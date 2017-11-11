@@ -1,0 +1,962 @@
+grigory.kislin [12:49 AM] 
+joined #hw2.
+
+
+grigory.kislin [12:52 AM] 
+Выложил занятие 2
+https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson02.md
+Закладываем архитектуру приложения, поэтому, если не сталкивались с архитектурой по слоям, непростое.
+Не стремитесь прочитать все ссылки урока, пока не сделаете HW2
+Ссылки всегда останутся у вас как справочник
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+Vangelis [12:53 AM] 
+joined #hw2 along with 18 others.
+
+grigory.kislin [10:31 AM] 
+всем привет!
+в видео про спиринг неверно сказано про common-logging. maven его подтянет, тк jcl-over-slf4j и common-logging- 2 разные зависимости, что у них одинаковые классы maven не может быть в курсе:) видео с правкой счас перезалью
+
+
+Fabus [11:11 AM] 
+Привет всем! Вопрос мы ведь патчи накатываем на ветку master? А ветки HW1, HW..., и т.д. остаются для нас? Их мержить не надо?
+
+vsergeev [11:11 AM] 
+Не надо
+
+
+
+Fabus [11:11 AM] 
+ок. спасибо
+
+
+chimax [11:24 AM] 
+Еще один шаг вперед)
+
+grigory.kislin [11:43 AM] 
+видео перезалил
+
+Shalukhau Dzmitry [11:44 AM] 
+@grigory.kislin А ссылочку :slightly_smiling_face:
+
+chimax [11:47 AM] 
+ссылка выше - в ветке hw2
+
+
+Abnod [12:13 PM] 
+хм... мне кажется с патчами что т оне то... взял ветку мастер после накатки всех патчей из первого урока.
+пытаюсь накатить 2,0 add fix патч
+в MealsUtils патч пытается заменить 108ю строку... но у меня в этом файле их всего 59 (edited)
+
+[12:13] 
+что я делаю не так? =(
+
+[12:15] 
+@here
+
+fbochkarev [12:19 PM] 
+@Abnod посмотри сам патч, что там внутри
+
+
+Abnod [12:22 PM] 
+так я ж написал, замена 108й строки :smiley: судя по гиту надо было накатывать опциональный патч 1.3_hw0 из прошлого урока "решение в один стрим". а я его не стал накатывать, т.к. он необязательный, судя по названию =))
+
+[12:22] 
+в общем решил вопрос
+
+fbochkarev [12:23 PM] 
+@Abnod https://github.com/JavaOPs/topjava/wiki/Git#%D0%9A%D0%B0%D0%BA-%D0%B2%D0%B5%D1%81%D1%82%D0%B8-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D1%83-%D1%81%D0%B5%D0%B1%D1%8F-%D0%B2-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%BC-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B5
+GitHub
+JavaOPs/topjava
+topjava - Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery
+ 
+
+
+[12:23] 
+Правила работы с патчами на проекте
+
+
+Abnod [12:24 PM] 
+да это то я читал... просто когда патчи по дз накатывал, почему то решил третий не накатывать, отсюда и проблема
+
+
+grigory.kislin [12:25 PM] 
+в этом же документе есть раздел- что делать если патч не накатывается
+те - как программисты- пытаемся все сделать самостоятельно
+
+
+Abnod [12:27 PM] 
+я решил по простому - зашел на гит и посмотрел историю изменений данного файла :smile:
+
+
+vsimonov [2:41 PM] 
+added this Plain Text snippet: первый домашний патч 2_1_HW1 если запустить ошибка позникает
+Type Exception Report
+Message An exception occurred processing [/meals.jsp] at line [34]
+Description The server encountered an unexpected condition that prevented it from fulfilling the request.
+Exception
+org.apache.jasper.JasperException: An exception occurred processing [/meals.jsp] at line [34]
+31:     </thead>
+32:     <c:forEach items="${meals}" var="meal">
+33:       <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
+34:       <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+35:         <td>
+36:             <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
+37:             <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
+Stacktrace:
+  org.apache.jasper.servlet.JspServletWrapper.handleJspException(JspServletWrapper.java:593)
+  org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:482)
+  org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:385)
+  org.apache.jasper.servlet.JspServlet.service(JspServlet.java:329)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+  org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+  ru.javawebinar.topjava.web.MealServlet.doGet(MealServlet.java:20)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+  org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+Root Cause
+javax.el.PropertyNotFoundException: Property [exceed] not found on type [ru.javawebinar.topjava.model.MealWithExceed]
+  javax.el.BeanELResolver$BeanProperties.get(BeanELResolver.java:260)
+  javax.el.BeanELResolver$BeanProperties.access$300(BeanELResolver.java:212)
+  javax.el.BeanELResolver.property(BeanELResolver.java:347)
+  javax.el.BeanELResolver.getValue(BeanELResolver.java:92)
+  org.apache.jasper.el.JasperELResolver.getValue(JasperELResolver.java:110)
+  org.apache.el.parser.AstValue.getValue(AstValue.java:169)
+  org.apache.el.parser.AstChoice.getValue(AstChoice.java:44)
+  org.apache.el.ValueExpressionImpl.getValue(ValueExpressionImpl.java:184)
+  org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate(PageContextImpl.java:702)
+  org.apache.jsp.meals_jsp._jspx_meth_c_005fforEach_005f0(meals_jsp.java:216)
+  org.apache.jsp.meals_jsp._jspService(meals_jsp.java:159)
+  org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+  org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:444)
+  org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:385)
+  org.apache.jasper.servlet.JspServlet.service(JspServlet.java:329)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+  org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+  ru.javawebinar.topjava.web.MealServlet.doGet(MealServlet.java:20)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+  org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+Note The full stack trace of the root cause is available in the server logs.
+
+
+Few [2:59 PM] 
+Я первые два применил без проблем,  дальше пока не пробовал
+
+
+aanyukhin [3:00 PM] 
+хм. всё поднялось, полёт нормальный.
+
+
+vsimonov [3:01 PM] 
+ок значит у меня чтото
+
+
+Zipper [3:14 PM] 
+Подскажите пожалуйста, мне на почту не пришло письмо с этим занятием. У всех так или только у меня?
+
+
+Abnod [3:16 PM] 
+применил до 2,3. если с файлами проекта все норм, то никаких проблем с патчами не наблюдается
+
+
+[3:16] 
+у всех
+
+aanyukhin [3:17 PM] 
+@vsimonov а ты все патчи применил или только с HW_2?
+
+
+vsimonov [3:17 PM] 
+все, щас попробую всё по новой сделать
+aanyukhin
+@vsimonov а ты все патчи применил или только с HW_2?
+Posted in #hw2Nov 9th at 3:17 PM
+
+
+Abnod [3:18 PM] 
+@vsimonov проверь что ты на мастер ветку применяешь
+
+vsimonov [3:18 PM] 
+на мастер, всё верно
+Oleg Maximov
+@vsimonov проверь что ты на мастер ветку применяешь
+Posted in #hw2Nov 9th at 3:18 PM
+
+
+[3:20] 
+этот патч надо накатываать? Apply 2_0_add_fix.patch
+
+aanyukhin [3:20 PM] 
+все надо по порядку
+
+
+vsimonov [3:22 PM] 
+всё удалил, всё по новой накатил, работает
+
+
+Abnod [4:23 PM] 
+@grigory.kislin по поводу видео 5. вы так и не ответили на вопрос в чатике как работает / что означает в пути, указанном в контексте две звездочки **
+
+
+tema.emelyan [4:26 PM] 
+это wildcart поиска во всех вложенных директориях
+
+
+
+Abnod [4:29 PM] 
+т.е. есть у нас прописано 1.**.финиш
+и в папке 1 лежит 100 папок, в каждой из которых по 100 папок, он будет проходить каждую до конца и искать файл "финиш"?
+если да, то получается это лучше использовать только в небольших проектах, а в крупных указывать точный путь, верно?
+
+
+tema.emelyan [4:31 PM] 
+не думаю, что даже большой проект может разрастись так, что это начнёт ощутимо бить по времени (edited)
+
+
+
+[4:33] 
+можно первые пару пакетов прописать чтобы сузить, а дальше вайлдкарты использовать (edited)
+
+
+Abnod [4:56 PM] 
+кто подскажет потокобезопасный вариант сета? :smiley:
+
+tema.emelyan [5:04 PM] 
+https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html#newKeySet--
+
+
+chimax [7:58 PM] 
+Коллеги, кто разобрался в отличиях dao слоя от repository?
+Вот, нашел запись
+
+Разница между слоем dao и repository:
+    DAO - это низкоуровневый слой, который работает с объектами базы
+    repository - работает с объектами DTO
+    Если Entity не переводятся в DTO, то два этих слоя сливаются и становятся одним и тем же
+
+
+[8:00] 
+насколько она правдоподобна?! (edited)
+
+
+chimax [8:15 PM] 
+Коллеги - все эти термины: POJO (для чего его придумали), JavaBean, Entity, ValueObject, DTO, DAO vs Repository, REST и тд не всегда бывают понятными (даже, когда есть четкое определение из интернета), предлагаю простыми словами описать все их определения - это можно делать совместно, даже редактировать, кто хочет присоединяйтесь (потом закину все это в гит для вопросов-ответов для собеса)
+https://docs.google.com/document/d/1qD5fJE5kAq0gmHDKmi-ubZW3odNxqyWjx0HYE2A0R48/edit?usp=sharing (edited)
+
+
+Valery [8:25 PM] 
+в патче 2,1 добавился файл functions.tld. это что за технология и почему требует отдельного файла?
+
+chimax [8:28 PM] 
+это кастомный тег
+
+[8:28] 
+у jstl
+
+
+grigory.kislin [9:15 PM] 
+@chimax я предлагаю не фиксироваться на определениях. практически от них немного пользы
+@Valery в уроке есть ссылка.
+
+evgeny [9:17 PM] 
+Я правильно понял, что бизнес логика расположена в слое сервисов?
+
+chimax [9:18 PM] 
+@grigory.kislin меня спросили пару определений некоторых терминов - я не смог внятно на них ответить - это и послужило причиной создания подобного документа (edited)
+
+
+[9:18] 
+вроде, да (edited)
+
+grigory.kislin [9:20 PM] 
+>  бизнес логика расположена в слое сервисов
+правильно. хотя бывает и в контроллерах
+
+chimax [9:21 PM] 
+@grigory.kislin а еще бывает и в сущностях в доменном уровне) - классическое трехлеерное приложение (edited)
+
+Shalukhau Dzmitry [10:01 PM] 
+Ага, я недавно бизнес логику в модели обнаружил вместе с контейером.... так что она бывает в самых необычных местах...
+
+
+Grub [10:10 PM] 
+@chimax еще называют трехтировое, да там бизнес логика в домене и якобы это правильно
+
+chimax [10:10 PM] 
+есть такие приверженцы этого подхода)
+
+[10:12] 
+https://www.youtube.com/watch?v=j88XgKAPy-s
+YouTube Sergey Nemchinsky
+Вопрос архитектуры - трехслойное приложение или сервисы?
+ 
+
+
+[10:12] 
+))))
+
+Valery [10:15 PM] 
+@grigory.kislin В списке типичных ошибок к дз1 первым пунктом идет избегание дублирований в названиях. Почему у нас сейчас переменные Энума не соблюдают это правило?
+В классе User поле каллорий инициализировано при объявлении константой. зачем его снова инициализировать в конструкторе?
+
+
+chimax [10:17 PM] 
+а мне не понятно почему id у нас в сущностях не final и у него есть сеттер
+
+Valery [10:29 PM] 
+и зачем мы храним 60 строчек коментированого кода в MealsUtil?
+
+chimax [10:30 PM] 
+это якоря)
+
+
+[10:32] 
+вот и пойми, что такое POJO: в статье, по версии спринг для POJO допускаются аннотации
+https://spring.io/understanding/POJO
+
+а в википедии написано, что нет
+spring.io
+Understanding : POJO (16 kB)
+(edited)
+
+
+Grub [10:42 PM] 
+@chimax не final, так как нам поле id для новых экземляров надо менять ( если isNew() возвращает true)
+
+
+chimax [10:43 PM] 
+c null на number?
+
+
+Grub [10:44 PM] 
+ну какой база сгенерит
+
+grigory.kislin [10:44 PM] 
+@Valery про роли- так принято их называть
+про User конструктор - предложи как лучше
+
+Viktor [10:45 PM] 
+посмотри это видео :smiley:
+chimax
+а мне не понятно почему id у нас в сущностях не final и у него есть сеттер
+Posted in #hw2Nov 9th at 10:17 PM
+
+
+[10:45] 
+https://www.youtube.com/watch?v=lfdAwl3-X_c
+YouTube JUG .ru
+Егор Бугаенко — Объектно-ориентированное вранье
+ 
+
+
+grigory.kislin [10:45 PM] 
+закоментрованный код- чтоб смотреть на него удобнее было
+можно конечно удалит и из истории git смотреть, когда захочется
+
+
+[10:46] 
+@chimax потомучто мы используем в коде сеттер
+
+chimax [10:46 PM] 
+Выступления Егора смотрел много раз, лучше не надо - на работе не поймут))
+
+Viktor [10:47 PM] 
+хаха ну тогда ты знаешь что ни одно поле не будет final :smiley: а id не задается при создании объекта, его потом придется выставлять. Хотя может я ещё не дошел до нужного патча
+
+
+chimax [10:47 PM] 
+просто использовать для id сеттер как-то не безопасно
+
+
+Grub [10:47 PM] 
+@grigory.kislin в HW1 добавить бы в форму mealForm.jsp для поля calories required то если пустое оставить получаем ексепшн  ну и ничего не мешает его сделать отрицательным (edited)
+
+
+
+chimax [10:48 PM] 
+для рефлексии пофиг - хоть файнал файнал в квадрате
+
+
+grigory.kislin [10:49 PM] 
+@Grub да, можно. в фикс добавлю. далее у нас будет валидация
+
+
+Valery [10:49 PM] 
+>про User конструктор - предложи как лучше
+либо в конструкторе, либо при объявлении. я не понимаю зачем сейчас оно инициализировано дважды
+
+
+chimax [10:50 PM] 
+а если не отрицательным, а просто ноль (edited)
+
+grigory.kislin [10:50 PM] 
+@Valery а, понял.
+да счас инициализация не работает... будет по умолчанию конструктор позже
+
+
+[10:51] 
+можно счас убрать
+
+Grub [10:52 PM] 
+Еще может логичнее сделать сразу в MealExceed конструктор c параметрами Meal и isExceed
+
+
+grigory.kislin [10:53 PM] 
+не.. MealExceed  - это to. он про entity ничего знать не должен. и наследоваться тоже поэтому нельзя
+
+
+
+
+----- Yesterday November 10th, 2017 -----
+Abnod [7:10 AM] 
+@tema.emelyan ну это мапа, а не сет :smiley: у того же листа есть Вектор, а у сета что то не могу найти аналог
+
+tema.emelyan [7:11 AM] 
+@Abnod не понял (edited)
+
+Abnod [7:12 AM] 
+ну смотри. для мапы есть потокобезопасный аналог - конкуррентхэшмэп. для листа - Vector, а для сета похоту никакого конкаррент сета нету, или я очень хреново ищу =-(
+
+
+tema.emelyan [7:13 AM] 
+uploaded this image: image.png
+Add Comment
+
+
+
+
+tema.emelyan [7:13 AM] 
+@Abnod ты спросил дайте мне потокобезопасный сет (edited)
+
+[7:14] 
+вот тебе потокобезопасный сет
+
+
+Denis1989 [10:32 AM] 
+@grigory.kislin В классе User появилось поле Date registered. А почему не LocalDateTime ?
+
+chimax [10:37 AM] 
+@Denis1989 LocalDateTime - не зависит от часового пояса - т.е. это абсолютное время, которое будет одним и тем же не зависимо от того в какой части планеты ты на него взглянешь (edited)
+
+
+[10:37] 
+Date - зависит от часового пояса - т.е. это относительные время/дата (edited)
+
+
+
+Дима Жуков [10:40 AM] 
+Ничоси
+
+[10:40] 
+Я не знал
+
+chimax [10:41 AM] 
+видимо, когда пользователь занес свои данные - нам не важно, а вот, когда зарегался и где он находится - важно). (edited)
+
+
+Denis1989 [10:44 AM] 
+@chimax а как из Date можно посмотреть где находится пользователь ?
+
+chimax [10:44 AM] 
+это я  чисто условно сказал про нахождение пользователя) (edited)
+
+
+Denis1989 [10:45 AM] 
+а вот наверное из LocalDateTime можно попробовать )
+
+aanyukhin [10:48 AM] 
+@chimax, а что ты понимаешь под абсолютным временем? Просто если вывести now() на экран, отобразится дата и время в которые сейчас на компьютере.
+
+
+LORREON [12:10 PM] 
+Как через stream API преобразовать list в map - чтоб ключ был автоматически пронумерован - 1,2,3 .. ?
+
+
+Few [2:53 PM] 
+Ну первая идея это локальная переменная в лямбде и инкрементить
+
+
+Grub [3:15 PM] 
+зачем в сигнатуре пишем `throws NotFoundException` если у нас unchecked exception
+
+
+Grub [3:45 PM] 
+@grigory.kislin почему 5й спринг не используем?
+
+
+Grub [3:58 PM] 
+` <context:component-scan .../>` уже включает `<context:annotation-config/>` , поэтому последнюю можно не писать
+
+Дима Жуков [4:00 PM] 
+Интересно сколько здесь людей которые только начинают работать со спрингом?)
+
+
+
+vsimonov [4:25 PM] 
+думаю много но не все
+
+
+
+grigory.kislin [4:35 PM] 
+заменил в уроке бытую ссылку на слои на картинку
+
+
+[4:36] 
+@Denis1989
+> User появилось поле Date registered. А почему не LocalDateTime ?
+в первом уроке есть вопрос: Почему у User.registered тип Date, а Meal.dateTime LocalDateTime? (edited)
+
+
+Belstrel 
+[4:37 PM] 
+думаю реально работающего ни одного, иначе зачем этот прект если Spring знаешь
+
+
+grigory.kislin [4:42 PM] 
+@Grub добавил впрос в урок
+> зачем в сигнатуре пишем `throws NotFoundException` если у нас unchecked exception
+Обычно не пишут. Я написал для информации разработчикам - здесь делаем проверку и может быть брошено.
+
+
+
+[4:43] 
+на topjava юзаем то, с чем с большой вероятностью придется работать
+spring 5 планирую юзать в новом проекте spring boot+microservices (edited)
+
+
+[4:46] 
+>` <context:component-scan .../>` уже включает `<context:annotation-config/>` , поэтому последнюю можно не писать
+спасибо, напишу сверху комментарий
+
+
+
+[4:47] 
+@Belstrel были (и возможно есть) и реально на нем работающие (edited)
+
+vch [4:47 PM] 
+@Belstrel в реальной работе не всегда нужен весь спектр изучаемых тут возможностей. Поэтому новое тоже можно узнать.
+Да, имея опыт работы с Spring тут будет гораздо легче (особенно помня о том, что многие участники не успевают изучать материал, что существенно снижает для них эффективность обучения). 
+Но углубиться в области, которые ранее не требовались в своём проекте - тоже полезно.
+Причём, имея свой рабочий проект на спринге можно тут же вводить в него новые изученные фишки.
+
+
+
+
+----- Today November 11th, 2017 -----
+Anton K. [12:08 AM] 
+(список пользователей возвращать отсортированным по имени)
+
+[12:08] 
+у них же не тимен
+
+
+[12:09] 
+а блин
+
+[12:09] 
+есть
+
+
+chimax [12:10 AM] 
+а еще и по емэйлу
+
+[12:10] 
+если имена совпадают
+
+
+Anton K. [1:06 AM] 
+блин
+
+
+Anton K. [1:07 AM] 
+А вопрос такой, можно же сигнатуру методов B mealrepository менять
+1 reply Today at 1:15 AM View thread
+
+Anton K. [1:07 AM] 
+:?
+
+Alexander _Gubanow [1:12 AM] 
+Почему Maven не подтягивает Spring-context?
+ 7 replies Last reply today at 4:32 PM View thread
+
+Li0n13 [1:15 AM] 
+Григорий не раз писал и говорил в видео, что не надо бояться менять исходный код, если это требуется для решения поставленной задачи.
+
+
+Anton K. [1:46 AM] 
+А я вот немножко не понял, мы должны проводить проверку "принадлежит ли данному юзеру еда" в слое репозитория?
+
+
+[1:46] 
+если да, то почему?
+
+
+Anton K. [1:51 AM] 
+Почему это не сделать в сервис слое?
+
+
+Дима Жуков 
+[3:44 AM] 
+Я не знаю, но я бы ответил что да. Ну тебе надо получить список еды юзера. Ты получается в репозитории всю еду вытащишь и потом на сл уровне будешь смотреть условие его еда или нет? Сразу вытаскивать только его может лучше в репозитории, где обращение к бд идёт или к мапе.
+
+
+Maksim [8:19 AM] 
+Объясните пожалуйста, что здесь происходит?  {
+       MealsUtil.MEALS.forEach(this::save);
+   }
+
+
+[8:19] 
+сохраняем куда?
+
+[8:21] 
+Или это просто создаем объекты, для каждой записи?
+
+
+Few
+[8:22 AM] 
+Читаем из листа в утилс,  и для каждой вызываем локальный сейв
+
+
+[8:22] 
+Наполняем репозиторий
+
+Maksim [8:23 AM] 
+т.е. таким образом вызываем метод save при инициализации InMemoryMealRepositoryImpl?
+
+Дима Жуков [8:23 AM] 
+MealsUtil.MEALS это лист, для каждого элемента вызываем (m -> this.save(m)
+
+
+Maksim [8:24 AM] 
+а метод ниже переписан? Правильно?
+
+
+Дима Жуков [8:24 AM] 
+где ниже
+
+
+Maksim [8:25 AM] 
+@Override
+   public Meal save(Meal meal) {
+       if (meal.isNew()) {
+           meal.setId(counter.incrementAndGet());
+       }
+       repository.put(meal.getId(), meal);
+       return meal;
+   }
+
+
+Few [8:25 AM] 
+Метод save ниже в репозитории
+
+
+Maksim [8:25 AM] 
+Все, понял
+
+
+[8:25] 
+спасибо
+
+[8:25] 
+иногда нужно самому себе рассказывать что происходит и как
+
+[8:25] 
+)))
+
+[8:26] 
+Т.е. просто заполняем мапу repository данными из MEALS?
+
+[8:26] 
+верно?
+
+
+Дима Жуков 
+[8:26 AM] 
+да там айдишник инициализируем
+
+
+Maksim [8:27 AM] 
+а так как будем использовать многопоточность, то используем ConcurrentHashMap?
+
+
+Дима Жуков 
+[8:28 AM] 
+ты все знаешь)
+
+
+Maksim [8:28 AM] 
+)))
+
+
+[8:28] 
+Просто жизнь очень круто меняется
+
+
+[8:28] 
+просто атас
+
+Maksim [8:53 AM] 
+У меня такое ощущение, что не хватает <!DOCTYPE html> в jsp файлах
+
+
+
+Few [9:03 AM] 
+Надо посмотреть код страницы после вывода
+
+
+[9:03] 
+По идее каждый браузер должен открывать в режиме совместимости без четкого указания
+
+
+Nick [3:43 PM] 
+Правильно ли я понимаю, что в методы MealRepository/InMemoryMealRepositoryImpl нужно передавать не только id пищи, а еще и id пользователя?
+
+
+
+Дима Жуков 
+[3:46 PM] 
+думаю да
+
+
+vsimonov [3:57 PM] 
+У кого уже получилось? Вывод на консоль какой должен быть?
+
+
+Дима Жуков 
+[4:08 PM] 
+added this Plain Text snippet
+//================ USERS ORDER BY NAME =================//
+INFO AdminRestController [AbstractUserController.java:21] getAll
+INFO InMemoryUserRepositoryImpl [InMemoryUserRepositoryImpl.java:54] getAll
+[User (id=3, email=igor@mail.ru, name=Igor Nekto, enabled=true, roles=[ROLE_USER], caloriesPerDay=2000), User (id=2, email=ivanov@mail.ru, name=Ivan Ivanov, enabled=true, roles=[ROLE_ADMIN], caloriesPerDay=2000), User (id=4, email=pasha@mail.ru, name=Pasha Kruglov, enabled=true, roles=[ROLE_USER], caloriesPerDay=2000), User (id=1, email=email, name=userName, enabled=true, roles=[ROLE_ADMIN], caloriesPerDay=2000)]
+//=================CREATE MEAL ================//
+INFO MealRestController [AbstractMealController.java:37] create Meal{id=null, dateTime=2017-11-11T20:06:31.467, description='Some new meal', calories=300, userId=0}
+INFO MealRestController [AbstractMealController.java:27] getAll
+[Meal{id=7, dateTime=2017-11-11T20:06:31.467, description='Some new meal', calories=300, userId=1}, Meal{id=6, dateTime=2015-05-31T20:00, description='Ужин', calories=510, userId=1}, Meal{id=5, dateTime=2015-05-31T13:00, description='Обед', calories=500, userId=1}, Meal{id=4, dateTime=2015-05-31T10:00, description='Завтрак', calories=1000, userId=1}, Meal{id=3, dateTime=2015-05-30T20:00, description='Ужин', calories=500, userId=1}, Meal{id=2, dateTime=2015-05-30T13:00, description='Обед', calories=1000, userId=1}, Meal{id=1, dateTime=2015-05-30T10:00, description='Завтрак', calories=500, userId=1}]
+//==================UPDATE MEAL ===============//
+INFO MealRestController [AbstractMealController.java:48] update Meal{id=7, dateTime=2017-11-11T20:06:31.472, description='Some new meal - updated', calories=900, userId=0}
+INFO MealRestController [AbstractMealController.java:27] getAll
+[Meal{id=7, dateTime=2017-11-11T20:06:31.472, description='Some new meal - updated', calories=900, userId=1}, Meal{id=6, dateTime=2015-05-31T20:00, description='Ужин', calories=510, userId=1}, Meal{id=5, dateTime=2015-05-31T13:00, description='Обед', calories=500, userId=1}, Meal{id=4, dateTime=2015-05-31T10:00, description='Завтрак', calories=1000, userId=1}, Meal{id=3, dateTime=2015-05-30T20:00, description='Ужин', calories=500, userId=1}, Meal{id=2, dateTime=2015-05-30T13:00, description='Обед', calories=1000, userId=1}, Meal{id=1, dateTime=2015-05-30T10:00, description='Завтрак', calories=500, userId=1}]
+//================DELETE MEAL=================//
+INFO MealRestController [AbstractMealController.java:43] delete 7
+true
+INFO MealRestController [AbstractMealController.java:27] getAll
+[Meal{id=6, dateTime=2015-05-31T20:00, description='Ужин', calories=510, userId=1}, Meal{id=5, dateTime=2015-05-31T13:00, description='Обед', calories=500, userId=1}, Meal{id=4, dateTime=2015-05-31T10:00, description='Завтрак', calories=1000, userId=1}, Meal{id=3, dateTime=2015-05-30T20:00, description='Ужин', calories=500, userId=1}, Meal{id=2, dateTime=2015-05-30T13:00, description='Обед', calories=1000, userId=1}, Meal{id=1, dateTime=2015-05-30T10:00, description='Завтрак', calories=500, userId=1}]
+INFO ClassPathXmlApplicationContext [AbstractApplicationContext.java:984] Closing org.springframework.context.support.ClassPathXmlApplicationContext@843fce: startup date [Sat Nov 11 20:06:29 ALMT 2017]; root of context hierarchy
+
+
+Дима Жуков [4:09 PM] 
+мой вывод, так практически на каждом слое копипаст все что делается в юзере, с правками небольшими
+
+
+[4:11] 
+я так понял на консоли просто попробовать как  все заинжектилось.
+
+
+new messages
+Anton K. [6:26 PM] 
+Ребят, а когда нужно вызывать servlet.destroy
+
+
+[6:26] 
+в какой момент
+
+
+vsimonov [6:30 PM] 
+метод checkNew обязательно использовать в контроллере?
+
+
+Дима Жуков 
+[6:33 PM] 
+servlet.destroy разве его сам вызываешь?
+
+
+Anton K. [6:33 PM] 
+Ну проверка что кто то птается создать новый мил с определнным id
+
+
+[6:33] 
+Ну я думал он контекст спринга чистит
+
+
+[6:34] 
+или нужно переопределить метод дестрой и в нем закрыть контекст
+
+
+Дима Жуков 
+[6:34 PM] 
+нужно переопределить метод дестрой и в нем закрыть контекст - вот это наверное
+
+
+Anton K. [6:34 PM] 
+Просто я спринг поднимаю в методе init
+
+
+Дима Жуков 
+[6:35 PM] 
+но это предположение)
+
+Anton K. [6:35 PM] 
+с автозакрытием ресурсов
+
+
+[6:35] 
+и не могу вызвать его из другого метода
+
+
+Li0n13 [7:51 PM] 
+>4.2: AuthorizedUser известен только на слое web (см. реализацию ProfileRestController). MealService можно тестировать без подмены логики авторизации, принимаем в методах сервиса и репозитория параметр userId: id владельца еды.
+<Зачеркнуто>~Мне кажется, самое место для проверки, принадлежит ли еда залогиненному юзеру, в слое serivce. А по этому пункту вроде как service вообще не в курсе, что есть AuthorizedUser. Или можно передать в сервис id этого юзера как параметр? Что-то вообще этот пункт не очень понятен.~</Зачеркнуто> Заработалась. Ответ в п. 4.3 (edited)
+
+
+shaakem [7:55 PM] 
+Я правильно понимаю, в InMemoryMealRepositoryImpl (слой Repository) логики не должно быть? К примеру получение id залогиненого пользователя и формирование еды только для этого пользователя? Кто прошел 3й пункт?
+
+
+Li0n13 [7:56 PM] 
+Думаю, да. Дело репозитория - сделать запрос и вернуть ответ. А ответ уже по бизнес-логике обрабатывает сервис. (edited)
+
+vch [8:04 PM] 
+@Li0n13 возвратить еду юзера - это не бизнес логика.
+В SQL-запросе мы ведь будем писать `where userId=:userId`
+
+Li0n13 [8:06 PM] 
+Но репозиторию же должно быть  все равно, залогинен этот юзер или нет. Так ведь?
+
+vch [8:07 PM] 
+@Li0n13 да. Это его не касается. Его дело - выдать ответ на запрос. Ему неважно - сам юзер смотрит еду, или админ из праздного любопытства решил узнать, чем позавтракал коллега.
+
+
+Anton K. [8:18 PM] 
+Тогда получается будут лишние обращения к БД
+
+
+vch [8:21 PM] 
+@Anton K. почему?
+
+
+Anton K. [8:22 PM] 
+А нет
+
+[8:22] 
+получается будем гонять объекты между слоями
+
+[8:22] 
+не знаю хуже это или без разницы
+
+
+[8:23] 
+Так то можно и в контроллере прописать логику
+
+vch [8:24 PM] 
+@Anton K. предлагаю объекты не гонять... Не знаю, зачем тебе это.
+
+russell [8:25 PM] 
+На маленьких приложениях разницы нет, на больших обязательно. Поддерживать легче и менять когда надо.
+
+
+Anton K. [8:25 PM] 
+Ну просто если в сервисе прописать логику то получается в сервис будет приходить объект и только потом решается можно ли с ним что-то делать
+
+
+[8:26] 
+а если в репозитории прописать то в сервис будет приходить или null или объект
+
+
+vch [8:26 PM] 
+@Anton K. выше же цитата из задания была: `принимаем в методах сервиса и репозитория параметр userId: id владельца еды`
+Если в репозитории есть userId, то что, куда и, главное, зачем ты собираешься гонять?
+
+
+russell [8:26 PM] 
+это круд приложение здесь методы сервиса дублируют репозитрий. В больших приложениях в сервисе гораздо больше логики.
+
+Anton K. [8:28 PM] 
+В Meal, которая приходит в контроллер нет никакой информации о пользователе (еда приходит в контроллер БЕЗ user/userId)
+
+
+russell [8:28 PM] 
+кажется будет сессия в ней будет лежать юзер с айдишником
+
+
+Anton K. [8:29 PM] 
+я просто в репозитории беру ай-ди из класса autorisedUser
+
+
+russell [8:29 PM] 
+это ты должен делать в сервлете имхо
+
+Anton K. [8:30 PM] 
+принимаем в методах сервиса и репозитория параметр userId: id владельца еды
+
+
+[8:30] 
+а вот это како пункт
+
+
+russell [8:31 PM] 
+4.2: AuthorizedUser известен только на слое web
+
+
+[8:31] 
+его по цепочке в сервис, а сервис в репо
+
+
+Anton K. [8:33 PM] 
+а
+
+
+[8:33] 
+ок
+
+
+[8:33] 
+: изменить MealRepository/InMemoryMealRepositoryImpl: в одном общем хранилище хранится вся еда всех пользователей. Любой пользователь авторизуется и видит/модифицирует только свою еду.
+3.1: если по запрошенному id еда отсутствует или чужая, возвращать null/false (см. комментарии в UserRepository
+
+
+[8:34] 
+Вот еще раз про расположение логики
+
+
+[8:34] 
+в задании написано что в репозитории
+
+
+[8:34] 
+или я неправльно понимаю
+
+
+russell [8:35 PM] 
+на сколько я понимаю методы репо должны принимать два айдишника, мила и юзера.
+
+
+Anton K. [8:35 PM] 
+просто если логику не прописать как он будет возвращить null false
+
+
+[8:35] 
+он может только объекты возвращать
+
+
+[8:36] 
+из БД
+
+
+[8:36] 
+и вообще тогда null и false не надо возвращать
+
+
+[8:36] 
+сразу эксепшн в сервисе кидать
+
+
+russell [8:40 PM] 
+@chimax Максим, мыслим правильно?
