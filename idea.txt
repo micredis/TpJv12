@@ -1,0 +1,70 @@
+grigory.kislin [1:57 AM] 
+joined #idea.
+
+
+grigory.kislin [1:57 AM] 
+set the channel purpose: Вопросы по idea
+
+
+astronarh [7:21 AM] 
+joined #idea along with 18 others.
+
+
+
+----- Thursday, October 26th -----
+Lezenford [6:17 PM] 
+там в подготовке к первому заданию предлагают поменять шрифт. можно же пропустить этот шаг и не ставить это вырвиглазное нечто?
+
+
+Grub [6:29 PM] 
+up to you
+
+
+
+new messages
+
+----- Today November 12th, 2017 -----
+Erick
+[1:07 AM] 
+не могу победить идею. задавал вопросы в HW1, но чувствую вопрос для этой ветки. 
+директива работает, но идея ее не принимает.
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+то есть отрисовка таблицы есть, но светится красным.
+
+
+Erick [1:07 AM] 
+uploaded this image: штатный режим после запуска идеи.PNG
+Add Comment
+
+
+
+Erick
+[1:08 AM] 
+зависимости в пом прописаны, в репозитории мэйвена лежит директория jstl и соответствующие *.jar, удалял их и заливал вручную, переписывал зависимость и перезаливал в авторежиме самим мэйвеном, инвалидировал кэши идеи, в конфигах мейвена прописал кастомный репозиторий, в настройках мэйвена тоже все по инструкции. (edited)
+
+
+Erick [1:21 AM] 
+uploaded and commented on this image: индексация файлов.PNG
+1 Comment
+File -> Invalidate Caches/Restart -> Invalidate and Restart
+сразу после выполнения команды, и рестарта идеи все нормально. но только пока кешируются файлы. потом все ломается.
+
+
+
+Erick
+[4:03 AM] 
+added and commented on this Plain Text snippet
+<project>
+ <modelVersion>4.0.0</modelVersion>
+ <groupId>javax.servlet</groupId>
+ <artifactId>jstl</artifactId>
+ <version>1.2</version>
+  <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>jsp-api</artifactId>
+   <version>2.0</version>
+   <scope>provided</scope>
+  </dependency>
+1 Comment Collapse
+мэйвн почему то в авторежиме не подтягивает зависимость самой jstl 1.2.
+библиотеки jsp-api 2.0 не создается при релоаде компонетнов мэйвн.

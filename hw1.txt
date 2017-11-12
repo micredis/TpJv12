@@ -6742,3 +6742,57 @@ Valery [11:02 PM]
 
 Andrew [11:06 PM] 
 @Valery Да, это звучит проще, попробую. Спасибо
+
+
+Andrew [11:25 PM] 
+@Valery не могу заставить кнопку отправлять value... можете показать код такой кнопки?
+
+
+russell [11:27 PM] 
+<a href="meals?action=delete&mealId=${meal.id}
+
+
+[11:27] 
+попробуй ссылкой кнопку обернуть, хотя в хтмл 5 это не разрешено
+
+
+Valery [11:34 PM] 
+если делать кнопкой, то это форма без полей. value будет равно action. что-то такое:
+<form method="post" action="remove${id}">
+но на каждую такую кнопку нужен обработчик.
+
+
+russell [11:35 PM] 
+лучше вставь иконку с http://fontawesome.io/icons/ и оберни ссылкой.
+fontawesome.io
+Font Awesome Icons
+Font Awesome, the iconic font and CSS framework
+
+
+
+----- Today November 12th, 2017 -----
+Andrew [12:35 AM] 
+Спасибо! Зарешали подсказки!
+
+
+Andrew [11:56 AM] 
+Всё получилось, кроме русского языка. Всунул кодировку в web.xml:
+   <jsp-config>
+       <jsp-property-group>
+           <url-pattern>*.jsp</url-pattern>
+           <page-encoding>UTF-8</page-encoding>
+       </jsp-property-group>
+   </jsp-config>
+
+В самой ЖСП: 
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %> 
+
+Но всё равно кириллица выглядит грустно
+
+
+Valery [11:58 AM] 
+в сервлете вставь request.setCharacterEncoding("UTF-8");
+
+
+[11:59] 
+параметры запроса приходят в методы с кодировкой null. почему нету дефолтного состояния - хз.
