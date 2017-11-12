@@ -68,3 +68,8 @@ added and commented on this Plain Text snippet
 1 Comment Collapse
 мэйвн почему то в авторежиме не подтягивает зависимость самой jstl 1.2.
 библиотеки jsp-api 2.0 не создается при релоаде компонетнов мэйвн.
+
+
+grigory.kislin [9:25 PM] 
+> библиотеки jsp-api 2.0
+а она нам не нужна

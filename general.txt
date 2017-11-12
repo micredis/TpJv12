@@ -2822,3 +2822,31 @@ Viktor [10:49 PM]
 
 Abnod [7:11 AM] 
 @Viktor в письме видимо старая, в документе на гите нормально.
+
+
+Andrew [6:17 PM] 
+Что-то не то :disappointed: Ставлю 2.0_add_fix.patch - и находит Hunk. Посмотрел сорсы - моя мастер ветка не имеет вещей, которые фиксит патч..
+
+
+russell [6:34 PM] 
+Значит прошлый неправильно встал
+
+
+Andrew [6:37 PM] 
+Откуда можно стащить состояние классов до 2.0 патча? На https://github.com/JavaOPs/topjava ничего(
+GitHub
+JavaOPs/topjava
+topjava - Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery
+ 
+
+
+russell [6:40 PM] 
+сам откатись в мастер ветке и накати заново
+
+
+Andrew [6:44 PM] 
+Откатился, но что-то не так. По второму кругу - то же самое. В доке про патчи прочёл, что надо взять состояние классов из гит, но не могу найти откуда
+
+
+Andrew [7:17 PM] 
+Нашёл мастер ветку, решилось

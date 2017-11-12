@@ -1960,3 +1960,22 @@ Add Comment Collapse
 
 chimax [12:01 PM] 
 @kirill_liutikov почему мне на почту пришло письмо от тебя :point_up_2: (edited)
+
+
+chimax [1:09 PM] 
+https://habrahabr.ru/post/342170/
+Хабрахабр
+Обзор Java 9
+Всем доброго времени суток. В ноябре 2017 в Санкт-Петербурге прошло одно из самых примечательных событий года для отечественных Java-разработчиков: конференция... (31 kB)
+
+
+Viktor [9:10 PM] 
+Если кто-то заинтересовался, сделал тестовый репозиторий, можете посмотреть 
+https://github.com/vampirit/speedment-demo
+Sergeev Viktor
+Для тех кому понравилось использовать стримы и кто уже хоть раз пробовал работать с БД в коде интересно ваше мнение об этом https://www.speedment.com/resources/videos/
+Posted in #randomToday at 2:45 AM
+ GitHub
+vampirit/speedment-demo
+Contribute to speedment-demo development by creating an account on GitHub.
+ 
