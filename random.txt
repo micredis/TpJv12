@@ -1979,3 +1979,11 @@ Posted in #randomToday at 2:45 AM
 vampirit/speedment-demo
 Contribute to speedment-demo development by creating an account on GitHub.
  
+
+tema.emelyan [4:05 PM] 
+тёмная тема в слак https://github.com/widget-/slack-black-theme
+GitHub
+widget-/slack-black-theme
+slack-black-theme - A darker, more contrasty, Slack theme.
+ 
+ 
