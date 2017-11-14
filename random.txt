@@ -1987,3 +1987,62 @@ widget-/slack-black-theme
 slack-black-theme - A darker, more contrasty, Slack theme.
  
  
+astronarh [1:26 PM] 
+Народ, а тестами ни кто ещё свой вариант проекта не покрывал? Для себя.
+
+
+[1:27] 
+Или по логам отслеживать удобнее? Мне как то нет.
+
+
+vch [1:30 PM] 
+@astronarh Ну если чисто для себя... Так-то тема по JUnit будет через 2 дня
+
+
+astronarh 
+[1:40 PM] 
+@vch осталось ДВА ДНЯ)
+
+vch [1:42 PM] 
+@astronarh В смысле `целых 2 дня`, а тебе не терпится их применить? Ну что ж... Бывает. (edited)
+
+
+Viktor [3:10 PM] 
+@astronarh в помник добавьте зависимость от junit, переходите к ласс который хотите тестировать Ctrl+Shift+T на имени класса -> create new test и все. Придумать нормальный тест сложнее чем понять junit :smiley: (edited)
+
+
+astronarh [3:12 PM] 
+@Viktor ключевое слово нормальный ))) для себя то я иногда использую, а вот написать что-то красивое, понятное и коротенькое, сложно, да )))
+
+
+Viktor [3:36 PM] 
+@astronarh мне понравилась библиотека https://mvnrepository.com/artifact/org.easytesting/fest-assert-core с ней утверждения выглядят по лучше
+
+
+russell [3:41 PM] 
+@Viktor она поверх джей юнита ставится?
+
+
+Viktor [3:41 PM] 
+рядом, замена asset ам
+
+
+Viktor [3:47 PM] 
+если есть свободное время, то предложу видео: https://www.youtube.com/watch?v=Dwk80prrKys
+YouTube Computer Science Center
+Тестирование Java-программ
+ 
+
+
+[3:48] 
+там и про festassert и про mocito немного, первая половина видео про TDD (как это выглядит на примере калькулятора), если про TDD знаете-слышали, то можно пропустить
+
+
+grigory.kislin [8:51 PM] 
+@Viktor как оаз счас на AssertJ смотрю
+AssertJ is a fork of the Fest assert library, as Fest is not actively maintained anymore.
+http://www.vogella.com/tutorials/AssertJ/article.html
+
+
+Viktor [8:53 PM] 
+@grigory.kislin да похожи, есть какие-то принципиальные отличия?
