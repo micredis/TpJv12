@@ -2046,3 +2046,44 @@ http://www.vogella.com/tutorials/AssertJ/article.html
 
 Viktor [8:53 PM] 
 @grigory.kislin да похожи, есть какие-то принципиальные отличия?
+
+
+grigory.kislin [9:59 PM] 
+так то что я написал и есть принципиальное отличие:) я сам только читаю, к topjava прикрутим
+
+
+russell [10:01 PM] 
+@grigory.kislin в эту топ джаву или следующую?
+
+
+grigory.kislin [10:03 PM] 
+в этот четверг:)
+
+
+
+Viktor [10:08 PM] 
+@grigory.kislin я имел ввиду отличие между fest assert и assertJ? посмотрел вашу ссылку и увидел много схожего, вот ссылка на fest-assert github https://github.com/alexruiz/fest-assert-2.x
+GitHub
+alexruiz/fest-assert-2.x
+fest-assert-2.x - FEST Fluent Assertions 2.x
+ 
+
+
+grigory.kislin [10:11 PM] 
+https://github.com/alexruiz/fest-assert-2.x/graphs/contributors
+GitHub
+alexruiz/fest-assert-2.x
+fest-assert-2.x - FEST Fluent Assertions 2.x
+ 
+
+
+[10:12] 
+https://github.com/joel-costigliola/assertj/graphs/contributors
+GitHub
+joel-costigliola/assertj
+assertj - AssertJ documentation
+ 
+
+
+Viktor [10:14 PM] 
+понял :smiley:
