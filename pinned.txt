@@ -1,0 +1,35 @@
+slackbot [9:13 PM] 
+@viktorpavlovi4 unpinned the message you pinned to #general.
+Антон Кляшторный
+По окончанию 30-ти дневного пробного периода для Ultimate:
+регистрацию проходишь и в сервер пишешь
+(в license server address)
+http://idea.iteblog.com/key.php
+Posted in #generalOct 26th at 4:20 PM
+
+
+slackbot [9:15 PM] 
+@viktorpavlovi4 unpinned the message you pinned to #hw0.
+chimax
+toMap тоже это позволяет сделать
+Posted in #hw0Oct 28th at 11:55 PM
+
+
+
+----- Today November 15th, 2017 -----
+slackbot [8:04 PM] 
+@viktorpavlovi4 unpinned the message you pinned to #random.
+Tetiana Poliakh
+@vladimir.glinskikh
+Я платила 330 cad, подоготовка наверное пару мес в расслабленном режиме
+Основные материалы - "OCA / OCP Java SE 8 Programmer Certification Kit: Exam 1Z0-808 and Exam 1Z0-809" + тесты онлайн какие найдешь
+Сдаешь за компом, дается 2,5ч но я реально за 1,5ч справилась на 94%  (где-то все-таки натупила)
+Экзамен несложный, но нужно готовиться конкретно к нему, т.к. работая в идее слишком привыкаешь к подсказкам
+Posted in #randomOct 27th at 8:46 PM
+
+
+slackbot [8:04 PM] 
+@viktorpavlovi4 unpinned the message you pinned to #random.
+Oleg Chekhonadskikh
+@vladimir.glinskikh Я сдавал OCA в мае. Стоимость экзамена 150 usd. Подготовка заняла 2 месяца. Надо ответить на 70 вопросов за 150 минут. Готовился по книжке https://www.amazon.com/OCA-Certified-Associate-Programmer-1Z0-808/dp/1118957407/ref=sr_1_1?ie=UTF8&qid=1509090284&sr=8-1&keywords=Jeanne+Boyarsky
+Posted in #randomOct 27th at 10:49 AM
