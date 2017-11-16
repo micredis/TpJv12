@@ -44,3 +44,16 @@ Glumov Konstantin [2:14 PM]
 
 Glumov Konstantin [2:19 PM] 
 помог clean, хотя думал что package автоматом должен его вызвать
+
+
+MetalBro [7:55 PM] 
+На почту будет?
+
+
+grigory.kislin [8:51 PM] 
+сорри, письмо счас будет
+@Glumov Konstantin package его автоматом не должен вызывать
+
+
+vch [9:05 PM] 
+set the channel purpose: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson03.md

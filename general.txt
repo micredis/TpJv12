@@ -2883,3 +2883,39 @@ russell [10:00 PM]
 grigory.kislin [2:08 AM] 
 @here
 *Коллеги, налетаем: #hw3* :slightly_smiling_face: (edited)
+
+
+danissimo [5:49 PM] 
+uploaded this image: A good architect leaves a footprint
+Add Comment
+
+
+
+
+danissimo [5:52 PM] 
+Настоятельно рекомендую: https://www.petrikainulainen.net/software-development/design/understanding-spring-web-application-architecture-the-classic-way/
+Petri Kainulainen
+Understanding Spring Web Application Architecture: The Classic Way
+Every developer must understand two things: Architecture design is necessary. Fancy architecture diagrams don’t describe the real architecture of an application. The real architecture is found from the code that is written by developers, and if we don’t design the architecture of our application…
+Oct 19th, 2014 at 7:19 PM
+ 
+
+
+[5:53] 
+статье всего 3 года
+
+
+danissimo [11:34 PM] 
+Меня тут оросило: зачем вводить пакеты repo, model, web, etc? Я бы делил по объектам предметной области: например, meal, user, etc. Таким образом, пакет meal будет содержать и entity, и DTO, и сервис, и контроллер
+
+
+[11:35] 
+В этом случае я могу использовать мощный инструмент языка package-prive visibility
+
+
+[11:36] 
+и всё, что относится к meal, лежит в одном месте. имена типов говорящие. базовые типы (абстрактные) выносим выше по иерархии пакетов
+
+
+[11:36] 
+такой дизайн считаю элегантым

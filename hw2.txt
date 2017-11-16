@@ -4711,3 +4711,9 @@ grigory.kislin [2:03 PM]
     }
 ```
  
+
+Tanya [10:03 PM] 
+а если вместо null отдавать Predicate.TRUE? 
+public List<Meal> getAll(int userId) {
+      return getAllFiltered(userId, meal -> true);
+}
