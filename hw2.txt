@@ -4477,3 +4477,237 @@ Viktor [12:06 AM]
 видео про репозиторий, не отличия от ДАО, но из видео их примерно можно обозначить https://www.youtube.com/watch?v=G9apMqwRedA
 YouTube JUG .ru
 Владимир Цукур — Путь от CRUD к Hypermedia API с Spring
+
+
+dyakoven [11:12 AM] 
+@grigory.kislin Григорий, похоже, у нас в проекте баг. когда добавляешь/редактируешь еду, при нажатии Cancel еда все равно сохраняется
+
+
+grigory.kislin [11:28 AM] 
+@dyakoven это наблюдалось на FF. полечили тем, что поставили в Cancel type="button"
+я проверли- все ок. 1. обнови страничку F5 2. какой браузер? (edited)
+1 reply Today at 11:32 AM View thread
+
+LORREON [12:06 PM] 
+added this Java snippet: Почему в сервлете в методе doGet такой код вызывает ava.lang.NullPointerException
+String action = req.getParameter("action");
+​
+    if(action.equals("delete")){
+      System.out.println("delete");
+    }
+Add Comment
+
+
+
+Grub [12:07 PM] 
+а откуда там этому параметру взяться
+
+
+LORREON [12:08 PM] 
+неважно если нет пусть пропустит (edited)
+
+
+Grub [12:10 PM] 
+тогда на null проверяй
+
+
+Few 
+[12:13 PM] 
+public static final LocalDate MIN_DATE = LocalDate.of(1, 1, 1);
+   public static final LocalDate MAX_DATE = LocalDate.of(3000, 1, 1);
+
+
+[12:13] 
+а зачем эти константы?
+
+[12:13] 
+LocalDate.MIN и LocalDate.MAX не подходят?
+
+vch [12:24 PM] 
+@Few не подходят, т.к. диапазон значений даты в PostgreSQL уже, чем LocalDate.MIN и LocalDate.MAX. 
+Падать будут такие запросы... (edited)
+
+
+
+Few 
+[12:24 PM] 
+ок, спс
+
+
+[12:28] 
+видео еще не смотрел, а уже с вопросами
+
+
+[12:28] 
+там наверное объясняется )
+
+
+Katherine Buzatu [12:48 PM] 
+```@Override
+public List<Meal> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+return getAllAsStream(userId)
+.filter(meal -> DateTimeUtil.isBetween(meal.getDateTime(), startDateTime, endDateTime))
+.collect(Collectors.toList());
+}
+
+private Stream<Meal> getAllAsStream(int userId) {
+Map<Integer, Meal> meals = repository.get(userId);
+return meals == null ?
+Stream.empty() :
+meals.values().stream()
+.sorted(Comparator.comparing(Meal::getDateTime).reversed());
+}```
+В методе `getBetween` происходит сначала сортировка, потом фильтрация. Почему не наоборот?
+
+
+danissimo [1:36 PM] 
+Коллеги, почему операции репозитория возвращают спец. значения, а не исключения? То есть почему вместо
+```public interface MealRepository {
+    Meal save(Meal meal);
+    /** @return {@code false} if there was no {@link Meal} with the given {@code id} by the moment of invocation */
+    boolean delete(int id);
+    /** @return {@code null} if there was no {@link Meal} with the given {@code id} by the moment of invocation */
+    Meal get(int id) throws NotFoundException;
+    Collection<Meal> getAll();
+}
+```
+не объявить такие операции:
+```public interface MealRepository {
+    Meal save(Meal meal);
+    void delete(int id) throws NotFoundException;
+    Meal get(int id) throws NotFoundException;
+    Collection<Meal> getAll();
+}
+```
+? (edited)
+
+
+grigory.kislin [1:41 PM] 
+@Katherine Buzatu мы `getAllAsStream`  еще для `getAll()` используем 
+попробуй красиво зарефакторить- поменяю:) (edited)
+
+
+Shalukhau Dzmitry [1:42 PM] 
+@danissimo Насколько я понимаю, отсутствие в БД Meal является допустимым состоянием приложения
+
+
+[1:43] 
+Т.е. не является ошибкой.
+
+
+
+grigory.kislin [1:43 PM] 
+@danissimo мне кажется так более универсально. далеко не всегда в приложении нам нужно достать по ентити id  и получить эксепшен. 
+поэтому проверку вынес на уровень сервиса. ну и дублирования не будет, тк у нас будет несколько реализаций репозиториев
+
+
+danissimo [1:44 PM] 
+@Shalukhau Dzmitry исключение != ошибка, особенно если это checked exception
+
+
+Shalukhau Dzmitry [1:45 PM] 
+@danissimo исключение = исключительная ситуация (edited)
+
+
+danissimo [1:45 PM] 
+исключение — это изменение workflow без if'ов
+
+
+Shalukhau Dzmitry [1:45 PM] 
+@danissimo Я бы сказал, что исключение - это очень дорогое изменение workflow :slightly_smiling_face:
+
+
+[1:46] 
+Дешевле алгоритм поменять :slightly_smiling_face:
+
+vch [1:46 PM] 
+@grigory.kislin По `getBetween` вопрос действительно интересный.
+По уму да - все сортировки и фильтрации происходят только в момент терминальной операции.
+И, если верить в благоразумие разработчиков JDK - то они должны были сделать выполнение операций в стриме не в том порядке, в котором мы их заносили, а сначала всё отфильтровать, и уже потом сортировать.
+Но вроде по спецификации нам таких гарантий не дают.
+
+
+grigory.kislin [1:46 PM] 
+если приложение чуть сложнее нашего скорее всего понадобится get где результата может не быть
+вместо catch(NotFound e) гораздо лучше !=null проверить (edited)
+
+
+Katherine Buzatu [1:48 PM] 
+У меня вспомогательный метод выглядит так
+```private final List<Meal> getMealsByFiltersSortedByDate(Predicate<AbstractMap.SimpleEntry<Integer, Meal>>... filters) {
+        Stream<AbstractMap.SimpleEntry<Integer, Meal>> userAndMealStream = repository.values()
+                .stream();
+        for (Predicate<AbstractMap.SimpleEntry<Integer, Meal>> filter: filters) {
+            userAndMealStream = userAndMealStream.filter(filter);
+        }
+        return userAndMealStream
+                .map(AbstractMap.SimpleEntry::getValue)
+                .sorted(comparatorByDate)
+                .collect(Collectors.toList());
+    }```
+. Не знаю, насколько это красиво, но порядок действий, мне кажется, эффективнее. Схему хранилища я выбрала другую, не стала менять типы.
+Grigory Kislin
+@Katherine Buzatu мы `getAllAsStream`  еще для `getAll()` используем 
+попробуй красиво зарефакторить- поменяю:)
+Posted in #hw2Today at 1:41 PM
+
+
+grigory.kislin [1:48 PM] 
+@vch сотрировка- терминальная операция. те конечно filter спереди лучше... на наших объемах и нагрузках конечно это не так принципиально
+
+
+danissimo [1:48 PM] 
+правильно ли понимаю, что спец. значение или exception — дело вкуса?
+
+
+grigory.kislin [1:50 PM] 
+@danissimo на мой вкус null лучше. бывает что эксепшен используется для изменения flow, например выход из глубокого вложения вызовов
+в некоторых языках от используется для выхода из циклов.. но не в java
+
+
+danissimo [1:51 PM] 
+похоже, нужно попробовать и так, и эдак, чтобы понять
+
+
+grigory.kislin [1:51 PM] 
+@Katherine Buzatu :+1: попробую такой вариант
+
+
+danissimo [1:52 PM] 
+@grigory.kislin я вот что подумал: может, для Spring Data code conventions такие, что возвращаются спец. значения? Я не в курсе просто ещё. Это так, Григорий?
+
+
+grigory.kislin [1:56 PM] 
+в SpringData есть их стандартные JpaRepository extends PagingAndSortingRepository  extends CrudRepository extends Repository
+это их code conventions
+остальное уже- как разработчик захочет
+
+
+vch [1:58 PM] 
+@grigory.kislin Странно, а в Stream.java написано, что sorted() - `This is a stateful intermediate operation` , так же как и filter
+Если б sorted был терминальной операцией, то было бы совсем плохо.
+
+
+grigory.kislin [2:03 PM] 
+@Katherine Buzatu у меня так вышло:
+```    public List<Meal> getAll(int userId) {
+        return getAllFiltered(userId, null);
+    }
+
+    public List<Meal> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return getAllFiltered(userId, meal -> DateTimeUtil.isBetween(meal.getDateTime(), startDateTime, endDateTime));
+    }
+
+    private List<Meal> getAllFiltered(int userId, Predicate<Meal> filter) {
+        Map<Integer, Meal> meals = repository.get(userId);
+        if (CollectionUtils.isEmpty(meals)) {
+            return Collections.emptyList();
+        }
+        Stream<Meal> stream = meals.values().stream();
+        if (filter != null) {
+            stream = stream.filter(filter);
+        }
+        return stream.sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
+    }
+```
+ 

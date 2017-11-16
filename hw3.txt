@@ -20,3 +20,27 @@ Contribute to topjava development by creating an account on GitHub.
 
 dyakoven [2:09 AM] 
 joined #hw3 along with 18 others. 
+
+
+MetalBro [10:23 AM] 
+вопрос по реализации фильтрации по датам. Если зададим только время, в этой реализации будет учитываться только время дня без привязки к дням? Зачем просто ввод констант
+
+
+[10:23] 
+на дни
+
+
+[10:24] 
+пересмотрел, вроде все нормально)
+
+
+grigory.kislin [11:11 AM] 
+@MetalBro демо: http://topjava.herokuapp.com (edited)
+
+
+Glumov Konstantin [2:14 PM] 
+после накатывания патча 3_05 возникает ошибка при вызове mealServlet. У всех так или только у меня? Ругается что не может создать бин userServiceImpl
+
+
+Glumov Konstantin [2:19 PM] 
+помог clean, хотя думал что package автоматом должен его вызвать
