@@ -4467,3 +4467,13 @@ Viktor [11:17 PM]
 
 Andrew [11:23 PM] 
 А, в методе инит сделать так , как делали в SpringMain - сделать контекст и стянуть с него бин?
+
+
+Viktor [12:06 AM] 
+да
+
+
+[12:08] 
+видео про репозиторий, не отличия от ДАО, но из видео их примерно можно обозначить https://www.youtube.com/watch?v=G9apMqwRedA
+YouTube JUG .ru
+Владимир Цукур — Путь от CRUD к Hypermedia API с Spring

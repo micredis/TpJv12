@@ -6806,3 +6806,7 @@ private static final Logger log
 
 [7:49] 
 ты же не может ссылку эту переопределить
+
+
+grigory.kislin [1:52 AM] 
+@Grub deeply immutable означает изменить не ссылку, а объект
