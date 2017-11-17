@@ -4791,3 +4791,93 @@ I have read multiple posts on StackOverFlow about checked vs unchecked exception
 Ignore Checked Exceptions, All the Cool Devs Are Doing It - Based on 600,000 Java Projects | Takipi Blog
 An overview of exception handling in over 600,000 Java projects on Github and Sourceforge (59 kB)
 Jun 21st, 2016 at 6:59 PM
+
+
+Shalukhau Dzmitry [8:48 PM] 
+Ребята, правильно я понимаю, что в случае, если я RestController в MealServlet помечу @Authowired - и в init проинициализирую контекст - Spring не сможет заполнить Authowired свойство сервлета (т.к. объект уже создан)? Есть ли возможность обойти это ограничение или ручками getBean взять?
+
+
+russell [8:50 PM] 
+кажется только ручками, так как сервлет создается сервером через нью.
+
+
+
+Shalukhau Dzmitry [8:51 PM] 
+@russell Я это понял, Тут скорее вопрос, можно ли спринг заставить заюзать сеттер когда объект уже проинициализирован. Мне кажется, что нет - но вдруг :slightly_smiling_face:
+
+
+vch [8:54 PM] 
+@Shalukhau Dzmitry У меня однажды была необходимость создавать классы через `new`. И чтобы в них можно было использовать `@Autowired`, я делал такой конструктор:
+```        public MyClass() {
+            SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        }```
+Может и для твоего случая подойдёт.
+
+
+Shalukhau Dzmitry [8:55 PM] 
+SpringBeanAutowiringSupport - я думал об этом, но ведь это же не spring-context уже вроде как...
+
+
+vch [8:56 PM] 
+@Shalukhau Dzmitry А что тогда? Вроде как раз - где-то раньше контекст создан, и мы таким хаком обращаемся к нему
+
+
+Shalukhau Dzmitry [8:56 PM] 
+Это часть spring-web
+
+[8:57] 
+Хотя в данном случае оно помогло бы...
+
+
+vch [8:57 PM] 
+у вас всё равно Spring MVC используется. Так что не вижу проблем.
+
+Shalukhau Dzmitry [9:12 PM] 
+@vch В HW2 не используется spring-web и spring-mvc. Только хардкор. Отдельно Григорий написал, что не стоит модифицировать pom.xml
+
+
+Viktor [9:13 PM] 
+@Shalukhau Dzmitry спринг может чтолибо делать только с теми бинами, которые сам создал. Вы доверяете контроль за объектом ему (создание удаление и все зависимости). Если вы создаете объект сами, считайте, что спринг обиделся на вас и не поможет :smiley:
+
+
+Shalukhau Dzmitry [9:15 PM] 
+@Viktor Это понятно. Но есть SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);, которая говорит, а просканируй класс текущего объекта и внедри Authowired dependency зависимости в текущий объект
+
+
+vch [9:17 PM] 
+@Shalukhau Dzmitry Да, печально. В spring-context.jar ничего похожего не вижу.
+Может там оно и есть (кто знает), но во всяком случае названий классов на эту тему не вижу.
+
+
+russell [9:20 PM] 
+у меня тоже пусто, есть еще вариант http://olivergierke.de/2009/05/using-springs-configurable-in-three-easy-steps/
+
+
+Shalukhau Dzmitry [9:25 PM] 
+@russell я не уверен, что там что - то есть (по крайней мере я не нашел).
+
+
+russell [9:26 PM] 
+@Shalukhau Dzmitry первая строчка перед описанием As you might not be aware of, besides injecting dependencies into beans Spring is able to inject dependencies into objects that are not instantiated by Spring.
+
+
+Shalukhau Dzmitry [9:34 PM] 
+@russell Не смог завести это решение.
+
+
+[9:34] 
+3 пункт звучит как костыль.
+
+[9:39] 
+@russell для того, чтобы 3 пункт реализовать нужно подключить spring-aspect. А это уже нарушение правила. В общем, наиболее красивое решение: SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+
+
+[9:42] 
+Всем спасибо
+
+
+Viktor [10:13 PM] 
+ну блин, это тоже самое, что использовать контекст, проще конечно, но хз как там будут жить бины
+Shalukhau Dzmitry
+@Viktor Это понятно. Но есть SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);, которая говорит, а просканируй класс текущего объекта и внедри Authowired dependency зависимости в текущий объект
+Posted in #hw2Today at 9:15 PM
