@@ -4717,3 +4717,38 @@ Tanya [10:03 PM]
 public List<Meal> getAll(int userId) {
       return getAllFiltered(userId, meal -> true);
 }
+
+
+
+grigory.kislin [12:43 AM] 
+https://stackoverflow.com/questions/26549659/built-in-java-8-predicate-that-always-returns-true
+```    private List<Meal> getAllFiltered(int userId, Predicate<Meal> filter) {
+        Map<Integer, Meal> meals = repository.get(userId);
+        return CollectionUtils.isEmpty(meals) ? Collections.emptyList() :
+                meals.values().stream()
+                        .filter(filter)
+                        .sorted(Comparator.comparing(Meal::getDateTime).reversed())
+                        .collect(Collectors.toList());
+    }
+```
+stackoverflow.com
+Built-in Java 8 predicate that always returns true?
+Google Guava has a predicate that always returns true. Does Java 8 have something similar for its Predicate? I know I could use (foo)->{return true;}, but I want something pre-made, analogous to
+ 
+(edited)
+
+
+Katherine Buzatu [8:33 AM] 
+Вчера была дискуссия на тему "null против исключений". Вроде пришли к тому, что null предпочтительнее. А у нас все равно выбрасывается исключение, да еще и `unchecked`. Объясните, пожалуйста, кто понял, зачем бросать `unchecked` там, где такая ситуация ожидаема? Почему бы не бросить `checked`, например, чтобы наверху тоже бы готовились?
+
+
+russell [9:09 AM] 
+@Katherine Buzatu Не уверен, но возможно, из-за того, что в 95 случаях исключения непонятно как обрабатывать. Где-то же была статистика, что в исключениях просто лог выводится или просто другое пробрасывается. а засорять трай кэтчем код не хочется. Имхо. (edited)
+
+
+Katherine Buzatu [9:38 AM] 
+Но мы же и так засорили. Свое исключение ввели. Класс `ValidationUtils` написали. Типа мы знали, что это наверняка случится, но решили сами не заморачиваться. Как-то логичнее, имхо, бросать `checked`, а выше захотят - поймают, неизвестно, что делать - бросят дальше. Ситуация-то на самом деле не исключительная.
+
+
+russell [9:49 AM] 
+создатели джава вроде заявляли, что налл и чект эксепшнз их самые большие ошибки. Возможно поэтому все современные фреймворки переоборачивают чект в анчект. А то что ситуация неисключительная - согласен. А с другой стороны как можно починить, то что в базе нет еды с таким айди и не получается удалить. Что можно сделать в кэтче? Еще чект искл не совместимы с функциональным программированием. http://literatejava.com/exceptions/checked-exceptions-javas-biggest-mistake/ (edited)
