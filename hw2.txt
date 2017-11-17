@@ -4752,3 +4752,42 @@ Katherine Buzatu [9:38 AM]
 
 russell [9:49 AM] 
 создатели джава вроде заявляли, что налл и чект эксепшнз их самые большие ошибки. Возможно поэтому все современные фреймворки переоборачивают чект в анчект. А то что ситуация неисключительная - согласен. А с другой стороны как можно починить, то что в базе нет еды с таким айди и не получается удалить. Что можно сделать в кэтче? Еще чект искл не совместимы с функциональным программированием. http://literatejava.com/exceptions/checked-exceptions-javas-biggest-mistake/ (edited)
+
+
+Viktor [1:59 PM] 
+@Katherine Buzatu не что не мешает вам поймать unchecked исключение и обработать его. Просто это не обязательно.
+
+
+Katherine Buzatu [2:08 PM] 
+@Viktor мешает то, что слой выше даже не догадывается обо всех `unchecked`, которые могут ему прилететь.
+
+
+Viktor [2:09 PM] 
+@Katherine Buzatuесли это важное исключение влияющее на работы вы можете объявить его в блоке throws и описать в доках.
+
+
+grigory.kislin [2:10 PM] 
+@Katherine Buzatu я голосовал за то, что null в репозитории удобнее
+а в сервисе уже бизнес логика- ексепшен. в конце проекта будем их централизовано обрабатывать
+по поводу checked-unckeked чтото не могу найти ссылок, вроде гдето были, тк вопрос частый
+чекад были признаны ошибкой и чуть ли не хотят из java удалить
+ссылки поищу (edited)
+
+
+Katherine Buzatu [2:11 PM] 
+> в конце проекта будем их централизовано обрабатывать.
+Ну, это уже другой компот. Буду ждать.
+
+
+grigory.kislin [2:22 PM] 
+вопрос в 2м уроке:
+https://stackoverflow.com/questions/6115896/java-checked-vs-unchecked-exception-explanation
+http://blog.takipi.com/ignore-checked-exceptions-all-the-cool-devs-are-doing-it-based-on-600000-java-projects/
+stackoverflow.com
+Java: checked vs unchecked exception explanation
+I have read multiple posts on StackOverFlow about checked vs unchecked exceptions. I'm honestly still not quite sure how to use them properly. Joshua Bloch in "Effective Java" said that Use c...
+ 
+ Takipi Blog
+Ignore Checked Exceptions, All the Cool Devs Are Doing It - Based on 600,000 Java Projects | Takipi Blog
+An overview of exception handling in over 600,000 Java projects on Github and Sourceforge (59 kB)
+Jun 21st, 2016 at 6:59 PM
