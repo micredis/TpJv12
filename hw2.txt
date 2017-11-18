@@ -4881,3 +4881,7 @@ Viktor [10:13 PM]
 Shalukhau Dzmitry
 @Viktor Это понятно. Но есть SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);, которая говорит, а просканируй класс текущего объекта и внедри Authowired dependency зависимости в текущий объект
 Posted in #hw2Today at 9:15 PM
+
+
+grigory.kislin [9:11 PM] 
+SpringBeanAutowiringSupport находится в spring-web. если подключить, то можно заюзать

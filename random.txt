@@ -2087,3 +2087,10 @@ assertj - AssertJ documentation
 
 Viktor [10:14 PM] 
 понял :smiley:
+
+
+chimax [6:25 PM] 
+http://www.opennet.ru/opennews/art.shtml?num=47568
+"Включено по умолчанию свойство dom.forms.datetime, позволяющее использовать в формах поля ввода даты и времени ("input type=date" и "input type=time");"
+opennet.ru
+OpenNews: Выпуск Firefox 57 с многопоточным CSS-движком и новым оформлением (26 kB)

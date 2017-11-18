@@ -2987,3 +2987,51 @@ Contribute to topjava development by creating an account on GitHub.
 
 danissimo [8:55 PM] 
 Спасибо, @MetalBro!
+
+
+danissimo [2:06 PM] 
+И снова про exception vs. special returning values, будь то null или false, или -1. Спец. значения - это C/C++. Уже проходили. Computer Science придумала механизм exceptions именно по этой причине. Следовательно, and I stay ground on it, никаких спец. значений - только exceptions. Другой вопрос, какие: checked или unchecked. (edited)
+
+
+[2:07] 
+По метериалам http://literatejava.com/exceptions/checked-exceptions-javas-biggest-mistake/
+
+Anton K. [5:37 PM] 
+Ребят, посоветуйте какую-нибудь библиотеку, чтобы написать десктопное приложение (нужны фреймы кнопки)
+
+
+Дима Жуков 
+[5:38 PM] 
+Swing старый добрый)
+
+
+[5:38] 
+Он входит в джаву
+
+
+russell [5:38 PM] 
+AWT -> SWING -> JAVA FX
+
+
+Shalukhau Dzmitry [5:47 PM] 
+@russell ... -> Delphi :slightly_smiling_face:
+
+
+[5:49] 
+(я не очень люблю Java для десктопа. Возможно просто я не умею ее готовить)
+
+
+Дима Жуков [5:52 PM] 
+На еклипс вроде есть плагин для свинга. Компоненты чтобы можно было перетаскивать. На идею может тоже. Может облегчить наверное
+
+
+[5:52] 
+Типо как в дэлфи
+
+
+Viktor [6:01 PM] 
+@Anton K. бери JavaFx для неё есть sceneBuilder.  ну и плюс идет отделение вида от кода, сам UI генерируется в fxml файл, в котором можно описать action на пару десятков случаев. + все элементы приходят через инъекции в контроллер
+
+
+grigory.kislin [9:04 PM] 
+JavaFX. если это интерфейс приложения типа eclipce- то его SWT
