@@ -686,3 +686,51 @@ new messages
 uploaded this image: Вывод main.png
 Антон Кляшторный [5:12 PM] 
 Починеный main такой должен быть?
+
+
+ujwegh [8:21 PM] 
+возможно глупый вопрос, почему тест создаем из MealService, а не MealServiceImpl?
+
+
+anpotashev [8:23 PM] 
+Может быть несколько реализаций интерфейса и все они должны проходить эти тесты
+
+
+
+[8:24] 
+Ты можешь с помощью, например аннотаций, выбрать другую реализацию.
+
+
+ujwegh [8:24 PM] 
+понятно) спасибо
+
+
+russell [8:25 PM] 
+@anpotashev какая аннотация?
+
+
+[8:25] 
+profile
+
+
+Dmitry Makarov [8:25 PM] 
+Qualifier
+
+
+anpotashev [8:25 PM] 
+Она
+
+
+russell [8:25 PM] 
+там можно через @Profile включать
+
+
+[8:26] 
+например одна для тестов, другая для продакшена
+
+
+anpotashev [8:26 PM] 
+Profile не пользовался. Пойду почитаю что за зверь.
+
+Shalukhau Dzmitry [8:48 PM] 
+Добрался до HW3 - так много видео :slightly_smiling_face:
