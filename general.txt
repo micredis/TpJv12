@@ -3169,3 +3169,15 @@ Follows two TDD projects from start to finish, illustrating techniques programme
 
 [1:09] 
 вот автор TDD
+
+
+1:10] 
+https://www.youtube.com/watch?v=KtHQGs3zFAM
+YouTube toalexsmail
+Jim Coplien and Bob Martin Debate TDD
+ 
+
+
+Дима Жуков 
+[1:11 PM] 
+Ну врядли придешь проект и любой подход избирай... Просто интересно как в основном бывает. Что то мне подсказывает что именно так как говорит @vch часто и происходит
