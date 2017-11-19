@@ -507,3 +507,182 @@ grigory.kislin [9:31 PM]
 
 Katherine Buzatu [12:01 PM] 
 @grigory.kislin, можно пару слов в поддержку п. 1 раздела `Проверка по HW03 (сначала сделайте самостоятельно!)`? _(не цитирую - для тех, кто еще не сделал)_
+
+
+vsimonov [7:55 PM] 
+у меня 9.4 заработала (edited)
+
+Valery [7:58 PM] 
+база встала, но проблемы с админкой...
+
+Дима Жуков [8:00 PM] 
+@vsimonov да
+
+Viktor [8:11 PM] 
+у меня уже стоял @vsimonov пишите, что конкретно не встает (ps тыжпрограммист) :smiley: (edited)
+
+Valery [8:19 PM] 
+в базе уже есть юзер с именем user. его надо сбросить?
+
+Viktor [8:29 PM] 
+зачем?
+
+russell [8:30 PM] 
+Подскажите LocalDateTime чем заменяли в сиквеле? Timestamp?
+
+Viktor [8:30 PM] 
+а базе это в таблице users? или в пользователях postgre?
+
+Valery [8:31 PM] 
+в пользователях postgre
+
+[8:31] 
+я не знаю его пароль. как я могу его использовать в проекте?
+
+[8:32] 
+пришлось пересоздать...
+
+Viktor [8:34 PM] 
+@Valery пока проект не настоящий, можете создать себе пользователя root root и не задумываться :smiley: у меня и постгресе и mysql такой есть
+
+Dmitry Neustupov [8:38 PM] 
+Товарищи, подскажите, в чём может быть проблема? Установил постгрес, создал базу topjava, создал юзера user с паролем password, в идее подключил постгрес, скачал и установил драйвер, но при попытке коннекта к базе пишет - 28000 для роли user вход запрещён. Пароли проверял, менял. Безрезультатно (
+
+vsimonov [8:39 PM] 
+@Viktor на винду postgres ставил?
+1 reply 20 hours ago View thread
+MetalBro [8:39 PM] 
+в pgAdmin привилегии надо выставить
+
+[8:39] 
+для user
+
+Viktor [8:39 PM] 
+@vsimonov да
+
+Dmitry Neustupov [8:43 PM] 
+@MetalBro Спасибо! ) Не думал, что нужно ручками возможность логиниться выставлять для юзера )
+
+vsimonov [8:45 PM] 
+версия?
+Sergeev Viktor
+@vsimonov да
+Posted in #hw3Yesterday at 8:39 PM
+
+Katherine Buzatu [8:47 PM] 
+У меня на винде. Версия 10 без проблем.
+
+Viktor [8:49 PM] 
+@vsimonov 9.6
+
+Valery [8:54 PM] 
+pgAdmin III говорит, что версия базы не поддерживаемая...
+
+[8:54] 
+как посмотреть версию postgre?
+
+vsimonov [8:56 PM] 
+расскажи как ставил
+Sergeev Viktor
+@vsimonov 9.6
+Posted in #hw3Yesterday at 8:49 PM
+
+Viktor [8:59 PM] 
+@vsimonovты пиши, что не получилось, я устанавливал несколько мес назад
+
+[8:59] 
+@Valery скачай админку 4 версии
+
+[9:00] 
+@Valery WARNING: pgAdmin 3 is no longer supported. It is recommended that you download pgAdmin 4 instead.
+
+[9:00] 
+@Valery https://www.pgadmin.org/download/
+pgadmin.org
+Download
+pgAdmin Website
+
+Valery [9:00 PM] 
+4 только веб версию нашел
+
+vch [9:01 PM] 
+@Viktor А 4 версия нормально работает?
+У нас один человек скачал 4 версию. После 1 дня работы цензурных слов в его лексиконе уже не было.
+
+Viktor [9:02 PM] 
+@vch у меня запросы не большие, мне там всего то надо было создать БД topjava, дальше все готовыми скриптами из IDEA
+
+Valery [9:03 PM] 
+если только создать БД, то и консоли достаточно.
+
+Viktor [9:10 PM] 
+ага
+
+vsimonov [9:13 PM] 
+Как ты ставила расскажи
+Katherine Buzatu
+У меня на винде. Версия 10 без проблем.
+From a thread in #hw3Yesterday at 8:47 PM
+1 reply 20 hours ago View thread
+grigory.kislin [9:31 PM] 
+слово АНОЛОГИЧНО в уроке заменил
+у меня старенький postgres 9.5, по новым не подскажу
+@Katherine Buzatu
+> зачем ROW_MAPPER static? У нас же все равно синглтон
+(в смысле JdbcUserRepositoryImpl в контесксте sprig как я понял)
+я делаю скорее по логике... если например будет 2 контекста спринг- будет это static или нет
+но вообще, если найдешь на эту тему ссылки, было бы хорошо.. 
+константы то по любому статик делают, а тут могут быть варианты.. (edited)
+
+
+----- Today November 19th, 2017 -----
+Katherine Buzatu [12:01 PM] 
+@grigory.kislin, можно пару слов в поддержку п. 1 раздела `Проверка по HW03 (сначала сделайте самостоятельно!)`? _(не цитирую - для тех, кто еще не сделал)_
+
+grigory.kislin [2:02 PM] 
+> Проверка по HW03 (сначала сделайте самостоятельно!)
+ну, там могут быть явные подсказки.. если наступите на грабли- лучше запомнится
+пользы думаю больше будет, если сначала сделать самому (крайний случай- когда только мои решения смотреть- тогда польза минимальна)
+
+Katherine Buzatu [2:33 PM] 
+Понятно. Ждем часа Х для обсуждения.
+
+vsimonov [3:22 PM] 
+added and commented on this Plain Text snippet
+1 Понять, почему перестали работать SpringMain, InMemoryAdminRestControllerTest, InMemoryAdminRestControllerSpringTest
+1 Comment
+тут нужно только понять или ещё попробовать починить?
+
+chimax [3:23 PM] 
+понять и ~простить~ починить)
+
+ujwegh [3:44 PM] 
+"Порядок таблиц при DROP и DELETE важен, если они связаны fk."  что такое fk?
+
+Дима Жуков 
+[3:46 PM] 
+Foreign key. Внешний ключ. Таблицы связывают
+
+
+philip.goldm [3:54 PM] 
+>6 Предложить решение, как почнинить SpringMain, InMemory*Test. InMemory*Test должны использовать реализацию в памяти
+Мне одному кажется `Предложить решение` двусмысленно написано?  Наверное лучше написать, починить ...?
+
+
+chimax [3:54 PM] 
+не забывай про бонусы, возможно, что это заэвуалированное приглашение их получить)
+1 reply Today at 3:56 PM View thread
+
+Дима Жуков [3:55 PM] 
+Проверка дз есть?
+ 3 replies Last reply today at 3:57 PM View thread
+
+ujwegh [3:59 PM] 
+Дима Жуков спасибо
+
+
+new messages
+Антон Кляшторный [5:12 PM] 
+uploaded this image: Вывод main.png
+Антон Кляшторный [5:12 PM] 
+Починеный main такой должен быть?

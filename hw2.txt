@@ -4885,3 +4885,8 @@ Posted in #hw2Today at 9:15 PM
 
 grigory.kislin [9:11 PM] 
 SpringBeanAutowiringSupport находится в spring-web. если подключить, то можно заюзать
+
+
+Shalukhau Dzmitry [4:12 PM] 
+Есть еще вопрос, который остался после HW2:
+Есть фильтры(для стрима) в apache commons, есть фильтры в Java 8. Они не совместимы (реализуют разный интерфейс. Есть ли возможность (адаптер какой либо), чтобы преобразовать apache commons стримы в java или наоборот
