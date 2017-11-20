@@ -734,3 +734,477 @@ Profile не пользовался. Пойду почитаю что за зв�
 
 Shalukhau Dzmitry [8:48 PM] 
 Добрался до HW3 - так много видео :slightly_smiling_face:
+
+
+chimax [11:39 PM] 
+Кто заглядывал в код реализации метода ConcurrentHashMap.computeIfPresent?
+
+
+[11:39] 
+такое.... воообще человек может написать?
+
+
+
+
+----- Today November 20th, 2017 -----
+Ivan [8:58 AM] 
+Подскажите ни у кого не возникало проблем с обновлением записи, в частности с изменением времени?
+
+
+Few [9:04 AM] 
+Не вполне конкретный вопрос :slightly_smiling_face:
+
+
+Shalukhau Dzmitry [9:07 AM] 
+@chimax Ну пока что AI не умеет код сам писать...
+
+
+vsimonov [9:18 AM] 
+uploaded and commented on this image: autowired.jpg
+  1 Comment
+Гугл не помагает, притом дома всё работало :disappointed:
+
+
+
+Few
+[9:20 AM] 
+Spring-db.xml скорее всего в настройках контекста не прописан (edited)
+
+
+vsimonov [9:21 AM] 
+а может потому что самой базы нет? :slightly_smiling_face:
+Fedor Vershinin
+Spring-db.xml скорее всего в настройках контекста не прописан
+Posted in #hw3Today at 9:20 AM
+
+
+Ivan [9:21 AM] 
+Есть таблица (...dateTime TIMESTAMP DEFAULT now() NOT NULL,...), с которой работают все наши CRUD методы, кроме update,
+(namedParameterJdbcTemplate.update(
+                  "UPDATE meals SET datetime=:dateTime, description=:description,  calories=:calories " +
+                          "WHERE id=:id AND userid=:userId", source)
+
+при этом "UPDATE meals SET description=:description, calories=:calories " +
+"WHERE id=:id AND userid=:userId - работает прекрасно, правда дату не меняет:grimacing:
+
+
+Few [9:21 AM] 
+Ха
+
+
+vsimonov [9:27 AM] 
+а не ошибка таже
+
+Few [9:27 AM] 
+Timestamp.valueOf(localDateTime);
+
+
+vsimonov [9:27 AM] 
+бин есть
+
+
+vsimonov [9:28 AM] 
+added this Plain Text snippet
+<bean id="dataSource"
+     class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="org.postgresql.Driver"/>
+    <property name="url" value="${database.url}"/>
+    <property name="username" value="${database.username}"/>
+    <property name="password" value="${database.password}"/>
+  </bean>
+Add Comment Collapse
+
+
+
+vsimonov [9:29 AM] 
+added this Plain Text snippet: полный вывод ошибки
+Exception in thread "main" org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+10:26:13.201 WARN o.s.context.support.AbstractApplicationContext.refresh:551 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:749)
+  at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:189)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1193)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1095)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:83)
+  at ru.javawebinar.topjava.SpringMain.main(SpringMain.java:20)
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+  at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:835)
+  at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:741)
+  ... 15 more
+Add Comment Collapse
+
+
+
+Rostish [9:39 AM] 
+я чет тоже подзавис на понимании почему не работает
+
+[9:39] 
+уже 2 часа гуглю
+
+[9:39] 
+на спринге прочитал все варианты этой ошибке в туториале
+
+
+Few
+[9:39 AM] 
+@vsimonov А запускаешь что? тест, SpringMain или сервлет на томкате?
+
+Rostish [9:39 AM] 
+но они чет не подходят сюда
+
+Few
+[9:39 AM] 
+в каждом случае в своем месте контекст настраивается
+
+Rostish [9:40 AM] 
+это часть дз 1 Понять, почему перестали работать SpringMain, InMemoryAdminRestControllerTest, InMemoryAdminRestControllerSpringTest
+
+
+Few
+[9:40 AM] 
+чтобы понимать куда смотреть дальше
+
+
+Rostish [9:40 AM] 
+у всех не работает по одной и той же причине
+
+
+russell [9:40 AM] 
+@Rostish ответ вообщем то есть в видео, только Григорий делает в обратную сторону
+
+Few [9:40 AM] 
+ну я не знаю, стоит ли сюда писать ответ?
+
+
+Rostish [9:41 AM] 
+нет, ты можешь сказать где почитать
+
+[9:41] 
+так тоже пойдет
+
+Few
+[9:42 AM] 
+да в общем то надо смотреть в сторону того, какие бины при текущей конфигурации в контекст попадают
+
+
+Ivan [9:42 AM] 
+@Few Спасибо большое, всё заработало (не знал, что TimeStamp есть в Джаве). Здоровенный + в карму!
+
+
+vsimonov [9:44 AM] 
+SpringMain
+Fedor Vershinin
+@vsimonov А запускаешь что? тест, SpringMain или сервлет на томкате?
+Posted in #hw3Today at 9:39 AM
+
+
+[9:45] 
+дома у меня всё проходило,ну ок
+
+Katherine Buzatu [9:51 AM] 
+Копай на тему того, чего ему не хватает, откуда оно берется и откуда спринг должен знать, что у тебя все это уже есть.
+
+
+vsimonov [9:52 AM] 
+Спасибо Кэп!
+Katherine Buzatu
+Копай на тему того, чего ему не хватает, откуда оно берется и откуда спринг должен знать, что у тебя все это уже есть.
+Thread in #hw3Today at 9:51 AM
+ 3 replies Last reply today at 10:21 AM View thread
+
+Rostish [10:38 AM] 
+Я вот не могу только понять, у нас в текущей реализации с контролера при создании еды пробрасывается юзер ид, но в бд мы юзер ид для таблицы meal не делаем, его надо удалить теперь из контролера? Или его надо все-таки пробрасывать,а я неправильно понял часть дз, где написано *(userId в класс Meal вставлять НЕ надо (для UI и REST это лишние данные, userId это id залогиненного пользователя - в класс ненадо, в бд надо)*, так как без этого ид у нас не будет отношейний между таблицами еды и пользователей
+и бд должен быть и idmeal и iduser
+
+
+Сергей Матвеев [10:39 AM] 
+какую версию PostgreSQL  ставить?
+
+Rostish [10:39 AM] 
+я поставил 10, все работает
+
+Сергей Матвеев [10:39 AM] 
+ок) попробуем повторить)
+
+Few 
+[10:40 AM] 
+@Rostish userId передается в методы и хранится в базе, но в Meal entity он не нужен
+
+Rostish [10:40 AM] 
+это очевидно)
+
+
+[10:41] 
+я спрашиваю в таблице meal
+
+
+[10:41] 
+нужен userId
+
+[10:41] 
+или нет?
+
+Few [10:43 AM] 
+ну а иначе как определить чья еда?
+
+Rostish [10:44 AM] 
+логично, я просто прочитал дз и сидел в раздумьях имеется в виду только класс приложения или + бд, второе вызывало недоумение
+
+
+Few [10:44 AM] 
+можно конечно еще запилить таблицу дополнительную с полями mealId и userId, но это уже перебор по-моему, каждый запрос с JOINами будет
+
+
+Rostish [10:46 AM] 
+ну сейчас тоже джоинить можно, если ты хочешь и питание посмотреть и информацию по пользователю)))
+
+
+Few [10:46 AM] 
+да, но пока не требуется )
+
+
+[10:49] 
+кстати, я уже выше задавал вопрос, но никто не ответил:
+
+[10:49] 
+Как при текущей реализации JdbcUserRepositoryImpl информация о ролях пользователя будет в базу попадать?
+
+[10:50] 
+или мы это позже будем прикручивать?
+
+
+Антон Кляшторный [10:58 AM] 
+может логикой в таблицах базы? https://www.postgresql.org/docs/9.2/static/ddl-constraints.html
+
+
+vsimonov [10:58 AM] 
+ещё одну реализацию запилим, потом. (edited)
+
+Rostish [11:02 AM] 
+Чет при запуске кидает java.lang.NoSuchMethodException: ru.javawebinar.topjava.model.Meal.<init>()
+
+
+[11:03] 
+сталкивался кто-то?
+
+[11:03] 
+это при попытке  getall в mealservlet
+
+
+Few 
+[11:03 AM] 
+ну так в эксепшене есть указание на строку которая вызвала его
+
+[11:03] 
+а, ок
+
+[11:04] 
+ну всю цепочку надо смотреть как запрос по слоям движется
+
+[11:04] 
+весь стектрейс выложи
+
+Rostish [11:05 AM] 
+Root Cause
+
+java.lang.NoSuchMethodException: ru.javawebinar.topjava.model.Meal.<init>()
+    java.base/java.lang.Class.getConstructor0(Class.java:3322)
+    java.base/java.lang.Class.getDeclaredConstructor(Class.java:2510)
+    org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:102)
+    org.springframework.jdbc.core.BeanPropertyRowMapper.mapRow(BeanPropertyRowMapper.java:277)
+    org.springframework.jdbc.core.RowMapperResultSetExtractor.extractData(RowMapperResultSetExtractor.java:93)
+    org.springframework.jdbc.core.RowMapperResultSetExtractor.extractData(RowMapperResultSetExtractor.java:60)
+    org.springframework.jdbc.core.JdbcTemplate$1QueryStatementCallback.doInStatement(JdbcTemplate.java:463)
+    org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:408)
+    org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:474)
+    org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:484)
+    ru.javawebinar.topjava.repository.jdbc.JdbcMealRepositoryImpl.getAll(JdbcMealRepositoryImpl.java:71)
+    ru.javawebinar.topjava.service.MealServiceImpl.getAll(MealServiceImpl.java:40)
+    ru.javawebinar.topjava.web.meal.MealRestController.getAll(MealRestController.java:47)
+    ru.javawebinar.topjava.web.MealServlet.doGet(MealServlet.java:88)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+    org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+
+
+[11:05] 
+конструктора вроде как ему не хватает
+
+[11:05] 
+в meal
+
+Few [11:05 AM] 
+а есть без аргументов конструктор?
+
+
+[11:06] 
+нужен для корректной работы с spring jdbc
+
+Rostish [11:07 AM] 
+у нас там файнал переменные он без аргументов не дает создать
+
+[11:07] 
+потому что их проинициилизировать нужно
+
+Few [11:08 AM] 
+ну да, убираем final
+
+[11:08] 
+смотри на реализацию User
+
+Rostish [11:08 AM] 
+о, точно
+
+[11:08] 
+а я голову ломаю
+
+[11:08] 
+спасибо
+
+
+[11:08] 
+а зачем мы до этого файналами пользовались?
+
+[11:09] 
+потому что в мапе как-то после созданния можно просетить?
+
+
+[11:09] 
+пока у нас mock был
+
+Few 
+[11:12 AM] 
+ну всегда стоит наверное самый безопасный вариант использовать, на данный момент не можем уже так, поэтому снижаем уровень )
+
+
+Дима Жуков [11:13 AM] 
+Ни у кого проблем с зависимостью postgres не возникало? Не хочет загружать. Нифига не пойму из за чего
+
+Сергей Матвеев [11:14 AM] 
+в PostgreSQL юзеру каких прав добавить?
+
+Few [11:15 AM] 
+было что-то, не могу вспомнить как решил (edited)
+
+
+anpotashev [11:16 AM] 
+Право login
+
+
+[11:16] 
+Остальные роли раздаешь на бд topjava
+
+Дима Жуков
+[11:17 AM] 
+Я понимаю почему mysql популярнее этого ..... Зла не хватает на этот постгрес
+
+
+anpotashev [11:18 AM] 
+Это еще что :slightly_smiling_face: Было удовольствие работы с ingres
+
+
+Сергей Матвеев [11:21 AM] 
+схему в идеи не показывает от посгреса (edited)
+
+Few [11:23 AM] 
+@Дима Жуков ты когда Data Source в Idea добавляешь он тебе в этом окне предлагает драйвер скачать
+
+[11:23] 
+я там нажимал и все ок
+
+Дима Жуков [11:30 AM] 
+Ё моё. Я тоже так сделал и добавил в помку зависимость. Как оказалось он скачал другой версии jar и типо была не совместимость... (edited)
+
+
+Few 
+[11:31 AM] 
+меня видимо пронесло, совпали версии
+
+
+Rostish [12:07 PM] 
+в каком формате в таблице meal должно храниться dateTime?
+
+
+[12:07] 
+TIMESTAMP?
+
+[12:07] 
+2015-05-31 12:00:00.000000 как-то так?
+
+
+[12:08] 
+потому что с таким форматом, при попытке сделать get all вылетает:
+java.lang.NullPointerException
+    ru.javawebinar.topjava.model.Meal.getDate(Meal.java:42)
+    java.base/java.util.stream.Collectors.lambda$groupingBy$49(Collectors.java:1075)
+    java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169)
+    java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1492)
+    java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+    java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+    java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+    java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+    java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:511)
+    ru.javawebinar.topjava.util.MealsUtil.getFilteredWithExceeded(MealsUtil.java:36)
+    ru.javawebinar.topjava.util.MealsUtil.getWithExceeded(MealsUtil.java:31)
+    ru.javawebinar.topjava.web.meal.MealRestController.getAll(MealRestController.java:47)
+    ru.javawebinar.topjava.web.MealServlet.doGet(MealServlet.java:88)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+    org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+
+
+Few [12:11 PM] 
+а столбец у тебя помечен NOT NULL, может у тебя туда залетело без даты?
+
+Rostish [12:12 PM] 
+да стоит NOT_NULL
+
+Few [12:14 PM] 
+с подчеркиванием?
+
+
+[12:14] 
+date_time        TIMESTAMP DEFAULT now()  NOT NULL,
+
+Rostish [12:15 PM] 
+нет просто dateTime
+
+
+[12:15] 
+CREATE TABLE meals
+(
+ meal_id INTEGER PRIMARY KEY NOT NULL,
+ user_id INTEGER NOT NULL,
+ dateTime TIMESTAMP NOT NULL,
+ description VARCHAR NOT NULL,
+ calories INTEGER NOT NULL,
+ CONSTRAINT meals_dateTime_unique_idx UNIQUE (dateTime,user_id)
+
+);
+
+
+Few [12:15 PM] 
+кладу в базу Timestamp.valueOf(localDateTime)
+
+
+[12:16] 
+достаю через BeanPropertyRowMapper
+
+
+[12:16] 
+работает, NPE не было
+покажи просто метож геталл
+в репозитории
+в личку
