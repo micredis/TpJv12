@@ -2094,3 +2094,63 @@ http://www.opennet.ru/opennews/art.shtml?num=47568
 "Включено по умолчанию свойство dom.forms.datetime, позволяющее использовать в формах поля ввода даты и времени ("input type=date" и "input type=time");"
 opennet.ru
 OpenNews: Выпуск Firefox 57 с многопоточным CSS-движком и новым оформлением (26 kB)
+
+
+astronarh [1:33 PM] 
+Ни кто не обращал внимание как немного кривовато генерится html содержимое страницы, в частности в <c:forEach> лишние переносы, не кто вопрос не изучал, почему так, и как исправить? (edited)
+
+
+danissimo
+[3:48 PM] 
+@astronarh это нормально для JSP. не обращай внимания. попробуй поиграть свойством `trim-directive-whitespaces` в `web.xml`:
+```    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+        </jsp-property-group>
+    </jsp-config>
+```
+(edited)
+
+
+astronarh 
+[3:49 PM] 
+@danissimo попробую, сенкс, я то думал может у меня что не так...
+
+
+danissimo [3:50 PM] 
+не-не, всё нормально, так и должно быть
+
+
+
+Sergey [7:14 PM] 
+Привет всем! Может кто-нибудь подсказать почему idea не хочет запускать нормально файл sql и выдает такое сообщение:
+
+
+Sergey [7:14 PM] 
+uploaded this image: image.png
+Add Comment
+
+
+
+Viktor [7:23 PM] 
+плагин database tools and sql включен?
+
+
+Sergey [8:15 PM] 
+uploaded and commented on this image: image.png
+1 Comment
+Да, включен
+
+
+
+Tanya [8:25 PM] 
+а зачем тебе maxcompute ?
+
+
+Sergey [8:38 PM] 
+Не знаю почему он был включен. Отключил, все нормально заработало, спасибо!
+
+
+Tanya [9:46 PM] 
+:slightly_smiling_face:

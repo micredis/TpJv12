@@ -1208,3 +1208,395 @@ Few [12:15 PM]
 покажи просто метож геталл
 в репозитории
 в личку
+
+
+Rostish [12:27 PM] 
+чтобы rowmapper сработал правильно, названия должны совпадать и в бд и классе?
+
+
+Few [12:33 PM] 
+кстати хороший вопрос
+
+
+fbochkarev [12:56 PM] 
+Что не так делаю, при тестовом подключение к postgres пишет "Connection to topjava@localhost failed.
+[08004] The server does not support SSL." Разобрался. (edited)
+
+
+Few 
+[12:59 PM] 
+у тебя на вкладке SSH/SSL при создании в Idea Data Source  флаг SSL не выбран?
+1 reply Today at 1:41 PM View thread
+
+Rostish [1:08 PM] 
+Люди, помогайте, не берет из БД время почему-то, уже дебаг врубил, картина такая
+
+
+Rostish [1:08 PM] 
+uploaded this image: Снимок экрана 2017-11-20 в 21.07.31.png
+Add Comment
+
+
+
+russell [1:14 PM] 
+@Rostish а ты сеттеры установил?
+
+
+[1:14] 
+сеттеры нужны
+
+Rostish [1:14 PM] 
+Few мне помог, мы сидели час наверно, он после картинки тоже про них подумал
+
+
+[1:15] 
+я смотрю id приходит, а сеттера на него нет, думал не в этом дело, а он сеттер через супер брал
+
+vsimonov [2:10 PM] 
+тоже на этом же моменте
+Ruslan Shakirov
+@Rostish а ты сеттеры установил?
+Posted in #hw3Today at 1:14 PM
+
+
+philip.goldm [3:36 PM] 
+@Rostish в Meal.class свойства должны быть одинаково именованы. Вся магия магия происходит здесь. 
+RowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
+
+>я смотрю id приходит, а сеттера на него нет, думал не в этом дело, а он сеттер через супер брал
+есть 
+
+Включи org.springframework.jdbc логи в logback.xml. Сможешь увидеть детали ошибки.
+
+
+Viktor [5:05 PM] 
+вопрос по первому пункту "1 Понять, почему перестали работать SpringMain, InMemoryAdminRestControllerTest, InMemoryAdminRestControllerSpringTest"
+Main сделал, а вот по InMemoryAdminRestControllerTest, надо сделать так чтобы для тестов бралась InMemoyUserRepository или переделать, чтобы брал сервис или чтобы брал интерфейс?
+
+
+Katherine Buzatu [5:06 PM] 
+InMemoyUserRepository только для тестов
+
+
+russell [5:07 PM] 
+все остально оставляешь меняешь только реализации jdbc на inMemory
+
+
+Viktor [5:09 PM] 
+@Katherine Buzatu так и вопрос про тестовый класс.  В идеале там надо поставить заглушку для сервиса и проверять только рест класс
+ 2 replies Last reply today at 5:13 PM View thread
+
+Few [5:10 PM] 
+Все по идее должно работать,  только репо ин мемори
+
+
+russell [5:10 PM] 
+в идеале надо мок через мокито делать для сервиса, это наверно на следующих занятиях
+
+
+Viktor [5:11 PM] 
+@russell т.е. надо тип репозитория с конкретного сменить на интерфейс? или на сервис?
+
+
+Few
+[5:12 PM] 
+я так понял что все должно остаться как до jdbc реализации
+
+Viktor [5:12 PM] 
+Тогда такой вопрос, кто смог закинуть тестовую кофигурацию в ресурсы тестов и вытащить оттуда? или это невозможно?
+
+
+Few
+[5:12 PM] 
+в контекст при тестировании inMemory должны попадать только InMemory репозитории
+
+
+[5:13] 
+да вроде работает именно так
+
+russell [5:14 PM] 
+тестовая конфигурация это тестовый контекст?
+
+
+
+Viktor [5:15 PM] 
+@Few на мой взгляд 2 варианта, создать ещё одну конфигурацию в classpath:resource (это не сложно), либо создать тестовую конфигурацию в test/resources и как-то её достать. По последнему ответа не нашел, обращение по полному пути в target е помогло
+
+
+[5:15] 
+либо использовать профили
+
+
+russell [5:15 PM] 
+а в чем проблема ее достать
+
+
+Viktor [5:16 PM] 
+не видна она, попробуй
+
+
+[5:16] 
+у меня пока не получилось
+
+russell [5:16 PM] 
+не видна из папки тест?
+
+
+Viktor [5:17 PM] 
+не видна в аннотации @ContexConfiguration
+
+
+russell [5:17 PM] 
+classpath:spring-test.xml
+
+
+[5:17] 
+все видно
+
+[5:17] 
+клади в ресурсы теста
+
+Viktor [5:17 PM] 
+это ту, что в classpath а ты создай в ресурсы test/resources
+
+
+Few
+[5:18 PM] 
+src\test\resources\spring
+
+[5:18] 
+видит норм
+
+
+
+russell [5:18 PM] 
+да это один класспас
+
+
+[5:18] 
+класспасс вообще один на всех
+
+
+Viktor [5:19 PM] 
+@russell только потом тестовые ресурсы и классы кладуться не в папку class куда ссылаеться classpath, а в папку test-classes
+
+
+[5:19] 
+ща иедю запущи скринами закидаю :smiley:
+
+Few
+[5:22 PM] 
+где вообще про classpath почитать? это серьезный пробел
+
+[5:22] 
+так чтоб понятно и не на 10 страниц
+
+Shalukhau Dzmitry [5:24 PM] 
+@Few +1
+
+Katherine Buzatu [5:24 PM] 
+classpath - это те места, где java ищет классы. :slightly_smiling_face:
+_если найдешь, кинь ссылку, пусть все знают_ (edited)
+
+
+russell [5:25 PM] 
+про джаву 9 не забудь там теперь класпасс не помойка для всего, они модули добавили.
+
+
+[5:25] 
+http://dev.solita.fi/2015/10/15/goodbye-glasspath-java-9.html
+/dev/solita
+Goodbye classpath - welcome Java 9
+Java 9 module system is going to kick out the old classpath
+
+
+Few
+[5:26 PM] 
+гудбай это сильно, я еще и поздороваться не успел толком )
+
+
+Viktor [5:27 PM] 
+"Твоюж картошку" :smiley: я назвал конфиг sprint-test-config, а искал spring-test-config :smiley: (edited)
+
+
+[5:27] 
+bpdtyz.cm pf ie[th :smiley:
+
+Few [5:28 PM] 
+я так попался с подчеркиванием вместо дефиса
+
+
+Katherine Buzatu [5:28 PM] 
+а автодополнение?.. как раз для склеротиков. спасает. (edited)
+
+
+
+Viktor [5:29 PM] 
+в аннотации не сработало
+
+
+[5:30] 
+тут не склероз, тут косоглазие :smiley: конфиг был открыт в соседней веладке
+
+Антон Кляшторный [5:53 PM] 
+подскажите какой sql запрос в методе public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) JdbcMealRepositoryImpl.class?
+
+
+russell [5:54 PM] 
+between ? and ?
+1 reply Today at 7:00 PM View thread
+
+grigory.kislin [6:11 PM] 
+Привет!
+замечания про fk и "предложить решение" в уроке поправил
+класспасс из википедии, но мне кажется лучше не читать, чтобы не запутаться:)
+https://en.wikipedia.org/wiki/Classpath_(Java)
+место окуда java классы грузит и реcурсы через ClassLoader.getResource()
+Ресурсы и туда кладет maven при сборке (из `src/main/resources` и для тестов 
+`src/test/resources`) как и скомпилированные классы.
+те если есть какой то конкретный вопрос- то задавайте
+Wikipedia
+Classpath (Java)
+Classpath is a parameter in the Java Virtual Machine or the Java compiler that specifies the location of user-defined classes and packages. The parameter may be set either on the command-line, or through an environment variable.
+
+
+Few [6:14 PM] 
+Насколько я понимаю, есть четко прописанная структура каталогов для расположения java, xml, jsp, html, properties и т.д. в проекте webapp. Хотелось бы почитать об этом, т.к. на данный момент в голове каша если честно
+
+
+Viktor [6:17 PM] 
+@Few для сборки важна только архитектура мавена, остальное это архитектура проекта и тут думаю выбирают любую архитекутуру
+
+
+Few [6:18 PM] 
+т.е. мавен ждет четкого расположения, но где это настраивается?
+
+
+Viktor [6:18 PM] 
+либо выбираете архитип, либо сами делаете каталоги
+
+
+[6:18] 
+https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html
+
+[6:19] 
+тут важно понять зачем это нужно. 
+Мавен не ИИ, чтобы собрать проект он должен положить все классы в итоговый архив, а для этого ему надо их найти.
+Искать он будет только в определенных пакетах
+
+
+Few
+[6:20 PM] 
+хотелось бы увидеть где это настроено, так стало бы понятнее
+
+
+[6:20] 
+или это глубоко в мавене и не меняется?
+
+
+Viktor [6:21 PM] 
+думаю сам поиск прописан в мавене, менять если и возможно, то нет особого смысла
+
+grigory.kislin [6:21 PM] 
+архетип- это при старте проекта уже создается заготовка
+> Introduction to the Standard Directory Layout
+:+1:
+без нужды менять не надо. настраивается в maven-resources-plugin (ест спец теги resource и test-resource)
+меняем в проекте  masterjava, в нашем не надо
+
+
+Few
+[6:23 PM] 
+@Viktor Спасибо за ссылку
+
+
+[6:23] 
+стало понятнее
+
+grigory.kislin [6:24 PM] 
+у нас кстати там есть уже logback-test.xml
+
+
+Few [6:28 PM] 
+Вот еще попутно нашел:
+
+
+[6:29] 
+https://tomcat.apache.org/tomcat-7.0-doc/appdev/deployment.html
+
+grigory.kislin [6:32 PM] 
+добавил ссылки на  standard-directory-layout и maven-resources-plugin  в урок после Apply 3_12_test_logging.patch
+
+
+Few [7:01 PM] 
+@grigory.kislin Спасибо
+
+Дима Жуков 
+[7:34 PM] 
+ребята, у меня тест update вытаскивает еду у юзера, update эту еду у админа. 0 rows affected. Но тест проходит) это ж не правильно?)
+
+
+russell [7:35 PM] 
+а ты как ассерт делаешь?
+
+
+Дима Жуков [7:36 PM] 
+никак естественно) спасибо
+
+[7:37] 
+я подумал там и без него notFound выскочит
+
+
+russell [7:38 PM] 
+да без ассерта должен выскочить
+
+
+Дима Жуков [7:39 PM] 
+мне not found нужен...
+
+
+[7:40] 
+а у вас вылетает норм? или вы как тестите?
+
+
+Дима Жуков [7:47 PM] 
+разобрался, пригодились тесты заодно)) спасибо @russell
+
+
+Marina [8:46 PM] 
+Ребята, подскажите, как у вас JdbcMealRepository вытаскивает еду из базы? Сделала getAll по аналогии с JdbcUserRepository, но вытаскивает еду с ненулевым только id, остальные поля null, хотя в базе есть данные: Meal{id=1, dateTime=null, description='null', calories=0} . Что-то уже запуталась не могу найти в чем дело.
+
+
+russell [8:47 PM] 
+@Marina сеттеры в мил энтити не забудь добавить
+
+
+Marina [8:49 PM] 
+СПАСИБО!!!
+
+
+dyakoven [10:12 PM] 
+так как мы не храним userId в Meal, как проверить принадлежность Еды, которую достали из базы, конкретному юзеру?
+
+
+Valery [10:15 PM] 
+почему нельзя это сразу сделать когда достаешь еду из базы?
+
+
+[10:16] 
+SELECT * FROM meals WHERE id=? AND user_id=?
+
+dyakoven [10:18 PM] 
+логично) спасибо
+
+
+Viktor [10:23 PM] 
+Я в замешательстве... Таблица meals создается, но не в postgre клиенте её нет, ни в идее. Select к ней сделать могу..
+
+
+Viktor [10:23 PM] 
+uploaded this image: Pasted image at 2017-11-20, 11:25 PM
+
+
+Viktor [10:29 PM] 
+нашел, только вот сфигали она улетела в другую базу...
