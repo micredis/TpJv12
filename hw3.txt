@@ -1710,3 +1710,1177 @@ Dmitry Makarov [3:39 AM]
 
 Katherine Buzatu [7:10 AM] 
 @Viktor Мы задаем время от min до max, так что фактически фильтруем по дате
+
+
+Alexander _Gubanow [11:07 AM] 
+Как запретить создавать у одного и того-же юзера еду с одинаковой dateTime?(п.7)CREATE UNIQUE INDEX meals_unique_date_time_idx ON meals (date_time) не помогло.
+
+
+RNG [11:18 AM] 
+@Alexander _Gubanow нужно еще учесть user_id (edited)
+
+
+Marina [11:34 AM] 
+CONSTRAINT user_meals_idx UNIQUE (user_id, date_time)
+
+
+vsimonov [12:18 PM] 
+При запуске приложения в методе init
+springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+возникает ошибка 
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jdbcMealRepositoryImpl': Failed to introspect bean class [ru.javawebinar.topjava.repository.jdbc.JdbcMealRepositoryImpl] for lookup method metadata: could not find class that it depends on; nested exception is java.lang.NoClassDefFoundError: org/springframework/jdbc/core/RowMapper (edited)
+
+
+[12:19] 
+jdbcMealRepositoryImpl - помечен как @Repository
+
+Few 
+[12:20 PM] 
+он кажется RowMapper найти не может
+
+
+Marina [12:21 PM] 
+Ребят, а можно как то аннотацией заставить Autowired Service выбрать определенную реализацию репозитория или только через spring-context? Никак что-то не могу найти.
+
+
+Katherine Buzatu [12:21 PM] 
+@Marina Qualifier
+
+
+Few [12:21 PM] 
+аннотировать с квалификатором
+
+
+Ганичев Максим [12:24 PM] 
+Мне кажется в данном случае проще создать конфиг отдельный для тестов
+
+
+Marina [12:25 PM] 
+Qualifier насколько я поняла позволяет выбрать реализация самого service, а чтобы он внутри себя выбрал нужную реализацию репозитория, тоже как то через него? Просто service один и на mock реализацию и на jdbc, хотела в serviceTest заставить внутренний service брать jdbc репозиторий.
+
+
+Few 
+[12:26 PM] 
+ну в сервисе у тебя тоже Autowired аннотация есть
+
+[12:27] 
+но вообще Максим дело говорит
+
+Katherine Buzatu [12:27 PM] 
+Позволяет выбрать реализацию для любого интерфейса.
+
+vsimonov [12:27 PM] 
+<dependency>
+           <groupId>org.springframework</groupId>
+           <artifactId>spring-jdbc</artifactId>
+           <version>${spring.version}</version>
+       </dependency>
+Fedor Vershinin
+он кажется RowMapper найти не может
+Posted in #hw3Today at 12:20 PM
+
+
+[12:31] 
+всё подкачено
+
+
+vsimonov [12:47 PM] 
+@Katherine Buzatu Ваши советы пришлись бы к месту.
+
+
+Katherine Buzatu [12:58 PM] 
+Я бы для начала посмотрела, на месте ли библиотеки. Project structure - Libraries.
+
+vsimonov [1:01 PM] 
+uploaded this image: на месте
+Add Comment
+
+
+
+Few
+[1:02 PM] 
+а ты ексепшн весь выложил?
+
+
+Katherine Buzatu [1:03 PM] 
+Вот-вот...
+
+
+[1:04] 
+Как ROW_MAPPER инициализируется?
+
+
+vsimonov [1:49 PM] 
+щас
+
+
+vsimonov [1:50 PM] 
+added this Plain Text snippet: весь лог
+ype Exception Report
+Message Servlet.init() for servlet [mealServlet] threw exception
+Description The server encountered an unexpected condition that prevented it from fulfilling the request.
+Exception
+javax.servlet.ServletException: Servlet.init() for servlet [mealServlet] threw exception
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Root Cause
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jdbcMealRepositoryImpl': Failed to introspect bean class [ru.javawebinar.topjava.repository.jdbc.JdbcMealRepositoryImpl] for lookup method metadata: could not find class that it depends on; nested exception is java.lang.NoClassDefFoundError: org/springframework/jdbc/core/RowMapper
+  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:269)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1118)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1091)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Root Cause
+java.lang.NoClassDefFoundError: org/springframework/jdbc/core/RowMapper
+  java.lang.Class.getDeclaredMethods0(Native Method)
+  java.lang.Class.privateGetDeclaredMethods(Class.java:2701)
+  java.lang.Class.getDeclaredMethods(Class.java:1975)
+  org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:613)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:524)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:510)
+  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:247)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1118)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1091)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Root Cause
+java.lang.ClassNotFoundException: org.springframework.jdbc.core.RowMapper
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1269)
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1104)
+  java.lang.Class.getDeclaredMethods0(Native Method)
+  java.lang.Class.privateGetDeclaredMethods(Class.java:2701)
+  java.lang.Class.getDeclaredMethods(Class.java:1975)
+  org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:613)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:524)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:510)
+  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:247)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1118)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1091)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Note The full stack trace of the root cause is available in the server logs.
+Add Comment Collapse
+
+
+
+Marina [1:51 PM] 
+Спасибо, в итоге так и сделала.
+Ganichev Maxim
+Мне кажется в данном случае проще создать конфиг отдельный для тестов
+Posted in #hw3Today at 12:24 PM
+
+
+vsimonov [1:51 PM] 
+До ROW_MAPPER дело не доходит
+Katherine Buzatu
+Как ROW_MAPPER инициализируется?
+Posted in #hw3Today at 1:04 PM
+
+
+Few
+[1:53 PM] 
+томкат не находит RowMapper кажется
+
+
+vsimonov [1:55 PM] 
+Как это выяснить?
+Fedor Vershinin
+томкат не находит RowMapper кажется
+Posted in #hw3Today at 1:53 PM
+
+
+Few
+[1:59 PM] 
+у тебя в папке проекта topjava\target\topjava\WEB-INF\lib\ есть spring-jdbc jar?
+
+
+Katherine Buzatu [1:59 PM] 
+Сделай еще на всякий `mvn clean` - для чистоты экспериментов.
+
+
+vsimonov [2:00 PM] 
+делал раза 3
+Katherine Buzatu
+Сделай еще на всякий `mvn clean` - для чистоты экспериментов.
+Posted in #hw3Today at 1:59 PM
+
+
+[2:01] 
+там нет папки lib
+Fedor Vershinin
+у тебя в папке проекта topjava\target\topjava\WEB-INF\lib\ есть spring-jdbc jar?
+Posted in #hw3Today at 1:59 PM
+
+
+Few
+[2:01 PM] 
+в target нет lib?
+
+
+vsimonov [2:03 PM] 
+нету
+Fedor Vershinin
+в target нет lib?
+Posted in #hw3Today at 2:01 PM
+
+
+[2:03] 
+ща добавлю это в артифактах помоему
+
+Few [2:04 PM] 
+ты  war exploded деплоишь?
+
+
+vsimonov [2:04 PM] 
+да
+
+
+Few [2:06 PM] 
+просто у томката же наверное нет своих либ спринга (или есть?)
+
+
+[2:06] 
+так что ты должен ему все дать
+
+[2:08] 
+ты в мавене клин пробовал запускать?
+
+
+vsimonov [2:08 PM] 
+много раз запускал
+Fedor Vershinin
+ты в мавене клин пробовал запускать?
+Posted in #hw3Today at 2:08 PM
+
+
+[2:09] 
+нету
+Fedor Vershinin
+просто у томката же наверное нет своих либ спринга (или есть?)
+Posted in #hw3Today at 2:06 PM
+
+
+Katherine Buzatu [2:10 PM] 
+@vsimonov а если попробовать не запускать, а `maven clean` - `maven package`, что он вообще в target создает? Что пишет? Где lib? (edited)
+
+
+vsimonov [2:12 PM] 
+clean всё убивает
+
+
+[2:12] 
+package делает такое
+
+
+vsimonov [2:14 PM] 
+uploaded this image: maven.jpg
+Add Comment
+
+
+
+vsimonov [2:14 PM] 
+maven в консоль ошибки конечно срёт на тесты, я их не делал. не знаю критично ли это
+
+
+Viktor [2:15 PM] 
+@vsimonov что ты пвтаешься сделать? просто собрать?
+
+vsimonov [2:15 PM] 
+запустить проект
+Sergeev Viktor
+@vsimonov что ты пвтаешься сделать? просто собрать?
+Posted in #hw3Today at 2:15 PM
+
+
+vsimonov [2:16 PM] 
+added this Plain Text snippet
+15:11:06.446 WARN o.s.context.support.AbstractApplicationContext.refresh:551 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+[ERROR] Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.143 s <<< FAILURE! - in ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest
+[ERROR] ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest Time elapsed: 0.142 s <<< ERROR!
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest.beforeClass(InMemoryAdminRestControllerTest.java:23)
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest.beforeClass(InMemoryAdminRestControllerTest.java:23)
+[ERROR] ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest Time elapsed: 0.142 s <<< ERROR!
+java.lang.NullPointerException
+  at ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest.afterClass(InMemoryAdminRestControllerTest.java:30)
+[INFO] Running ru.javawebinar.topjava.web.InMemoryAdminRestControllerSpringTest
+15:11:06.533 WARN o.s.context.support.AbstractApplicationContext.refresh:551 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+15:11:06.535 ERROR o.springframework.test.context.TestContextManager.prepareTestInstance:234 - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@481ba2cf] to prepare test instance [ru.javawebinar.topjava.web.InMemoryAdminRestControllerSpringTest@46b61c56]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+  at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+  at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+  at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+  at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+  at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+  at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+  at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+  at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+  at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+  at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+  at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+  at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:369)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:275)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:239)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:160)
+  at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:373)
+  at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:334)
+  at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119)
+  at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:749)
+  at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:189)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1193)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1095)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+  at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+  at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+  at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+  ... 27 common frames omitted
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+  at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:835)
+  at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:741)
+  ... 45 common frames omitted
+15:11:06.567 WARN o.s.context.support.AbstractApplicationContext.refresh:551 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+15:11:06.568 ERROR o.springframework.test.context.TestContextManager.prepareTestInstance:234 - Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@481ba2cf] to prepare test instance [ru.javawebinar.topjava.web.InMemoryAdminRestControllerSpringTest@1c93f6e1]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+  at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+  at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+  at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+  at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+  at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+  at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+  at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+  at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+  at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+  at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+  at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+  at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:369)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:275)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:239)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:160)
+  at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:373)
+  at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:334)
+  at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119)
+  at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:749)
+  at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:189)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1193)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1095)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+  at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+  at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+  at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+  ... 27 common frames omitted
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+  at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+  at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:835)
+  at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:741)
+  ... 45 common frames omitted
+[ERROR] Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.107 s <<< FAILURE! - in ru.javawebinar.topjava.web.InMemoryAdminRestControllerSpringTest
+[ERROR] testDeleteNotFound(ru.javawebinar.topjava.web.InMemoryAdminRestControllerSpringTest) Time elapsed: 0.001 s <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+[ERROR] testDelete(ru.javawebinar.topjava.web.InMemoryAdminRestControllerSpringTest) Time elapsed: 0.001 s <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR]  InMemoryAdminRestControllerSpringTest.testDelete » IllegalState Failed to load...
+[ERROR]  InMemoryAdminRestControllerSpringTest.testDeleteNotFound » IllegalState Failed...
+[ERROR] ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest.ru.javawebinar.topjava.web.InMemoryAdminRestControllerTest
+[ERROR]  Run 1: InMemoryAdminRestControllerTest.beforeClass:23 » UnsatisfiedDependency Error c...
+[ERROR]  Run 2: InMemoryAdminRestControllerTest.afterClass:30 NullPointer
+[INFO] 
+[INFO] 
+[ERROR] Tests run: 19, Failures: 0, Errors: 3, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 9.754 s
+[INFO] Finished at: 2017-11-21T15:11:06+03:00
+[INFO] Final Memory: 19M/258M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.20.1:test (default-test) on project topjava: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /home/simonov/GIT/topjava/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date]-jvmRun[N].dump, [date].dumpstream and [date]-jvmRun[N].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Process finished with exit code 1
+Add Comment Collapse This snippet was truncated for display: see it in full.
+
+
+
+Viktor [2:16 PM] 
+в идее или томкате?
+
+
+Few [2:16 PM] 
+либы должны быть в \target\topjava\WEB-INF\lib
+
+
+vsimonov [2:18 PM] 
+идея
+Sergeev Viktor
+в идее или томкате?
+Posted in #hw3Today at 2:16 PM
+
+
+[2:19] 
+сейчас либы создались
+Fedor Vershinin
+либы должны быть в \target\topjava\WEB-INF\lib
+Posted in #hw3Today at 2:16 PM
+
+
+vsimonov [2:20 PM] 
+uploaded this image: lib.jpg
+Add Comment
+
+
+
+Viktor [2:20 PM] 
+попробуй "spring/spring-app.xml" заменить на "classpath:spring/spring-app.xml" мало ли
+
+
+vsimonov [2:21 PM] 
+Ошибка теперь такая
+
+
+vsimonov [2:21 PM] 
+added this Plain Text snippet
+Type Exception Report
+Message Servlet.init() for servlet [mealServlet] threw exception
+Description The server encountered an unexpected condition that prevented it from fulfilling the request.
+Exception
+javax.servlet.ServletException: Servlet.init() for servlet [mealServlet] threw exception
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Root Cause
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/topjava/WEB-INF/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jdbcTemplate': Failed to introspect bean class [org.springframework.jdbc.core.JdbcTemplate] for lookup method metadata: could not find class that it depends on; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/UncategorizedDataAccessException
+  org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:749)
+  org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:189)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1193)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1095)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Root Cause
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jdbcTemplate': Failed to introspect bean class [org.springframework.jdbc.core.JdbcTemplate] for lookup method metadata: could not find class that it depends on; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/UncategorizedDataAccessException
+  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:269)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1118)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1091)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+  org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:208)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1138)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+  org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:835)
+  org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:741)
+  org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:189)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1193)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1095)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Root Cause
+java.lang.NoClassDefFoundError: org/springframework/dao/UncategorizedDataAccessException
+  java.lang.ClassLoader.defineClass1(Native Method)
+  java.lang.ClassLoader.defineClass(ClassLoader.java:763)
+  java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+  org.apache.catalina.loader.WebappClassLoaderBase.findClassInternal(WebappClassLoaderBase.java:2257)
+  org.apache.catalina.loader.WebappClassLoaderBase.findClass(WebappClassLoaderBase.java:799)
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1238)
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1104)
+  java.lang.Class.getDeclaredMethods0(Native Method)
+  java.lang.Class.privateGetDeclaredMethods(Class.java:2701)
+  java.lang.Class.getDeclaredMethods(Class.java:1975)
+  org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:613)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:524)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:510)
+  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:247)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1118)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1091)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+  org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:208)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1138)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+  org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:835)
+  org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:741)
+  org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:189)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1193)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1095)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Root Cause
+java.lang.ClassNotFoundException: org.springframework.dao.UncategorizedDataAccessException
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1269)
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1104)
+  java.lang.ClassLoader.defineClass1(Native Method)
+  java.lang.ClassLoader.defineClass(ClassLoader.java:763)
+  java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+  org.apache.catalina.loader.WebappClassLoaderBase.findClassInternal(WebappClassLoaderBase.java:2257)
+  org.apache.catalina.loader.WebappClassLoaderBase.findClass(WebappClassLoaderBase.java:799)
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1238)
+  org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1104)
+  java.lang.Class.getDeclaredMethods0(Native Method)
+  java.lang.Class.privateGetDeclaredMethods(Class.java:2701)
+  java.lang.Class.getDeclaredMethods(Class.java:1975)
+  org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:613)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:524)
+  org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:510)
+  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:247)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1118)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1091)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+  org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:208)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1138)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+  org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:835)
+  org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:741)
+  org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:189)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1193)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1095)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+  org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+  org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:651)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1374)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Note The full stack trace of the root cause is available in the server logs.
+Add Comment Collapse This snippet was truncated for display: see it in full.
+
+
+
+Viktor [2:22 PM] 
+покажи класс с ошибкой. Либо поставь там пустой конструктор, а всем полям пропиши @Autowired и посмотри кто не появиться
+
+
+vsimonov [2:23 PM] 
+писать путь от корня? /home/simonov/GIT/topjava ....
+Sergeev Viktor
+попробуй "spring/spring-app.xml" заменить на "classpath:spring/spring-app.xml" мало ли
+Posted in #hw3Today at 2:20 PM
+
+
+[2:24] 
+мм Ошибка возникает в MealServlet
+Sergeev Viktor
+покажи класс с ошибкой. Либо поставь там пустой конструктор, а всем полям пропиши @Autowired и посмотри кто не появиться
+Posted in #hw3Today at 2:22 PM
+
+
+vsimonov [2:24 PM] 
+added and commented on this Plain Text snippet
+ @Override
+  public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+    mealController = springContext.getBean(MealRestController.class);
+  }
+1 Comment Collapse
+в этом методе
+
+
+
+vsimonov [2:24 PM] 
+томкат стратует и появляется index.html
+
+
+[2:25] 
+я жму на Select USer
+
+
+Viktor [2:25 PM] 
+У тебя ошибка в jdbcMealRepositoryImpl т.к. он не может его создать :smiley:
+
+
+vsimonov [2:26 PM] 
+?
+Sergeev Viktor
+У тебя ошибка в jdbcMealRepositoryImpl т.к. он не может его создать :smiley:
+Posted in #hw3Today at 2:25 PM
+
+
+[2:27] 
+класс есть, щас крин сделаю
+Sergeev Viktor
+У тебя ошибка в jdbcMealRepositoryImpl т.к. он не может его создать :smiley:
+Posted in #hw3Today at 2:25 PM
+
+
+vsimonov [2:27 PM] 
+uploaded this image: jdbc.jpg
+Add Comment
+
+
+
+Few
+[2:28 PM] 
+В одном из представленных эксепшенов четко было указано что не может создать бин репозитория,  т.к. Не находит определения класса RowMapper
+
+
+
+vsimonov [2:29 PM] 
+да написано, но класс есть, в чём ошибка?
+Fedor Vershinin
+В одном из представленных эксепшенов четко было указано что не может создать бин репозитория,  т.к. Не находит определения класса RowMapper
+Posted in #hw3Today at 2:28 PM
+(edited)
+
+
+Few [2:30 PM] 
+Пока не понятно, к сожалению не могу изучить последнюю простыню,  за рулём
+
+
+[2:32] 
+Но запускаешь ты помоему на томкате
+
+
+vsimonov [2:34 PM] 
+uploaded and commented on this image: tom.jpg
+1 Comment
+через идею в томкат,да
+
+
+
+Few
+[2:34 PM] 
+Ну да
+
+
+vsimonov [2:35 PM] 
+uploaded and commented on this image: tom2.jpg
+1 Comment
+вот так
+
+
+
+Few
+[2:35 PM] 
+Вот томкат и ругался помоему
+
+
+vsimonov [2:35 PM] 
+нет это не томкат ругается
+
+
+[2:35] 
+бин не созадётся
+
+Katherine Buzatu [2:40 PM] 
+а папка lib никуда не делась?
+
+
+vsimonov [2:40 PM] 
+lib есть
+
+
+[2:40] 
+что в ней длджно быть?
+
+[2:41] 
+может чего не хватает
+
+
+vsimonov [2:41 PM] 
+uploaded this image: lib.jpg
+Add Comment
+
+
+
+Katherine Buzatu [2:42 PM] 
+spring-jdbc на месте...
+
+
+Few
+[2:44 PM] 
+Надо простыню посмотреть последнюю,  но уж больно она длинная))
+
+[2:47] 
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jdbcMealRepositoryImpl' defined in file [/home/simonov/GIT/topjava/target/topjava/WEB-INF/classes/ru/javawebinar/topjava/repository/jdbc/JdbcMealRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jdbcTemplate': Failed to introspect bean class
+
+
+[2:47] 
+Опять та же петрушка,  только теперь не находит jdbctemplate
+
+vsimonov [2:51 PM] 
+что то не так с этими xml файлами
+
+
+[2:51] 
+хотя через main работает
+
+Few [2:52 PM] 
+А ты их в студию
+
+
+vsimonov [2:52 PM] 
+да нет проблем
+
+
+vsimonov [2:52 PM] 
+added this Plain Text snippet: db
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+  <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+  <!--no pooling-->
+  <bean id="dataSource"
+     class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="org.postgresql.Driver"/>
+    <property name="url" value="${database.url}"/>
+    <property name="username" value="${database.username}"/>
+    <property name="password" value="${database.password}"/>
+  </bean>
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <constructor-arg ref="dataSource"/>
+  </bean>
+  <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+    <constructor-arg ref="dataSource"/>
+  </bean>
+</beans>
+
+
+vsimonov [2:53 PM] 
+added this Plain Text snippet: app
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+  <!--
+    <bean class="ru.javawebinar.topjava.repository.mock.MockUserRepositoryImpl" id="mockUserRepository"/>
+    <bean class="ru.javawebinar.topjava.service.UserServiceImpl">
+      <property name="repository" ref="mockUserRepository"/>
+    </bean>
+  -->
+  <!-- Not necessary, already included with component-scan -->
+  <!--<context:annotation-config/>-->
+  <context:component-scan base-package="ru.javawebinar.**.repository.jdbc"/>
+  <context:component-scan base-package="ru.javawebinar.**.service"/>
+  <context:component-scan base-package="ru.javawebinar.**.web"/>
+</beans>
+Add Comment Collapse
+
+
+
+vsimonov [2:53 PM] 
+я их на само деле не трогал
+
+
+[2:55] 
+притом если зажимать Ctrl то "spring/spring-app.xml", "spring/spring-db.xml" к файлам переходит
+
+
+RNG [2:57 PM] 
+Может проблема с самой ДБ? Пробовал Postgres перезапускать?
+
+
+[2:57] 
+И да, какая версия стоит?
+
+
+vsimonov [2:57 PM] 
+10
+
+
+[2:59] 
+дб тут точно никак не замешана
+
+
+RNG [3:00 PM] 
+Если я правильно понял, то СпрингМейн работает, да? А при попытке запустить приложение через Томкат оно падает?
+
+
+vsimonov [3:01 PM] 
+да
+
+
+[3:01] 
+ща у гуру джавы спрошу
+
+
+Few [3:01 PM] 
+Спринг миейн не использует спринг jdbc
+
+vsimonov [3:05 PM] 
+всё посоны, похоже разобрался
+
+
+[3:06] 
+гуру в 2 сек сказал что надо сделать
+
+
+[3:08] 
+В томкат мы по рекомендации Гриши пуляем exploded файл, это вещь глючная бывает работает бывает нет. Лучше использовать только war. У меня через war всё разаботало (edited)
+
+
+Few [3:09 PM] 
+Была такая мыслишка
+
+
+[3:09] 
+Ну ок,  хорошо что заработало
+
+vsimonov [3:13 PM] 
+Странно что в предыдущих потоках не было таких проблем и Гриша об этом не предупреждает
+
+
+Katherine Buzatu [3:16 PM] 
+Вот интересно, будет такой же косяк, если напрямую в tomcat деплоить, или это только из Идеи так?
+
+
+vsimonov [3:16 PM] 
+да получается idea не такая уж и крутая и безупречная
+
+
+Few
+[3:23 PM] 
+Она удобная,  но багов в ней достаточно
+
+vsimonov [3:31 PM] 
+Всем спасибо за помощь
+
+
+Viktor [3:43 PM] 
+@Few "не баг а фича", это называется гибкостью :smiley: Как у меня вчера идея писала в другую базу, а оказалось надо не только в коннекте писать базу но и при выполнении скрипта выбирать в какую
+
+
+Glumov Konstantin [4:09 PM] 
+у меня после накатывания 3_07 патча мавен тоже перестал проходить тесты. При выборе юзера в браузере кидает ошибку "Description The server encountered an unexpected condition that prevented it from fulfilling the request."
+
+
+dyakoven [5:20 PM] 
+каким методом лучше сравнивать два списка Еды в assertMatch?
+
+
+russell [5:21 PM] 
+isEqualTo сравнивает по equals. сравнивать поле к полю (edited)
+
+
+dyakoven [5:22 PM] 
+то есть нужно переопределить equals() в Meal?
+
+russell [5:23 PM] 
+нет в ассерте джей есть fieldbyfield
+
+
+Дима Жуков 
+[5:23 PM] 
+Я сделал по isequalto. Надо переделать. Но вроде проверял все работало)
+
+
+[5:23] 
+Даже другие поля))) вроде
+
+
+russell [5:23 PM] 
+а ты икуалз переопределял
+
+
+Дима Жуков [5:24 PM] 
+Хотя в икуалс только по айди
+
+
+russell [5:24 PM] 
+он по айди и сравнивает
+
+
+Дима Жуков [5:25 PM] 
+Я хз. Сейчас переделывать буду.
+
+
+dyakoven [5:25 PM] 
+isEqualToComparingFieldByField() подходит для сравнения двух объектов Meal. для списков такого метода нет
+
+
+Katherine Buzatu [5:26 PM] 
+там еще много интересных методов
+
+
+dyakoven [5:26 PM] 
+да вот копаюсь в них
+
+
+russell [5:42 PM] 
+У кого-нибудь джава машина умирает, при прогонке тестов через мейвен? The forked VM terminated without properly saying goodbye. VM crash or System.exit called?
+
+
+Дима Жуков 
+[5:45 PM] 
+У кого нибудь есть проблема копипаста? Иногда лень печатать и даже переменные забываю переименовать с юзера)
+
+
+micredis [5:50 PM] 
+Shift+F6 в Идее, нет?
+to Дима
+
+
+Дима Жуков [5:52 PM] 
+@micredis  есть...
+
+
+micredis [5:55 PM] 
+Я имею в виду массовое переименование. Предложенная комбинация решила проблему?
+Жуков Дмитрий
+@micredis  есть...
+Posted in #hw3Today at 5:52 PM
+
+
+Дима Жуков [5:59 PM] 
+Просто видишь похожее сделано в юзер* где нибудь. Копируешь вставляешь в меал* что нибудь. Немного правишь и уаля) но не всегда получается чисто) я просто увидел сейчас там не просто isEqualTo, а IsEqualToIgnoringgivenfields. И переменная users в meal repo. Вчера я этого не видел
+
+
+micredis [6:04 PM] 
+@Дима Жуков Понятно, со всеми бывает :wink:
