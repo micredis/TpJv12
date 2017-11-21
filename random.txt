@@ -2154,3 +2154,35 @@ Sergey [8:38 PM]
 
 Tanya [9:46 PM] 
 :slightly_smiling_face:
+
+
+Andrey [8:22 PM] 
+Друзья, кто подскажет, нашел на сайте https://www.upwork.com такую объявку:
+
+Im looking for someone to come up with a small solution, and whoever makes it to solve this small app, will get a good paying job.
+The idea is all about doing a small app for recommendation using Java Spring Boot, Hibernate and u can use H2 Database.
+
+Find more about the simple task in attachment.
+
+The one who manages to solve this, not that will get the money, but will be contacted for a long-term job.
+***************************************************
+Тех задание выглядит так:
+Perhaps we have a CMS where we have our content (table: Article) regarding different topics and in various languages. You need to provide solution that makes recommendations considering improvements based on different criteria like languages the content is provided in, the length of the content, number of keywords used to describe the content, number of keywords found in the content. You need to consider the content of the same content category (ArticleCategory). Optionally, you could find similar articles based on the content.
+Requirements:
+-  Java (Spring, Hibernate)
+-  Derby or H2 database
+Note:
+-  You don’t have to provide full-implemented solution: the focus is not on CRUD operations (inserting/deleting/updating) content (you can manually insert categories and articles); you should, however, provide data model (DDL scripts), object model (Hibernate entities) and also application logic
+-  The results may be stored in a file or displayed if you decide to implement UI 
+***************************************************
+
+Написать простейший CRUD не проблема, хочу понять что хотят получить эти буржуи.
+Скажите куда копать, в UML чтоль? (edited)
+
+
+Viktor [10:05 PM] 
+Мой английский кривоват, но как я понял им нужен алгоритм, которые будет выдавать подходящие пользователю новости, по языку, по контенту, по длинне контента, исходя из того откуда читатель пришел, а не просто CRUD
+
+
+[10:06] 
+типо "рекомендованные" в ютубе или вк

@@ -2884,3 +2884,225 @@ Posted in #hw3Today at 5:52 PM
 
 micredis [6:04 PM] 
 @Дима Жуков Понятно, со всеми бывает :wink:
+
+
+russell [5:42 PM] 
+У кого-нибудь джава машина умирает, при прогонке тестов через мейвен? The forked VM terminated without properly saying goodbye. VM crash or System.exit called?
+
+Дима Жуков 
+[5:45 PM] 
+У кого нибудь есть проблема копипаста? Иногда лень печатать и даже переменные забываю переименовать с юзера)
+
+micredis [5:50 PM] 
+Shift+F6 в Идее, нет?
+
+[5:50] 
+to Дима
+
+Дима Жуков [5:52 PM] 
+@micredis  есть...
+
+micredis [5:55 PM] 
+Я имею в виду массовое переименование. Предложенная комбинация решила проблему?
+Жуков Дмитрий
+@micredis  есть...
+Posted in #hw3Today at 5:52 PM
+
+Дима Жуков [5:59 PM] 
+Просто видишь похожее сделано в юзер* где нибудь. Копируешь вставляешь в меал* что нибудь. Немного правишь и уаля) но не всегда получается чисто) я просто увидел сейчас там не просто isEqualTo, а IsEqualToIgnoringgivenfields. И переменная users в meal repo. Вчера я этого не видел
+
+micredis [6:04 PM] 
+@Дима Жуков Понятно, со всеми бывает :wink:
+
+ujwegh [7:36 PM] 
+такой вопрос: если я правильно понимаю при тестировании мы идем в базу берем там еду и сравниваем ее по полям c одной из MealTestData. По идее, при добавлении в базу, id еды у нас инкрементится, начиная с 1. Тогда почему когда я прошу в тесте получить еду с id =1, и в MealTestData у еды стоит id=1, мне кидается NotFoundException? Или я что-то не то делаю?
+
+Дима Жуков 
+[7:37 PM] 
+не с 1 ж, а 1000001
+
+russell [7:38 PM] 
+100001
+
+ujwegh [7:42 PM] 
+уууу вот я дурак) спасибо
+
+Антон Кляшторный [8:20 PM] 
+isEqualTo при сравнении списков еды учитывает только id AbstractBaseEntity остальные поля игнорируются, если не переопределять equls в Meals. Нам нужно сравнивать по всем полям или только по id еды?
+
+Katherine Buzatu [8:28 PM] 
+По всем полям надо сравнивать.
+
+
+Valery [8:35 PM] 
+>запретить создавать у одного и того-же юзера еду с одинаковой dateTime.
+добавил условие в скрипт. при попытке добавить новую сточку с той же датой падает сервер. А что в итоге надо получить?
+- предупреждение пользовотелю выдавать?
+- игнорировать новую запись?
+- перезаписывать существующую?
+
+
+vch [8:36 PM] 
+@Valery Лучше предупреждение. Но пока можно и падать.
+
+
+[8:36] 
+Но никак не игнорировать и не перезаписывать...
+
+Marina [8:37 PM] 
+По всем, я вообще id еды в тесте не учитываю, сделала аналогично UserTestData, через usingElementComparatorIgnoringFields(...).isEqualTo(...), и сравнивает по всем полям
+
+
+Valery [8:37 PM] 
+под запретом имеется ввиду ограничение на уровне БД? ведь можно делать проверку перед попыткой добавления.
+
+
+Katherine Buzatu [8:38 PM] 
+@Valery как падает? Должен бросить исключение.
+
+
+Few [8:38 PM] 
+constraint на уровне таблицы
+
+
+[8:38] 
+и автоматически полоучишь ексепшн
+
+
+Valery [8:38 PM] 
+HTTP Status 500 – Internal Server Error
+
+
+[8:39] 
+вот так падает )
+
+
+Few [8:39 PM] 
+неуникальный индекс
+
+Marina [8:40 PM] 
+Должен DataAccessException
+
+Few [8:40 PM] 
+DuplicateKeyException
+
+
+Katherine Buzatu [8:41 PM] 
+> HTTP Status 500 – Internal Server Error
+@Valery , а дальше - исключение. Это нормально.
+
+
+Valery [8:42 PM] 
+org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "user_meal_idx"
+то есть, потом это исключение надо будет пробрасывать через все слои в контроллер, чтобы он в браузере что-то написал пользователю?
+
+
+Katherine Buzatu [8:42 PM] 
+...но это будет потом.
+
+
+Few [8:42 PM] 
+по идее springmvc умеет в одном месте все ексепшены обрабатывать помоему и выдавать удобоваримые странички
+
+
+[8:43] 
+но это будет позже
+
+[8:43] 
+видимо
+
+Valery [8:45 PM] 
+говорилось же, что исключения надо обрабатывать чем раньше тем лучше. а тут получается, что исключения является управляющим элементом
+
+
+Few [8:48 PM] 
+ну а зачем дважды обращаться в базу сначала проверять, а потом писать если можно получить эксепшн (как задумано в реализации драйвера) и обработать его
+
+
+[8:50] 
+Можно написать спец контроллер аннотированный @ControllerAdvice и в нем методы аннотированные @ExceptionHandler(Exception.class)
+
+
+[8:50] 
+он будет со всех контроллеров собирать ексепшены и отвечать пользователю в чем он не прав (edited)
+
+
+Katherine Buzatu [8:51 PM] 
+Коллеги, это сегодня видели? Что это значит?
+[topjava:master] 14 new commits by gkislin:
+`ab2a2c0` 3_0_fix - gkislin
+`482d749` 3_01_HW2_repository - gkislin
+`669ed3b` 3_02_HW2_meal_layers - gkislin
+`4ad9634` 3_03_HW2_optional_MealServlet - gkislin
+`a03ebc2` 3_04_HW2_optional_filter - gkislin
+`419791b` 3_05_HW2_optional_select_user - gkislin
+`887f36e` 3_06_bean_life_cycle - gkislin
+`f21a2ab` 3_07_add_junit - gkislin
+`8dae74b` 3_08_add_spring_test - gkislin
+`2a6e74b` 3_09_add_postgresql - gkislin
+`23d6173` 3_10_db_implementation - gkislin
+`3d4b31d` 3_11_test_UserService - gkislin
+`361a6cc` 3_12_test_logging - gkislin
+`16a2d2a` 3_13_fix_servlet - gkislin
+Posted in #project_change
+
+
+Few
+[8:54 PM] 
+патчи накачены на мастер видимо
+
+
+Valery [8:54 PM] 
+Commits on Nov 16, 2017
+
+
+[8:55] 
+это ж не сегодня
+
+
+vch [8:55 PM] 
+Интеграция с guthub видимо подтормаживает...
+
+
+Few
+[8:55 PM] 
+Григорий онлайн, прояснит наверное )
+
+
+[8:55] 
+хотя по содержанию это те самые патчи
+
+Katherine Buzatu [8:57 PM] 
+@Few да, ты прав. А я перепугалась, что патчи поменялись - аж моск думать перестал!
+
+
+Dmitry Neustupov [10:44 PM] 
+Мальчишки и девчёнки, никак не могу возбудить InMemoryAdminRestControllerSpringTest, все время выстреливает 
+NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' - оба контекста висят в структуре проекта.
+
+
+[10:45] 
+Остальные тесты работают, квалификаторы вроде правильно расставил.
+
+
+[10:45] 
+Может кто сталкивался ? )
+
+Katherine Buzatu [10:55 PM] 
+@Dmitry Neustupov
+> оба контекста висят в структуре проекта
+1. Какие оба?
+2. Они должны не просто висеть. Надо еще сообщить, что мы их хотим в нашей конфигурации.
+
+
+Tanya [11:02 PM] 
+InMemoryAdminRestControllerSpringTest должен работать с inMemory соотв там не должно быть bean of type 'javax.sql.DataSource'
+
+
+new messages
+Dmitry Neustupov [11:07 PM] 
+@Katherine Buzatu spring-app и spring-db добавлены в структуру, как им сообщит, что мы их хотим? Оо...
+
+
+[11:09] 
+@Tanya но в нём же запросы уходят в AdminRestController а оттуда, соответственно в JDBCMealRepository
