@@ -3595,3 +3595,287 @@ Few [4:58 PM]
 
 [4:58] 
 но при удалении или апдейте будет ожидаемый результат
+
+
+russell [5:05 PM] 
+Глянул ему в код, он в сиквеле meal_id поле создал и beanpropertyrowmapper не знал как замэпить на id в baseEntity
+
+
+Few
+[5:06 PM] 
+вот и получалось без id
+
+
+russell [5:07 PM] 
+кому интересно в доке BeanPropertyRowMapper - Column values are mapped based on matching the column name as obtained from result set metadata to public setters for the corresponding properties. The names are matched either directly or by transforming a name separating the parts with underscores to the same name using "camel" case.
+
+
+Few
+[5:08 PM] 
+это бы в лекцию добавить
+
+
+[5:09] 
+скинь Григорию в личку
+
+
+russell [5:10 PM] 
+а может это как часть задания, чтобы помучились?
+
+
+Few [5:11 PM] 
+ну в основном просто скопировали с users не задумываясь и все работает
+
+
+[5:11] 
+но информация достаточно важная чтобы осмысленно создавать таблицу
+
+
+Belstrel [5:15 PM] 
+всем спасибо,заработало,ребята предлагали ранее сменить meal_id на id,но как то не видно было в это великого смысла вот и проковырялся столько))
+
+
+Few
+[5:15 PM] 
+вот она скрытая магия Спринга
+
+
+vch [5:16 PM] 
+@Few а где там спринг? Вроде там всё Hibernate делает
+
+
+Belstrel 
+[5:16 PM] 
+а где там хибернейт??
+
+Few [5:16 PM] 
+гибернейта нет у нас пока
+
+
+vch [5:17 PM] 
+гмм.... Значит я забыл, о чём HW3. Приношу извинения.
+
+
+Few [5:17 PM] 
+https://docs.spring.io/spring-framework/docs/4.3.0.RELEASE/javadoc-api/org/springframework/jdbc/core/RowMapper.html
+
+
+[5:18] 
+короче говоря полагаясь на магию, все же надо знать как она изнутри работает
+
+
+
+Belstrel [5:19 PM] 
+а я начал Spring for prof читаать но не успеваю,читать много))
+
+
+Few
+[5:20 PM] 
+я Spring in Action читаю, но до работы с базами еще не дошел
+
+
+grigory.kislin [5:20 PM] 
+думаю, счас главное пройти все темы стажировки и все ДЗ сделать
+книжками можно будет потом догоняться и вообще- уже даже можно не все подряд, а выборочно
+
+
+Few
+[5:21 PM] 
+ну это задание было попроще предыдущего, поэтому осталось время почитать )
+
+
+
+Belstrel [5:22 PM] 
+спасибо Григорий за совет,стараемся выполнять ДЗ потом теорию смотреть))
+
+
+
+grigory.kislin [7:40 PM] 
+по просьбам участников добавил в замечания, хотя для текущего потока поздновато:(
+10: Напомню: BeanPropertyRowMapper работает через отражение. Ему нужны геттеры/сеттеры и имена полей должны "совпадать" с колонками ResultSet (Column values are mapped based on matching the column name as obtained from result set metadata to public setters for the corresponding properties. The names are matched either directly or by transforming a name separating the parts with underscores to the same name using "camel" case).
+
+
+LORREON [8:23 PM] 
+Как временно убрать логи Spring-a c консоли?
+
+
+Valery [8:26 PM] 
+в файле topjava/src/main/resources/logback.xml  поменяй level
+
+
+[8:27] 
+или строчку <appender-ref ref="console"/> закоментируй
+
+
+[8:27] 
+это мои догадки, сам не проверял
+
+
+Nick [8:28 PM] 
+added this Java snippet
+public Meal save(Meal meal, int userId) {
+    MapSqlParameterSource map = new MapSqlParameterSource()
+        .addValue("userId", userId)
+        .addValue("id", meal.getId())
+        .addValue("description", meal.getDescription())
+        .addValue("calories", meal.getCalories())
+        .addValue("dateTime", meal.getDateTime());
+​
+    if (meal.isNew()) {
+      Number newKey = insertMeal.executeAndReturnKey(map);
+      meal.setId(newKey.intValue());
+    } else {
+      namedParameterJdbcTemplate.update(
+          "UPDATE meals SET id=:id, description=:description, calories=:calories, date_time=:dateTime WHERE id=:id", map);
+    }
+    return meal;
+  }
+Add Comment Collapse
+
+
+
+Nick [8:28 PM] 
+Этот код жалуется, что Id еды равен null
+
+[8:29] 
+Даже хардкодил, все равно null
+
+Valery [8:35 PM] 
+в 3 строчке может быть если новая еда
+
+
+Few [8:36 PM] 
+при создании или обновлении записи?
+
+
+Nick [8:36 PM] 
+При создании
+
+
+Valery [8:36 PM] 
+а вот тут сеттер лишний - SET id=:id
+
+
+[8:37] 
+смотри еще метод insertMeal
+
+
+[8:37] 
+он тебе id возвращает
+
+Few
+[8:39 PM] 
+как у тебя таблица в sql скрипте задана?
+
+
+Tanya [8:40 PM] 
+проверки по userId нет
+
+
+Few
+[8:40 PM] 
+да мы пока про создание говорим
+
+
+Valery [8:40 PM] 
+meal.isNew() - это не проверка?
+
+
+Few
+[8:40 PM] 
+проверки при обновлении нет
+
+
+Nick [8:40 PM] 
+added this SQL snippet
+CREATE TABLE meals
+(
+ id INT PRIMARY KEY NOT NULL,
+ user_id INTEGER NOT NULL,
+ description VARCHAR NOT NULL,
+ calories INT NOT NULL,
+ date_time TIMESTAMP NOT NULL,
+ FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+Add Comment Collapse
+
+
+
+Few
+[8:41 PM] 
+у тебя автогенерации id нет
+
+[8:41] 
+в таблице
+
+[8:42] 
+новый мил поступает без id и база должна его сгенерить
+
+
+[8:42] 
+а у тебя не генерит, а ждет от тебя ненулевого значения
+
+
+[8:44] 
+id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+
+
+[8:44] 
+сделай так
+
+Nick [8:45 PM] 
+Спасибо большое, заработало.
+
+Few [8:47 PM] 
+апдейт у тебя на первый взгляд не рабочий
+
+
+
+Nick [8:48 PM] 
+Не, все работает. Магия
+
+
+Few [8:48 PM] 
+чужую еду может апдейтить
+
+
+[8:49] 
+а не должен
+
+[8:50] 
+ты пишешь WHERE id=id, но не проверяешь что userId=userid
+
+
+[8:50] 
+и если WHERE id=id, то его упдейтить нет смысла SET id=:id
+
+Nick [8:53 PM] 
+Все исправил, благодарю.
+
+Few
+[8:53 PM] 
+и еще момент, тебе надо предусмотреть правильное возвращаемое значение если ничего не обновлено (т.е. была попытка обновить то, что нельзя)
+
+
+Nick [8:57 PM] 
+А как пользователь может изменять то что нельзя, он же только свою еду видит?
+
+
+Valery [8:57 PM] 
+хакнуть может)
+
+Few [8:57 PM] 
+ну мы тут REST API реализовываем, т.о. запрос может прийти любой
+
+
+Nick [8:58 PM] 
+Spring Security, наверное, эти дыры закроет
+
+
+vch [9:05 PM] 
+А как, простите, вам поможет Security?
+
+
+Few
+[9:05 PM] 
+если не сверять userid, можно обновить любую запись

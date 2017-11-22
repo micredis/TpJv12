@@ -3276,3 +3276,49 @@ grigory.kislin [12:24 PM]
 проблемы что не работает
 но может и заработать
 с 9.5 все ок
+
+
+Dmitry Neustupov [8:51 PM] 
+Пользуюсь 10-й версией, полёт нормальный.
+
+
+
+Andrew [9:07 PM] 
+Друзья, после применения патча 307 add junit - у мня АдминРестКонтроллерТест не в тест скоупе, поэтому всё светится красным. Не заморачиваться и ставить дальше патчи?
+
+
+gonzo.bard [9:09 PM] 
+@Andrew https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson03.md#--4-%D0%A2%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-junit
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+Katherine Buzatu [9:09 PM] 
+Папку test создал?
+
+
+Andrew [9:10 PM] 
+Блен, я думал она там была уже
+
+
+Katherine Buzatu [9:11 PM] 
+Там в инструкции написано
+
+
+Andrew [9:11 PM] 
+У меня файл продублирован, завалю дубликат из джавы
+
+
+Katherine Buzatu [9:11 PM] 
+Откати
+
+
+
+Andrew [10:14 PM] 
+Какую строку кидали в чат для настройки БД под хероку в поле sslfactory?
+
+
+[10:16] 
+Вытянул с видео - org.postgresql.ssl.NonValidatingFactory - заработало
