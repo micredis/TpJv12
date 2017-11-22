@@ -3148,3 +3148,450 @@ Few
 
 Dmitry Neustupov [8:27 AM] 
 У меня экзепшн из репозитория прилетает.
+
+
+itAvgur [9:41 AM] 
+Уже есть метод checkNotFoundWithId, который принимает на вход и проверяет на null. 
+Я использовал существующую реализацию, чтобы не изобретать Америку.
+2Few ага, я тоже подумал, что логичнее сделать еще одно исключение, типа DuplicateEntryFound.
+
+
+Katherine Buzatu [10:00 AM] 
+Тут, наверное, вопрос в том, что разные реализации репозитория будут вести себя по-разному в такой ситуации. И если от нашего jdbc летит DuplicateKeyException, то InMemory вообще все нравится, а третья реализация еще что-то третье выдаст. 
+Запрет создавать записи с одинаковым временем - как бы бизнес-логика и, значит, дело сервиса. Но решается на уровне БД - репозитория. Может, как-то обязать репозитории выкидывать исключение? Но оно тогда должно быть checked, а мы их не любим... В общем, непонятно, как правильно. Давайте поговорим об этом :slightly_smiling_face: (edited)
+
+
+russell [10:31 AM] 
+Кажется для каждого слоя будет создаваться своя обертка для всех исключений и пробрасываться. А обработка уже будет в контроллере проходить централизовано.
+
+
+Few 
+[10:34 AM] 
+они же и сами до контроллера всплывут
+
+russell [10:35 AM] 
+ну так их же надо залогировать на каждом слое
+
+
+[10:35] 
+Немчинский по крайней мере так говорил
+
+
+Katherine Buzatu [10:35 AM] 
+Вот сейчас мы тестируем сервис. Какого поведения мы ожидаем от него, когда создаем запись с существующим датаТаймом?
+
+
+Few 
+[10:36 AM] 
+@Test(expected = DuplicateKeyException.class)
+
+
+[10:36] 
+))
+
+Katherine Buzatu [10:37 AM] 
+нерулезно как-то...
+
+
+Few [10:38 AM] 
+да самому не нравится )
+
+
+Katherine Buzatu [10:39 AM] 
+Ну, я схитрила и создала свое исключение - типа лично сервисное. Но тогда сервис должен проверить ~спринговое~ исключение реализации и тем самым повязаться с ~спрингом~ реализацией по гроб жизни.
+_описка_ (edited)
+
+vch [10:41 AM] 
+@Katherine Buzatu А причём тут Spring? Вроде самое нижнее исключение - ConstraintException из Hibernate?
+
+
+Few [10:44 AM] 
+в общем я для этого здесь, один из тех моментов когда хочется узнать как делают в реальных проектах специалисты
+
+
+[10:45] 
+если нас интересуют много разных вариантов отказа репозитория, то false/null уже не достаточно и он должен кидать ексепшены
+
+
+[10:46] 
+и чекед вроде были бы к месту
+
+
+Katherine Buzatu [10:46 AM] 
+Ага. Заявленные интерфейсом и checked.
+
+
+itAvgur [10:49 AM] 
+"Запрет создавать записи с одинаковым временем - как бы бизнес-логика и, значит, дело сервиса"
+Да как бы наверное и не бизнес-логика, иначе на кой черт создавать CONSTRAINT в скуле.
+Получается, что это вопрос к репозиторию и исключение надо бросать из него (наследоваться от Runtime).
+
+
+Few 
+[10:49 AM] 
+Ну при разных реализациях репо должен быть один интерфейс взаимодействия (определенный список исключений или возвращаемых значений :)), иначе сервис будет зависеть от реализации репо (edited)
+
+
+Katherine Buzatu [10:55 AM] 
+>  наверное и не бизнес-логика, иначе на кой черт создавать CONSTRAINT в скуле.
+Я так понимаю, что бизнес-логика - это обеспечение поведения, которого мы ожидаем от сервиса. CONSTRAINT - не вынужденное ограничение из-за особенностей и ущербности хранилища. Это бизнес-логика, спущенная в БД для повышения эффективности.
+
+
+Сергей Матвеев [12:03 PM] 
+подскажите может кто наткнулся после запроса все поля кроме ИД в null 
+List<Meal> meals = jdbcTemplate.query("SELECT * FROM meals WHERE user_id=?",ROW_MAPPER,userId);
+
+
+Few [12:03 PM] 
+Сеттеры и геттеры нужны в Meal
+
+Сергей Матвеев [12:07 PM] 
+так и есть ) благодярю
+
+
+grigory.kislin [12:08 PM] 
+@Viktor
+> репозиторий кидает исключение, если попробовать добавить еду на занятое время
+хороший вопрос. у нас действительно в inmemory реализации нет таких проверок
+когда будем работать с эксепшенами (в конце стажировки) у нас будет тест на контроллер с проверкой занятого времени
+пока предлагаю оставить без теста
+вообще мой UserServiceTest.duplicateMailCreate не будет работать в inMemory реализации.. (edited)
+
+
+[12:10] 
+@russell
+> ну так их же надо залогировать на каждом слое
+зачем одно и тоже исключение много раз логировать?? централизовано будем ловить, логировать и обрабатывать (edited)
+
+
+[12:11] 
+@Few
+>  один из тех моментов когда хочется узнать как делают в реальных проектах специалисты
+в реальных проектах специалисты делают кому как захочется...
+на каждом проекте выходит по своему (edited)
+
+
+grigory.kislin [12:23 PM] 
+добавил в урок: 8: Еще раз: в тестах проверять через JUnit Assert нельзя. Он проверяет через equals, который, учитавая будующие JPA реализации, мы не можем переопределить как сравнение по всем поля.
+
+
+Сергей Матвеев [12:35 PM] 
+проверял фильтрацию еды 
+Message PreparedStatementCallback; bad SQL grammar [SELECT * FROM meals WHERE user_id=? AND datetime BETWEEN 2015-05-30 00:00 AND 2015-05-30 23:59]; nested exception is org.postgresql.util.PSQLException: ОШИБКА: ошибка синтаксиса (примерное положение: "00")
+И время из формы не приходит только дата
+Как в запрос дату со временем правильно сложить?
+
+
+Сергей Матвеев [12:40 PM] 
+return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? AND datetime BETWEEN "+ DateTimeUtil.toString(startDate) +" AND " + DateTimeUtil.toString(endDate)  ,ROW_MAPPER,userId);
+
+
+[12:40] 
+то в браузере посыпает)
+
+
+
+vch [12:43 PM] 
+@Сергей Матвеев Сработает, если используешь формат вида `'20150530 00:00'` В кавычки главное не забудь поставить.
+P.S. но это я из разряда вредных советов... Не надо так в реальном коде. (edited)
+
+
+Katherine Buzatu [1:13 PM] 
+@Сергей Матвеев отчего дату не подставил так же, как id?
+
+
+Glumov Konstantin [1:36 PM] 
+откуда брать userId при создании еды в JdbcMealRepositoryImpl?
+
+Few
+[1:37 PM] 
+Передается из контроллера через все слои (edited)
+
+
+Belstrel [2:11 PM] 
+Товарищи подскажите куда копать, getAll() работает нормально а при удалении или изменениии падает -
+public boolean delete(int meal_id, int user_id) {
+       return jdbcTemplate.update("DELETE FROM meals WHERE meal_id=? AND user_id=?", meal_id , user_id) != 0;}
+
+
+vch [2:12 PM] 
+@Belstrel а какой текст ошибки? Но я бы для начала заменил `WHERE meal_id=` на `WHERE id=`
+
+
+Belstrel [2:16 PM] 
+meal_id работает нормально метод save
+
+
+[2:16] 
+ошибка 500  For input string:""
+
+
+[2:17] 
+Сервер обнаружил внутреннюю ошибку, которая помешала ему выполнить этот запрос.
+
+
+vch [2:17 PM] 
+@Belstrel PostgreSQL 500 ошибку выдаёт???
+
+Belstrel [2:17 PM] 
+скрипт DELETE работает норм на базе
+
+
+[2:18] 
+ДА 9.5.9 версия помоему
+
+
+[2:21] 
+java.lang.NumberFormatException: For input string: ""
+
+[2:23] 
+видимо чтото в сервлете надо подправить,чтото с парсом траблы наверное
+
+Few [2:27 PM] 
+Ексепшн весь выложи
+
+Belstrel 
+[2:29 PM] 
+java.lang.NumberFormatException: For input string: ""
+    java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+    java.lang.Integer.parseInt(Integer.java:592)
+    java.lang.Integer.parseInt(Integer.java:615)
+    ru.javawebinar.topjava.web.MealServlet.getId(MealServlet.java:96)
+    ru.javawebinar.topjava.web.MealServlet.doGet(MealServlet.java:74)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:622)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:729)
+    org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+
+
+[2:30] 
+2017-11-22 15:28:48,549 INFO  ru.javawebinar.topjava.web.meal.MealRestController.create:53 - create Meal{id=null, dateTime=2017-11-22T15:28, description='мясо-сало', calories=1000} for user 100000
+2017-11-22 15:28:48,641 INFO  ru.javawebinar.topjava.web.meal.MealRestController.getAll:46 - getAll for user 100000
+
+
+[2:30] 
+это лог- получаеться у меня создается еда с id=null
+
+
+Katherine Buzatu [2:32 PM] 
+Так и должно быть. ИД потом в базе генерируется.
+
+
+Сергей Матвеев [2:34 PM] 
+ID это у поле в базе ... старт и энд это не поля
+Katherine Buzatu
+@Сергей Матвеев отчего дату не подставил так же, как id?
+Posted in #hw3Today at 1:13 PM
+
+
+Katherine Buzatu [2:35 PM] 
+Это значения, их тоже можно через ?
+
+
+Сергей Матвеев [2:38 PM] 
+да.. нашел - ларчик просто открывался.. благодарю.
+Katherine Buzatu
+Это значения, их тоже можно через ?
+Posted in #hw3Today at 2:35 PM
+
+
+Few [2:40 PM] 
+@Belstrel нужен код сервлета пока не могу посмотреть
+1 reply Today at 2:43 PM View thread
+
+Few
+[2:50 PM] 
+У тебя почему-то параметр id в запросе пустой приходит
+
+
+Belstrel [2:51 PM] 
+тоже туда копаю
+
+Few
+[2:52 PM] 
+Возможно при заполнении вьюхи модель туда уже с пустым id передается
+
+
+[2:54] 
+Может серьезно столбец в id переименовать
+
+Belstrel 
+[2:57 PM] 
+буду пробовать,сейчас создал новую еду ,проверил оба id но так и падает.
+
+
+Few [3:04 PM] 
+Ты вью не менял?
+
+
+Belstrel 
+[3:06 PM] 
+вроде бы нет
+
+
+Few [3:07 PM] 
+Тогда покажи из логов что достается из базы по getAll
+
+Belstrel 
+[3:11 PM] 
+2017-11-22 16:10:07,156 INFO  o.s.jdbc.datasource.DriverManagerDataSource.setDriverClassName:133 - Loaded JDBC driver: org.postgresql.Driver
+2017-11-22 16:10:15,741 INFO  ru.javawebinar.topjava.web.meal.MealRestController.getAll:46 - getAll for user 100000
+
+
+[3:11] 
+это с идеи лог
+
+
+Few
+[3:18 PM] 
+Добавь в лог значения полей meal в списке,  который в getAll формируется
+
+
+[3:19] 
+Или через дебаг посмотри его содержимое
+
+
+Belstrel 
+[3:20 PM] 
+2017-11-22 15:55:54,789 INFO  ru.javawebinar.topjava.web.meal.MealRestController.create:53 - create Meal{id=null, dateTime=2017-11-22T15:55, description='макароны', calories=1000} for user 100000
+
+
+Few [3:21 PM] 
+Это create
+
+
+Belstrel 
+[3:21 PM] 
+это когда нажимаешь делит
+
+[3:21] 
+сейчас креет сделаю
+
+Few
+[3:21 PM] 
+Так он у тебя create вызывает чтоли?
+
+Belstrel [3:25 PM] 
+2017-11-22 16:23:48,808 INFO  ru.javawebinar.topjava.web.meal.MealRestController.create:53 - create Meal{id=null, dateTime=2017-11-22T16:23, description='полдник', calories=500} for user 100000
+2017-11-22 16:23:49,062 INFO  ru.javawebinar.topjava.web.meal.MealRestController.getAll:46 - getAll for user 100000
+
+
+[3:26] 
+создаю новую еду,перехожу на meals.jsp всё норме,но когда пытаюсь её удалить -ошибка
+
+
+Few [3:26 PM] 
+У тебя в обоих логах create метод
+
+
+Katherine Buzatu [3:27 PM] 
+Поставь брейкпоинт в самом начале doGet. Запусти дебаг и посмотри, что приходит в запросе при удалении. (edited)
+
+
+Belstrel [3:38 PM] 
+дебагер пока чтото не хочет показывать,а зато в идееских логах пишет 
+2017-11-22 16:28:57,817 [22279325]   INFO - tbrains.idea.tomcat.TomcatUtil - Cannot load /home/belstrel/git-sam/topjava/target/topjava/META-INF/context.xml: /home/belstrel/git-sam/topjava/target/topjava/META-INF/context.xml (Нет такого файла или каталога)
+
+
+[3:39] 
+гдето видимо неправльно переименовал навеное
+
+
+[3:39] 
+странно как тогда креэйт работает
+
+Belstrel 
+[3:55 PM] 
+А вот такой файл у всех есть??  /target/topjava/META-INF/context.xml
+
+Few [3:55 PM] 
+Нет,  а что в нем?
+
+[3:55] 
+Что за контекст там может быть (edited)
+
+[3:59] 
+попробуй деплой WAR сделать вместо WAR Exploded
+
+Belstrel 
+[4:00 PM] 
+делал,у меня WAR вообще не хочет работать никак,тоьлко Exploded
+
+[4:00] 
+у меня тоже нет этого файла просто на него ругаються логи
+
+Viktor [4:04 PM] 
+попобуй без IDEA прямо в томкат закинуть
+
+
+Few [4:06 PM] 
+попробуй идею перезапустить чтоли :slightly_smiling_face:
+
+
+grigory.kislin [4:18 PM] 
+> "SELECT * FROM meals WHERE user_id=? AND datetime BETWEEN "+ DateTimeUtil.toString(startDate) +" AND
+так не делайте! счас ссылку в урок вставлю на SQL injection
+
+
+[4:20] 
+НЕ делайте склейку SQL запросов вручную из параметров, только через jdbcTemplate параметры! См. Внедрение_SQL-кода
+https://ru.wikipedia.org/wiki/%D0%92%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5_SQL-%D0%BA%D0%BE%D0%B4%D0%B0
+Wikipedia
+Внедрение SQL-кода
+Внедрение SQL-кода (англ. SQL injection) — один из распространённых способов взлома сайтов и программ, работающих с базами данных, основанный на внедрении в запрос произвольного SQL-кода.
+Внедрение SQL, в зависимости от типа используемой СУБД и условий внедрения, может дать возможность атакующему выполнить произвольный запрос к базе данных (например, прочитать содержимое любых таблиц, удалить, изменить или добавить данные), получить возможность чтения и/или записи локальных файлов и выполнения произвольных Show more…
+(edited)
+
+
+vch [4:26 PM] 
+@grigory.kislin Ну, конкретно в данном случае sql-инъекция не грозит - т.к. в репозиторий приходит LocalDateTime, а не строка.
+
+
+grigory.kislin [4:27 PM] 
+согласен. но мы же не будем различать - какие можно приклеивать, какие - нет
+все делается одинаково чз ппраметры jdbcTemplate
+
+
+Belstrel 
+[4:38 PM] 
+пробую дебажить,перезапуск идеи не решил проблему,потом попробую напрямую в томкат вставить
+
+
+Few [4:56 PM] 
+added this Plain Text snippet
+java.lang.NumberFormatException: For input string: ""
+  java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+  java.lang.Integer.parseInt(Integer.java:592)
+  java.lang.Integer.parseInt(Integer.java:615)
+  ru.javawebinar.topjava.web.MealServlet.getId(MealServlet.java:96)
+  ru.javawebinar.topjava.web.MealServlet.doGet(MealServlet.java:82)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:635)
+  javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+  org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+Add Comment Collapse
+
+
+
+Few
+[4:57 PM] 
+получил у себя
+
+
+new messages
+Belstrel [4:57 PM] 
+да у меня так же
+
+
+[4:58] 
+чтото с парс не так
+
+
+Few [4:58 PM] 
+достаточно в getAll взять из базы объекты c null вместо id
+
+
+[4:58] 
+они нормально отрисуются на вьюхе
+
+
+[4:58] 
+но при удалении или апдейте будет ожидаемый результат
