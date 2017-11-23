@@ -4919,3 +4919,21 @@ grigory.kislin [6:33 PM]
 
 Shalukhau Dzmitry [6:39 PM] 
 Ага
+
+
+Glumov Konstantin [10:16 AM] 
+Немного непонятно по AuthorizedUser. Его экземпляр создает Спринг при вызове метода doPost в UserServlet или в другом месте?
+
+
+Few 
+[10:19 AM] 
+а зачем нам его экземпляр?
+
+
+[10:19] 
+в нем все статическое
+
+
+Glumov Konstantin 
+[10:39 AM] 
+точно

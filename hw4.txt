@@ -60,6 +60,34 @@ Valery [8:40 AM]
 А разве в этом месте не вернется ошибка при попытке обновить запись с несуществующим id? - 'WHERE id=:id'
 
 
-new messages
 Katherine Buzatu [8:45 AM] 
 Не вернется. Просто строка с такими параметрами не будет найдена и ничего не будет изменено.
+
+
+Антон Кляшторный [10:36 AM] 
+*Зарефакторил в InMemoryMealRepositoryImpl.getAll/getBetween: filter() перед sorted() https://howtodoinjava.com/java-8/how-to-use-predicate-in-java-8/
+HowToDoInJava
+Java 8 Predicate Examples - HowToDoInJava
+In java 8, Predicate a functional interface and can therefore be used as the assignment target for a lambda expression or method reference. So, where you think, you can use these true/false returning functions in day to day programming?
+Apr 4th, 2014 at 5:37 PM
+ 
+
+
+Marina [2:57 PM] 
+Ребят, может у кого то такая же проблема - после накатки 4_6_add_jpa.patch, maven в idea подчеркивает зависимости, не могу никак исправить, в задании сказано: "При настройке JPA в IDEA НЕ скачивайте библиотеку javaee.jar (и любую другую). Все зависимости в проект попадают только через Maven". Не могу понять как это сделать.
+
+
+grigory.kislin [3:03 PM] 
+@Marina а maven рефреш (reimport all кнопка) делала?
+
+
+Marina [3:04 PM] 
+да, не помогает
+Grigory Kislin
+@Marina а maven рефреш (reimport all кнопка) делала?
+Posted in #hw4Today at 3:03 PM
+
+
+grigory.kislin [3:08 PM] 
+а без idea- проект компилится?
+mvn compile ? (edited)
