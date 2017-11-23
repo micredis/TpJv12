@@ -3322,3 +3322,14 @@ Andrew [10:14 PM]
 
 [10:16] 
 Вытянул с видео - org.postgresql.ssl.NonValidatingFactory - заработало
+
+
+grigory.kislin [1:41 AM] 
+@here
+Занятие 4 готово!
+*Welcome: #hw4*
+
+
+[1:42] 
+С этого занятия появляется #graduate_project
+Тоже welcome:) (edited)

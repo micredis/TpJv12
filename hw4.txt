@@ -1,0 +1,65 @@
+grigory.kislin [1:37 AM] 
+joined #hw4.
+
+
+grigory.kislin [1:37 AM] 
+set the channel topic: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson04.md
+
+
+grigory.kislin [1:38 AM] 
+Занятие 4: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson04.md
+ORM, JPA, Hibernate
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+(edited)
+
+
+YuriyD [1:42 AM] 
+joined #hw4 along with 18 others.
+
+
+itAvgur [6:25 AM] 
+Интересно у меня idea пропатчила sql скрипты в патче 1. Прибавила еще одну таблица meals.
+В итоге две таблицы, пришлось выкусывать старые.
+
+
+Few
+[6:52 AM] 
+ты патчи то на мастер накатывай, а не на HW3
+
+
+[6:53] 
+там не должно быть таблицы meals
+
+
+itAvgur [7:25 AM] 
+А еще я пользуюсь IDEA  и изучаю JAVA ? :grinning:
+Ну конечно же master.
+Ладно, проехали. Это у меня в мастере кусок кода видно остался. (edited)
+
+
+Tanya [7:50 AM] 
+возможно не закоммитил изменения перед переходом на мастер
+
+Few
+[7:53 AM] 
+@itAvgur это было бы слишком очевидно, да? :grinning:
+
+
+itAvgur [8:02 AM] 
+Это дело было так: исправил два скрипта sql, а УЖЕ ПОТОМ создал HW03.
+Визуально - все пучком. А при возврате в мастер эти изменения там и проявились.
+2Few Никаких костылей - только ХАРДКОР!
+Офтопик закончил. :no_entry: (edited)
+
+
+Valery [8:40 AM] 
+>В JdbcUserRepositoryImpl.save() и UserServiceImpl.update добавил проверку на несуществующей в базе User.id
+А разве в этом месте не вернется ошибка при попытке обновить запись с несуществующим id? - 'WHERE id=:id'
+
+
+new messages
+Katherine Buzatu [8:45 AM] 
+Не вернется. Просто строка с такими параметрами не будет найдена и ничего не будет изменено.
