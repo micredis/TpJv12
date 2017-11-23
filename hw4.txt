@@ -91,3 +91,81 @@ Posted in #hw4Today at 3:03 PM
 grigory.kislin [3:08 PM] 
 а без idea- проект компилится?
 mvn compile ? (edited)
+
+
+MetalBro [5:06 PM] 
+после 4.3 на Travis не билдится, выдает org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of class path resource [db/populateDB.sql]: DELETE FROM user_roles; nested exception is org.postgresql.util.PSQLException: ERROR: relation "user_roles" does not exist
+ Position: 13
+
+
+[5:06] 
+и т.п.
+
+
+MetalBro [5:06 PM] 
+так должно быть?
+1 reply Today at 5:15 PM View thread
+
+philip.goldm [4 hours ago] 
+Да
+
+MetalBro [5:19 PM] 
+Спасибо!
+
+
+[5:20] 
+в настройках на сайте не видно этого
+отключил в настройках (remove pattern) проверку assert в JUnit (проверяем через матчеры) и meta http-equiv="content-type" в JSP
+сделал remove pattern на Cross Site Scripting (XSS), будем делать защиту на последнем занятии
+Где это вообще
+
+
+MetalBro [5:25 PM] 
+просто поудаляли замечания после проверки?
+
+
+kadmser [5:32 PM] 
+@MetalBro тоже сейчас не могу этого найти на сайте
+
+
+MetalBro [5:36 PM] 
+там получается когда он сделает список замечаний (у меня получилось 18) можно при раскрытии каждого щелкнуть на значке настройки и сказать ignore issue, remove pattern
+
+
+[5:37] 
+в проекте, ссылка куда идет из нового задания, таких замечаний нет, там не обновлено с 3 урока у него
+
+
+[5:38] 
+не очень удобно, когда непонятно что точно должно быть после патчей
+
+
+kadmser [6:07 PM] 
+добавляю проекты из гитхаба на  versioneye.com , а список все равно остается пустой
+
+
+kadmser 
+[7:06 PM] 
+А, все ок. Нужно просто было включить ветку
+
+
+MetalBro [7:08 PM] 
+какие у тебя issues?
+
+
+[7:09] 
+есть The method getBetween() has an NPath complexity of 625 ?
+
+Marina [7:36 PM] 
+Что я совсем запуталась, откатила на патч 4-5 и теперь не могу снова накатить 4-6, выдает ошибку: Failed to make the following files writable:
+/home/marina/IdeaProjects/topjava/src/main/resources/spring/spring-db.xml
+/home/marina/IdeaProjects/topjava/src/main/resources/db/postgres.properties
+/home/marina/IdeaProjects/topjava/pom.xml
+/home/marina/IdeaProjects/topjava/src/main/java/ru/javawebinar/topjava/model/User.java
+/home/marina/IdeaProjects/topjava/src/main/java/ru/javawebinar/topjava/model/AbstractNamedEntity.java
+/home/marina/IdeaProjects/topjava/src/main/java/ru/javawebinar/topjava/model/Meal.java
+/home/marina/IdeaProjects/topjava/src/main/java/ru/javawebinar/topjava/model/AbstractBaseEntity.java
+Grigory Kislin
+а без idea- проект компилится?
+mvn compile ?
+Posted in #hw4Today at 3:08 PM
