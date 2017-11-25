@@ -2206,3 +2206,9 @@ Andrey [7:57 AM]
 Sergeev Viktor
 Мой английский кривоват, но как я понял им нужен алгоритм, которые будет выдавать подходящие пользователю новости, по языку, по контенту, по длинне контента, исходя из того откуда читатель пришел, а не просто CRUD
 Posted in #randomNov 21st at 10:05 PM
+
+
+chimax [7:19 PM] 
+https://www.youtube.com/watch?v=DclLJt8zDWk
+YouTube ITVDN
+Создание веб-приложения с помощью Spring JDBC, Spring MVC, Freemarker

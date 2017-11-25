@@ -252,3 +252,442 @@ philip.goldm [9:24 PM]
 Tanya [9:43 PM] 
 3.2 через Rule, про timeout ничего не сказано (edited)
 ну а 3.3. логично из 3.2 получается, сделать сводку
+
+
+Alexander _Gubanow [1:05 PM] 
+@grigory.kislin Свойства JPA обычно настраиваются в persistence.xml  файлe. Мы их настраиваем прямо в бине FactoryBean. Связано ли это с тем, что мы используем  Hibernate? И где можно бы почитать про это подробнее
+
+
+Few [2:54 PM] 
+Скорее это связано с использованием Спринга
+
+
+[2:54] 
+http://www.baeldung.com/the-persistence-layer-with-spring-and-jpa#xmlconfig
+Baeldung
+A Guide to Hibernate with Spring 4 | Baeldung
+Setup JPA with Spring 4 - how to set up the EntityManager factory and use the raw JPA APIs.
+Dec 18th, 2013 at 4:03 PM
+ 
+
+
+Alexander _Gubanow [3:25 PM] 
+Я понял,можно и без persistence.xml. Главное  packagesToScan определить
+
+
+grigory.kislin [6:00 PM] 
+>  Свойства JPA обычно настраиваются в persistence.xml  файлe.
+вот тут можно, если кратко:  Настройка EntityManagerFactory
+https://habrahabr.ru/post/232381/
+Хабрахабр
+По следам Spring Pet Clinic. Maven/ Spring Context/ Spring Test/ Spring ORM/ Spring Data JPA
+Здравствуйте! Spring MVC, согласно обзору инструментов и технологий Java за 2014 г. от RevbelLabs, является самым популярным веб фреймворком. Далее тот же... (77 kB)
+
+
+grigory.kislin [6:07 PM] 
+Spring помогает, можно и без него:
+https://stackoverflow.com/a/42372648/548473
+https://stackoverflow.com/a/30909140/548473
+и- почему не воспользоваться google ?? https://www.google.ru/search?newwindow=1&safe=active&ei=Y5QZWvj5OYPE6ATjpaqABg&q=JPA+without+%22persistence.xml%22&oq=JPA+without+%22persistence.xml%22&gs_l=psy-ab.3..0i203k1j0i22i30k1l9.208680.214131.0.214319.9.9.0.0.0.0.168.949.6j3.9.0....0...1c.1.64.psy-ab..0.9.934...0j0i7i30k1j0i7i5i30k1j0i7i30i19k1j0i7i5i30i19k1j0i8i7i30i19k1j0i5i30k1j0i8i30k1.0.OrPU3IT34Qk
+stackoverflow.com
+Create JPA EntityManager without persistence.xml configuration file
+Is there a way to initialize the EntityManager without a persistence unit defined? Can you give all the required properties to create an entity manager? I need to create the EntityManager from the ...
+ 
+ stackoverflow.com
+JPA without persistence.xml
+I'm trying to get started with using Guice Persist and JPA, which recommends using configuration via persistence.xml. Coming from a native Hibernate background where configuration was obtained
+ 
+
+
+PugV
+[6:40 PM] 
+У меня такой вопрос возник. Почему JpaUserRepositoryImpl помечен @Transactional(readOnly = true), без Propagation.SUPPORTS. Ведь по дефолту получается при операции чтения  должна всегда создаваться новая транзакция, что является затратным.
+
+
+grigory.kislin [7:08 PM] 
+@PugV не то:)
+в уроке есть ссылка, счас поищу
+
+
+[7:08] 
+вот: https://jira.spring.io/browse/DATAJPA-601
+
+[7:08] 
+:slightly_smiling_face:
+
+
+PugV
+[7:30 PM] 
+ок. посмотрю, спасибо. Просто везде написано, что SUPPORTS идеально подходит для чтения)))
+
+
+RNG [7:35 PM] 
+Такая проблема: после того как я помечаю класс `Meal` аннотацией `@Entity` (со всеми другими вытекающими аннотациями на поля), у меня обваливаются тесты в `UserServiceTest` c такой ошибкой
+```java.lang.IllegalStateException: Failed to load ApplicationContext Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in URL [file:/E:/ProjectsTraining/topjava12/target/classes/spring/spring-db.xml]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]```
+(edited)
+
+
+[7:36] 
+Если же убрать аннотацию `@Entity` с класса `Meal` все опять работает. (edited)
+
+[7:38] 
+С последнего патча 4.8 у меня появились изменения только в классах `Meal` и `JpaMealRepositoryImpl`, если что.
+
+
+[7:40] 
+Кто-то знает как пофиксить? Или может быть подскажите куда копать...
+
+Few [7:56 PM] 
+@PugV Вот еще нашел:
+
+
+[7:56] 
+https://www.ibm.com/developerworks/ru/library/j-ts1/index.html
+ibm.com
+Распространенные ошибки
+В этой статье Марк Ричардс описывает распространенные подводные камни, которые могут привести к потере согласованности. Они объясняются на примерах, взятых из инфраструктуры Spring Framework и спецификации EJB (Enterprise JavaBeans) 3.0.
+ 
+
+
+grigory.kislin [8:07 PM] 
+@RNG см верх последнего эксепшена (edited)
+
+
+
+[8:08] 
+@PugV ты ссыку то почитай:) это статья, с которой я начал беседу
+
+
+RNG [8:27 PM] 
+Всё, проблему решил. Оказалось при создание запроса в `@NamedQuery` допустил ошибку.
+
+Дима Жуков [8:41 PM] 
+Ребята, у кого-нибудь было в MealServiceTest - org.hibernate.LazyInitializationException: could not initialize proxy - no Session?
+
+Katherine Buzatu [8:47 PM] 
+Думаю, у всех.
+
+
+Дима Жуков [8:48 PM] 
+@Katherine Buzatu это значит я на правильном пути?)
+
+
+Katherine Buzatu [8:49 PM] 
+Думаю, да. Только как это правильно обойти?..
+
+
+MetalBro [8:53 PM] 
+я изменил тесты
+
+
+[8:54] 
+нужно выкидывать сравнение по полю юзер
+
+[8:54] 
+хотя не помню, эта ошибка может на другое выскакивала
+
+[8:55] 
+куда выводить п3.3. ? Вывожу хитро, в консоль)
+
+Katherine Buzatu [8:58 PM] 
+> нужно выкидывать сравнение по полю юзер
+ну да, так работает. А правильно ли это - юзера игнорировать? А вдруг он поменялся?
+
+
+MetalBro [8:59 PM] 
+его нет в MealTestData
+
+
+[8:59] 
+я долго тупил, почему у меня в логе пишет
+
+Katherine Buzatu [8:59 PM] 
+Тогда у нас и Юзера в Милзе не было.
+
+
+MetalBro [8:59 PM] 
+что два списка неэквивалентны, хотя сам же их выводит идентичные
+
+
+[9:00] 
+мы в тестах вроде как задаем условия, что при таком то юзере должен получиться такой то список
+
+
+[9:00] 
+а из базы нам приходит лишняя графа
+
+Katherine Buzatu [9:01 PM] 
+и должны проверить, что приходит нужная Еда нужного Юзера. А мы Юзера прокатили.
+
+
+Nick [9:01 PM] 
+Я просто переписал тесты с помощью коллекции Hamcrest
+
+
+Дима Жуков 
+[9:02 PM] 
+Hamcrest?
+ 2 replies Last reply today at 9:13 PM View thread
+
+MetalBro [9:02 PM] 
+нет, мы подобрали заведомо правильный список
+
+[9:02] 
+public static final List<Meal> MEALS = Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
+
+
+[9:02] 
+здесь
+
+[9:03] 
+и в базу перед стартом закидываются эти данные
+
+
+[9:04] 
+только из базы приходится брать полностью строку
+
+[9:04] 
+//        assertThat(actual).usingFieldByFieldElementComparator().isEqualTo(expected);
+       assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
+
+
+[9:04] 
+посмотрим еще что скажут на это
+
+
+Katherine Buzatu [9:04 PM] 
+Ну да, ну да... И методы правильные пишем, которые правильно все делают :slightly_smiling_face:
+
+
+MetalBro [9:06 PM] 
+если с 1 методом сделать, выставив fetchType.EAGER
+
+[9:06] 
+то выдаст
+
+[9:06] 
+Expecting:
+<"[Meal{id=100010, dateTime=2015-06-01T18:00, description='Созданный ужин', calories=300},
+   Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+   Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+   Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+   Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+   Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+   Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@1e75d6a6)">
+to be equal to:
+<"[Meal{id=100010, dateTime=2015-06-01T18:00, description='Созданный ужин', calories=300},
+   Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+   Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+   Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+   Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+   Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+   Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@1e75d6a6)">
+but was not.
+
+
+[9:06] 
+прикол да?
+
+
+[9:07] 
+возможно стоит тесты переработать, но это как партия скажет
+
+Katherine Buzatu [9:09 PM] 
+Мы тут не ждем партийных указаний. Мы думаем, надо это или нет для выполнения нашей задачи. :sunglasses:
+
+
+MetalBro [9:11 PM] 
+думаешь, есть смысл сравнивать поля юзера вместо забрасывания того что должно быть?
+
+Дима Жуков [9:12 PM] 
+Да что нибудь в meal entity не докрутили наверное. Какой нибудь экстра @ или join в запрос)
+
+
+MetalBro [9:12 PM] 
+до этого у нас было просто поле user_id, теперь там объект
+
+
+[9:13] 
+нет, получается поле user в классе meal хранит ссылку на объект другой таблицы по id
+
+[9:13] 
+вот кстати, все писали     @JoinColumn(name = "user_id") ? вроде как он сам и без этого понимает как связать...
+
+
+philip.goldm [9:14 PM] 
+@MetalBro, @Katherine Buzatu У меня такая же проблема с тестами
+
+
+RNG [9:14 PM] 
+И у меня тоже)
+
+
+Katherine Buzatu [9:14 PM] 
+@MetalBro
+> думаешь, есть смысл сравнивать поля юзера
+Поля не стоит, но id, думаю, надо.
+
+
+MetalBro [9:15 PM] 
+ты делала дебаг?
+
+
+Katherine Buzatu [9:15 PM] 
+Делала. (edited)
+
+
+MetalBro [9:15 PM] 
+там в поле объект хранится, а не id
+
+
+Katherine Buzatu [9:15 PM] 
+Прокси.
+
+vch [9:16 PM] 
+Вроде у этого прокси id должен быть доступен? И без всякого LazyException?
+
+
+philip.goldm [9:19 PM] 
+у меня сейчас валятся только testUpdateNotFound и testGetAll .
+указываю FetchType.EAGER + у каждого теста добавляю @Transactional
+https://cl.ly/0m3a1q1o1h3s
+
+При этом если выполняешь отдельно testGetAll. Выполняется успешно 
+https://cl.ly/3G1G0s2S2N15
+Created with CloudApp, The Video and Image Sharing Platform - Sign Up for Free
+Image 2017-11-25 at 9.19.34 PM.png (85 kB)
+ Created with CloudApp, The Video and Image Sharing Platform - Sign Up for Free
+Image 2017-11-25 at 9.19.22 PM.png (43 kB)
+(edited)
+2 replies Last reply today at 9:40 PM View thread
+
+Katherine Buzatu [9:20 PM] 
+Сверить-то в конечном счете можно. Не хочется верить, что на эту одну строчку кода с ORM надо писать километр тестов.
+
+
+MetalBro [9:22 PM] 
+m.dateTime BETWEEN
+
+
+MetalBro [9:22 PM] 
+а вот здесь идея ни у кого красным ошибку не подчеркивает по dateTime?)
+1 reply Today at 9:23 PM View thread
+
+MetalBro [9:22 PM] 
+type mismatch что-то в этом роде)
+
+
+[9:23] 
+баг идеи какой-то
+
+RNG [9:23 PM] 
+@MetalBro погугли `@SuppressWarnings`
+
+
+Дима Жуков [9:23 PM] 
+Что то мне не нравится название suppress
+
+[9:23] 
+:slightly_smiling_face:
+
+RNG [9:24 PM] 
+Ну так оно работает же и с подчеркиванием. А это способ убрать это недоразумение :slightly_smiling_face:
+
+
+anpotashev [9:25 PM] 
+Всем привет!
+Вопрос не из задания, а чисто академический. Если хочу чтоб поле email должно быть уникальным, но без учета регистра, то как его можно объявить?
+В бд реализуется легко, а вот как можно описать в модели.
+1 reply Today at 9:29 PM View thread
+
+Дима Жуков [9:25 PM] 
+У меня вроде не подчёркивает
+
+
+[9:25] 
+Но идея у меня 16.1
+
+Дима Жуков [9:31 PM] 
+@anpotashev orm аннотация какая для этого? Я пока знаю только not null)) но логично предположить что есть unique и email аннотации. Которая вообще проверит что там корректный емайл
+
+
+[9:33] 
+Опять таки какой то чувак там из видео показывал как свои аннотации делать.. :bike:
+
+
+anpotashev [9:35 PM] 
+Аннотация @Email немного для другого. Она служит для проверки что введенное значение похоже на email (содержит @ и т.п.). Интересует именно аннотации, для генерации таблиц.
+
+[9:36] 
+Можно еще в сеттер поля добавить преобразование к нижнему регистру, но, имхо, это не тру-вей
+
+
+Дима Жуков 
+[9:36 PM] 
+Почему? Я кстати тоже хотел предложить
+
+
+anpotashev [9:38 PM] 
+Потому что в таком случае код будет выполнять то, что можно сделать в базе, тем же триггером. Или чем-то вроде 
+"email VARCHAR_IGNORECASE(255) NOT NULL," (edited)
+
+
+Дима Жуков 
+[9:44 PM] 
+Да и вообще, пусть будет у меня двойка по инкапсуляции. Но я не особо вижу смысла в сеттере если там нет проверки. Просто делать паблик поле тогда да и все. Смысл от сеттеров этих просто формальность и как стандарт просто. Ошибаюсь я конечно наверное. Но
+
+
+[9:45] 
+Но на будущее если только
+
+
+anpotashev [9:47 PM] 
+А ты можешь быть уверен что твой сеттер использует тот же спринг или хибернейт, а не сгенерирует свой сеттер для прокси-класса?
+
+
+[9:51] 
+Меня в данном случае интересует аннотации не для валидации, а для генерации таблиц. Вопрос, повторюсь, академический: генерить таблицы на основании классов сущностей в реальном проекте вряд-ли кто-то будет.
+
+
+russell [9:53 PM] 
+added and commented on this Java snippet
+@Entity Foo { 
+  private value;
+  @Column(unique = true)
+  private valueLowercased;
+​
+  @PrePersist @PreUpdate private prepare(){
+    this.valueLowercased = value == null ? null : value.toLowerCase();
+  }
+}
+1 Comment Collapse
+@anpotashev в jpa нет такого, стек выдал вариант
+
+
+
+new messages
+vch [9:53 PM] 
+@Дима Жуков без сеттеров всё равно не обойтись, даже если поля будут public. Spring MVC и др. требуют наличия сеттеров/геттеров
+
+
+[9:55] 
+@anpotashev
+> генерить таблицы на основании классов сущностей в реальном проекте вряд-ли кто-то будет.
+Значит я всю жизнь занимался нереальными проектами... :thinking_face: (edited)
+
+
+grigory.kislin [9:57 PM] 
+по поводу тестов не забываем правило: тесты для приложения, а не приложение для тестов:)
+eager на каждую еду нам не нужен!
+@anpotashev
+c email мы решим проблему тем, что будем хранить email только в lowercase
+
+
+anpotashev [9:58 PM] 
+@vch значит ошибаюсь, тем более тогда интересно.
+
+
+
+new messages
+grigory.kislin [10:00 PM] 
+@vch вы на проде таблицы автогенерите? миграцией не пользуетесь?
