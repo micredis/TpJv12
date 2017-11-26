@@ -14,3 +14,9 @@ Contribute to topjava development by creating an account on GitHub.
 
 Argentum_kuh [1:54 AM] 
 joined #graduate_project along with 18 others.
+
+
+grigory.kislin [5:29 PM] 
+Привет!
+по выпускному: задание дано как есть, но делать в нем надо только то, что уже прошли
+например объектную модель, слой сервиса, слой контроллера пока без ввода данных снаружи (edited)

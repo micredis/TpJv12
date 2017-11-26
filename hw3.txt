@@ -3944,3 +3944,299 @@ grigory.kislin [3:54 PM]
 
 [3:55] 
 @Katherine Buzatu мне кажется с константами тестировать проще
+
+
+Maksim [3:31 PM] 
+Всем привет. Почему в MavenProjects в ветке Dependensies подсвечивается красным org.springframework:spring-test:4.3.12.RELEASE (test)
+
+
+grigory.kislin [5:31 PM] 
+@Maksim
+у меня все ок. зависимость подтянулась, тесты идут? реимпорт алл (первая кнопка)- делал?
+
+
+Maksim [6:51 PM] 
+Тесты UserServiceTest ни один не проходит
+
+
+Maksim [6:51 PM] 
+added this Plain Text snippet
+/usr/lib/jvm/default-java/bin/java -ea -Dfile.encoding=UTF-8 -Didea.test.cyclic.buffer.size=1048576 -javaagent:/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/lib/idea_rt.jar=36097:/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/bin -classpath /home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/lib/idea_rt.jar:/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/plugins/junit/lib/junit-rt.jar:/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/plugins/junit/lib/junit5-rt.jar:/usr/lib/jvm/default-java/jre/lib/charsets.jar:/usr/lib/jvm/default-java/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/default-java/jre/lib/ext/dnsns.jar:/usr/lib/jvm/default-java/jre/lib/ext/icedtea-sound.jar:/usr/lib/jvm/default-java/jre/lib/ext/jaccess.jar:/usr/lib/jvm/default-java/jre/lib/ext/localedata.jar:/usr/lib/jvm/default-java/jre/lib/ext/nashorn.jar:/usr/lib/jvm/default-java/jre/lib/ext/sunec.jar:/usr/lib/jvm/default-java/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/default-java/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/default-java/jre/lib/ext/zipfs.jar:/usr/lib/jvm/default-java/jre/lib/jce.jar:/usr/lib/jvm/default-java/jre/lib/jsse.jar:/usr/lib/jvm/default-java/jre/lib/management-agent.jar:/usr/lib/jvm/default-java/jre/lib/resources.jar:/usr/lib/jvm/default-java/jre/lib/rt.jar:/home/maximus/IdeaProjects/topjava/target/test-classes:/home/maximus/IdeaProjects/topjava/target/classes:/home/maximus/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/maximus/.m2/repository/org/slf4j/jcl-over-slf4j/1.7.25/jcl-over-slf4j-1.7.25.jar:/home/maximus/.m2/repository/org/slf4j/jul-to-slf4j/1.7.25/jul-to-slf4j-1.7.25.jar:/home/maximus/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar:/home/maximus/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar:/home/maximus/.m2/repository/org/springframework/spring-context/4.3.12.RELEASE/spring-context-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/springframework/spring-aop/4.3.12.RELEASE/spring-aop-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/springframework/spring-beans/4.3.12.RELEASE/spring-beans-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/springframework/spring-core/4.3.12.RELEASE/spring-core-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/springframework/spring-expression/4.3.12.RELEASE/spring-expression-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/springframework/spring-jdbc/4.3.12.RELEASE/spring-jdbc-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/springframework/spring-tx/4.3.12.RELEASE/spring-tx-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/postgresql/postgresql/42.1.4/postgresql-42.1.4.jar:/home/maximus/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/home/maximus/.m2/repository/javax/servlet/jstl/1.2/jstl-1.2.jar:/home/maximus/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/maximus/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/maximus/.m2/repository/org/springframework/spring-test/4.3.12.RELEASE/spring-test-4.3.12.RELEASE.jar:/home/maximus/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 -junit4 ru.javawebinar.topjava.service.UserServiceTest
+21:50:24.821 DEBUG o.springframework.jdbc.datasource.DataSourceUtils.doGetConnection:110 - Fetching JDBC Connection from DataSource
+21:50:24.822 DEBUG o.s.jdbc.datasource.DriverManagerDataSource.getConnectionFromDriver:142 - Creating new JDBC DriverManager Connection to [jdbc:postgresql://localhost:5432/topjava]
+21:50:24.827 DEBUG org.postgresql.Driver.loadDefaultProperties:131 - Loading driver configuration via classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+21:50:24.829 DEBUG org.postgresql.Driver.connect:240 - Connecting with URL: jdbc:postgresql://localhost:5432/topjava
+21:50:24.844 DEBUG org.postgresql.jdbc.PgConnection.<init>:182 - PostgreSQL JDBC Driver 42.1.4
+21:50:24.845 DEBUG org.postgresql.jdbc.PgConnection.setDefaultFetchSize:1012 -  setDefaultFetchSize = 0
+21:50:24.846 DEBUG org.postgresql.jdbc.PgConnection.setPrepareThreshold:1021 -  setPrepareThreshold = 5
+21:50:24.855 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:136 - Trying to establish a protocol version 3 connection to localhost:5432
+21:50:24.866 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:186 - Receive Buffer Size is 530 904
+21:50:24.867 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:187 - Send Buffer Size is 1 313 280
+21:50:24.985 INFO o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:441 - Executing SQL script from class path resource [db/populateDB.sql]
+21:50:25.012 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:473 - 2 returned as update count for SQL: DELETE FROM user_roles
+21:50:25.019 DEBUG o.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection:329 - Returning JDBC Connection to DataSource
+21:50:25.028 WARN o.springframework.test.context.TestContextManager.beforeTestMethod:273 - Caught exception while allowing TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6caf0677] to process 'before' execution of test method [public void ru.javawebinar.topjava.service.UserServiceTest.create() throws java.lang.Exception] for test instance [ru.javawebinar.topjava.service.UserServiceTest@413d1baf]
+org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #2 of class path resource [db/populateDB.sql]: DELETE FROM meals; nested exception is org.postgresql.util.PSQLException: ERROR: relation "meals" does not exist
+ Позиция: 13
+  at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:491)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.populate(ResourceDatabasePopulator.java:238)
+  at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:48)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.execute(ResourceDatabasePopulator.java:253)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:210)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:142)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.beforeTestMethod(SqlScriptsTestExecutionListener.java:112)
+  at org.springframework.test.context.TestContextManager.beforeTestMethod(TestContextManager.java:269)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+  at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+  at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+  at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:252)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+  at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+  at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+  at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+  at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+  at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+  at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+  at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+  at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+  at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+  at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
+  at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
+  at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+Caused by: org.postgresql.util.PSQLException: ERROR: relation "meals" does not exist
+ Позиция: 13
+  at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2477)
+  at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2190)
+  at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:300)
+  at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:428)
+  at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:354)
+  at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:301)
+  at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:287)
+  at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:264)
+  at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:260)
+  at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:470)
+  ... 27 common frames omitted
+org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #2 of class path resource [db/populateDB.sql]: DELETE FROM meals; nested exception is org.postgresql.util.PSQLException: ERROR: relation "meals" does not exist
+ Позиция: 13
+  at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:491)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.populate(ResourceDatabasePopulator.java:238)
+  at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:48)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.execute(ResourceDatabasePopulator.java:253)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:210)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:142)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.beforeTestMethod(SqlScriptsTestExecutionListener.java:112)
+  at org.springframework.test.context.TestContextManager.beforeTestMethod(TestContextManager.java:269)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+  at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+  at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+  at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:252)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+  at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+  at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+  at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+  at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+  at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+  at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+  at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+  at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+  at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+  at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
+  at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
+  at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+Caused by: org.postgresql.util.PSQLException: ERR...
+Add Comment Collapse This snippet was truncated for display: see it in full.
+
+
+
+Maksim [6:53 PM] 
+И остальные тесты перестали идти
+
+
+[6:53] 
+Странно как-то
+
+
+Maksim [6:54 PM] 
+added this Plain Text snippet
+/usr/lib/jvm/default-java/bin/java -Dmaven.multiModuleProjectDirectory=/home/maximus/IdeaProjects/topjava -Dmaven.home=/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/plugins/maven/lib/maven3 -Dclassworlds.conf=/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/plugins/maven/lib/maven3/bin/m2.conf -javaagent:/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/lib/idea_rt.jar=37323:/home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/bin -Dfile.encoding=UTF-8 -classpath /home/maximus/Develop/IntellijIDEA/idea-IU-171.3780.107/plugins/maven/lib/maven3/boot/plexus-classworlds-2.5.2.jar org.codehaus.classworlds.Launcher -Didea.version=2017.2.6 install
+[INFO] Scanning for projects...
+[INFO]                                     
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Calories Management 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ topjava ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 6 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ topjava ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ topjava ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:testCompile (default-testCompile) @ topjava ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.20.1:test (default-test) @ topjava ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO] T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running ru.javawebinar.topjava.service.UserServiceTest
+21:53:49.509 INFO o.s.jdbc.datasource.DriverManagerDataSource.setDriverClassName:133 - Loaded JDBC driver: org.postgresql.Driver
+21:53:49.803 DEBUG o.springframework.jdbc.datasource.DataSourceUtils.doGetConnection:110 - Fetching JDBC Connection from DataSource
+21:53:49.804 DEBUG o.s.jdbc.datasource.DriverManagerDataSource.getConnectionFromDriver:142 - Creating new JDBC DriverManager Connection to [jdbc:postgresql://localhost:5432/topjava]
+21:53:49.809 DEBUG org.postgresql.Driver.loadDefaultProperties:131 - Loading driver configuration via classloader sun.misc.Launcher$AppClassLoader@7f31245a
+21:53:49.810 DEBUG org.postgresql.Driver.connect:240 - Connecting with URL: jdbc:postgresql://localhost:5432/topjava
+21:53:49.823 DEBUG org.postgresql.jdbc.PgConnection.<init>:182 - PostgreSQL JDBC Driver 42.1.4
+21:53:49.824 DEBUG org.postgresql.jdbc.PgConnection.setDefaultFetchSize:1012 -  setDefaultFetchSize = 0
+21:53:49.825 DEBUG org.postgresql.jdbc.PgConnection.setPrepareThreshold:1021 -  setPrepareThreshold = 5
+21:53:49.834 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:136 - Trying to establish a protocol version 3 connection to localhost:5432
+21:53:49.852 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:186 - Receive Buffer Size is 530 904
+21:53:49.853 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:187 - Send Buffer Size is 1 313 280
+21:53:49.932 INFO o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:441 - Executing SQL script from class path resource [db/populateDB.sql]
+21:53:49.942 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:473 - 0 returned as update count for SQL: DELETE FROM user_roles
+21:53:49.963 DEBUG o.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection:329 - Returning JDBC Connection to DataSource
+21:53:49.974 WARN o.springframework.test.context.TestContextManager.beforeTestMethod:273 - Caught exception while allowing TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@38467116] to process 'before' execution of test method [public void ru.javawebinar.topjava.service.UserServiceTest.create() throws java.lang.Exception] for test instance [ru.javawebinar.topjava.service.UserServiceTest@5b7a7f33]
+org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #2 of class path resource [db/populateDB.sql]: DELETE FROM meals; nested exception is org.postgresql.util.PSQLException: ERROR: relation "meals" does not exist
+ Позиция: 13
+  at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:491)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.populate(ResourceDatabasePopulator.java:238)
+  at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:48)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.execute(ResourceDatabasePopulator.java:253)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:210)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:142)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.beforeTestMethod(SqlScriptsTestExecutionListener.java:112)
+  at org.springframework.test.context.TestContextManager.beforeTestMethod(TestContextManager.java:269)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+  at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+  at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+  at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:252)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+  at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+  at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+  at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+  at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+  at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+  at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+  at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:369)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:275)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:239)
+  at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:160)
+  at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:373)
+  at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:334)
+  at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:119)
+  at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:407)
+Caused by: org.postgresql.util.PSQLException: ERROR: relation "meals" does not exist
+ Позиция: 13
+  at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2477)
+  at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2190)
+  at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:300)
+  at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:428)
+  at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:354)
+  at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:301)
+  at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:287)
+  at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:264)
+  at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:260)
+  at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:470)
+  ... 30 common frames omitted
+21:53:50.018 DEBUG o.springframework.jdbc.datasource.DataSourceUtils.doGetConnection:110 - Fetching JDBC Connection from DataSource
+21:53:50.018 DEBUG o.s.jdbc.datasource.DriverManagerDataSource.getConnectionFromDriver:142 - Creating new JDBC DriverManager Connection to [jdbc:postgresql://localhost:5432/topjava]
+21:53:50.019 DEBUG org.postgresql.Driver.connect:240 - Connecting with URL: jdbc:postgresql://localhost:5432/topjava
+21:53:50.020 DEBUG org.postgresql.jdbc.PgConnection.<init>:182 - PostgreSQL JDBC Driver 42.1.4
+21:53:50.021 DEBUG org.postgresql.jdbc.PgConnection.setDefaultFetchSize:1012 -  setDefaultFetchSize = 0
+21:53:50.022 DEBUG org.postgresql.jdbc.PgConnection.setPrepareThreshold:1021 -  setPrepareThreshold = 5
+21:53:50.026 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:136 - Trying to establish a protocol version 3 connection to localhost:5432
+21:53:50.028 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:186 - Receive Buffer Size is 530 904
+21:53:50.029 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:187 - Send Buffer Size is 1 313 280
+21:53:50.034 INFO o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:441 - Executing SQL script from class path resource [db/populateDB.sql]
+21:53:50.040 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:473 - 0 returned as update count for SQL: DELETE FROM user_roles
+21:53:50.042 DEBUG o.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection:329 - Returning JDBC Connection to DataSource
+21:53:50.044 WARN o.springframework.test.context.TestContextManager.beforeTestMethod:273 - Caught exception while allowing TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@38467116] to process 'before' execution of test method [public void ru.javawebinar.topjava.service.UserServiceTest.delete() throws java.lang.Exception] for test instance [ru.javawebinar.topjava.service.UserServiceTest@5884a914]
+org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #2 of class path resource [db/populateDB.sql]: DELETE FROM meals; nested exception is org.postgresql.util.PSQLException: ERROR: relation "meals" does not exist
+ Позиция: 13
+  at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:491)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.populate(ResourceDatabasePopulator.java:238)
+  at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:48)
+  at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.execute(ResourceDatabasePopulator.java:253)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:210)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:142)
+  at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.beforeTestMethod(SqlScriptsTestExecutionListener.java:112)
+  at org.springframework.test.context.TestContextManager.beforeTestMethod(TestContextManager.java:269)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+  at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+  at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+  at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:252)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+  at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+  at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71...
+Add Comment Collapse This snippet was truncated for display: see it in full.
+
+
+
+Maksim [6:54 PM] 
+Когда делаю mvn package, то появляется ошибка,
+
+
+Maksim [7:01 PM] 
+и почему-то стало при запуске тестов появляться следующее:
+
+
+Viktor [7:02 PM] 
+@Maksim org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #2 of class path resource [db/populateDB.sql]: DELETE FROM meals; nested exception is org.postgresql.util.PSQLException: ERROR: relation "meals" does not exist
+
+
+[7:03] 
+тебе спринг говорит, что таблицы meals не существует
+
+
+Maksim [7:04 PM] 
+а она в каком патче добавляется?
+
+
+Viktor [7:05 PM] 
+ты к какой БД подсоединяешься? к своей?
+
+
+Maksim [7:05 PM] 
+Да
+
+
+[7:05] 
+вроде нашел
+
+[7:05] 
+в hw4
+
+
+[7:05] 
+в патке 4_1
+
+
+[7:05] 
+перезапустил idea вроде прошлая ошибка ушла
+
+
+[7:06] 
+Ага, точно, спасибо Виктор
+
+
+[7:07] 
+помогло
+
+
+[7:07] 
+точно не было таблицы
