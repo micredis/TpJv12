@@ -4240,3 +4240,53 @@ Maksim [7:05 PM]
 
 [7:07] 
 точно не было таблицы
+
+
+CRCx86 [2:13 PM] 
+подскажите плз, где посмотреть как в идее откатиться до предыдущего урока? всё запорол, ничего не работает
+
+
+Maksim [5:29 PM] 
+Не переживай. Все тут так делали. Посмотри вот здесь
+AleksandrZinov
+подскажите плз, где посмотреть как в идее откатиться до предыдущего урока? всё запорол, ничего не работает
+Posted in #hw3Today at 2:13 PM
+
+
+[5:29] 
+https://github.com/JavaOPs/topjava/wiki/Git
+GitHub
+JavaOPs/topjava
+topjava - Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery
+ 
+
+
+[5:29] 
+С места как откатить патч
+
+
+Shalukhau Dzmitry [6:45 PM] 
+Народ, я помню версию postgresql обсуждали: 10.1 смог кто-либо попробывать?
+
+Katherine Buzatu [2 hours ago] 
+У меня работает
+
+
+Few [2 hours ago] 
++1
+
+
+Shalukhau Dzmitry [2 hours ago] 
+Спасибо всем.
+
+
+Argentum_kuh [6:45 PM] 
+Я. Пашет норм.
+
+
+Shalukhau Dzmitry [6:48 PM] 
+Спасибо всем.
+
+
+chimax [9:02 PM] 
+ды

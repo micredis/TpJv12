@@ -3392,3 +3392,58 @@ chimax [9:41 PM]
 https://www.youtube.com/watch?v=3XKfP8gbd9k
 YouTube Оскар Хартманн
 КАК СИЛЬНО ТЫ ЭТОГО ХОЧЕШЬ?! МОТИВАЦИЯ!
+
+
+CRCx86 [2:12 PM] 
+подскажите где посмотреть как откатиться идее до предыдущего урока? всё запорол, ничего не работает
+
+
+russell [2:14 PM] 
+@CRCx86 Version Control -> Log-> выбираешь коммит -> reset current branch to here
+
+
+CRCx86 [2:15 PM] 
+@russell это не работает, не удаляются файлы
+
+
+Katherine Buzatu [2:15 PM] 
+Потом надо выбрать Hard
+
+
+CRCx86 [2:16 PM] 
+@Katherine Buzatu всё выбирал
+
+
+[2:16] 
+может обновить что то надо?
+
+
+russell [2:16 PM] 
+ты кажется стэш выбрал
+
+
+CRCx86 [2:17 PM] 
+а?
+
+
+Katherine Buzatu [2:19 PM] 
+>  не удаляются файлы
+и они теперь наверное в списке Local changed - unversioned. А если все unversioned теперь руками грохнуть?
+
+
+CRCx86 [2:21 PM] 
+@Katherine Buzatu а вот это сработало, спасибо!
+
+Katherine Buzatu [7 hours ago] 
+ломать - не строить!
+
+
+CRCx86 [2:22 PM] 
+@Katherine Buzatu я просто как слепой котёнок, ничего не понимаю, что надо делать, но иду и делаю, и ударяюсь о стены и табуретки
+
+Katherine Buzatu [7 hours ago] 
+Да я тоже случайно угадала :slightly_smiling_face:
+
+
+CRCx86 [7 hours ago] 
+:+1:

@@ -1714,3 +1714,50 @@ grigory.kislin [1:18 PM]
 itAvgur [1:19 PM] 
 т.е. это поведение норм?
 ок, тогда копаю дальше :slightly_smiling_face:
+
+
+itAvgur [1:58 PM] 
+А все таки странно... в видео UserTest работает.... здесь нет  и это норм....
+
+
+MetalBro [2:22 PM] 
+UserServiceTest? Нет, не норм, он должен работать
+
+
+Eugeniy [4:31 PM] 
+А у меня тесты Юзера на Ура. Это хорошо или плохо?))))
+
+
+[4:33] 
+И всё таки почему @Transactional в тестах плохо?
+
+
+anpotashev [4:39 PM] 
+@Eugeniy посмотри статью на хабре. Ссылка где-то выше у Григория.
+
+
+Andrey [4:42 PM] 
+https://habrahabr.ru/post/232381/
+Eugeniy Glushkov
+И всё таки почему @Transactional в тестах плохо?
+Posted in #hw4Today at 4:33 PM
+ Хабрахабр
+По следам Spring Pet Clinic. Maven/ Spring Context/ Spring Test/ Spring ORM/ Spring Data JPA
+Здравствуйте! Spring MVC, согласно обзору инструментов и технологий Java за 2014 г. от RevbelLabs, является самым популярным веб фреймворком. Далее тот же... (74 kB)
+
+
+Andrey [5:39 PM] 
+используйте usingElementComparatorIgnoringFields вместо usingFieldByFieldElementComparator и будет вам счастье у методе testGetAll,  после этого можно оставить  FetchType.LAZY в Еде (edited)
+
+
+
+itAvgur [6:13 PM] 
+Хорошо.
+Теперь все хорошо. :grinning:
+Eugeniy Glushkov
+А у меня тесты Юзера на Ура. Это хорошо или плохо?))))
+Posted in #hw4Today at 4:31 PM
+
+
+Viktor [8:39 PM] 
+Задачка "вперед в неизвестность": написать код, который будет считать запросы к БД от jpa. Сам сейчас ищю-читаю, может кому-то тоже будет интересно. Заметил, что количество запросов меняется иногда и посчитать их точно не всегда возможно. Как подсказка и отправная точка - механизм называется inteceptor.
