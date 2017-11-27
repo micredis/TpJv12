@@ -1268,3 +1268,449 @@ Anton K. [8:11 PM]
 
 [8:11] 
 как то прописывать
+
+
+ujwegh [9:21 PM] 
+а как посмотреть в идее код метода? например EntityManager persist. по ctrl+click кидает на интерфейс, а хотелось бы реализацию глянуть
+
+
+grigory.kislin [9:38 PM] 
+@ujwegh
+стрелка слева есть или Ctrl+H (edited)
+
+
+anpotashev [9:41 PM] 
+Или Ctrl+Alt+мышь слева
+
+
+ujwegh [9:44 PM] 
+спасибо
+
+Valery [9:45 PM] 
+почему в предыдущих реализациях репозитория в еде хранили used_id, а теперь User?
+если захочем переключися на jdbc, то снова код еды переписывать?
+
+
+Argentum_kuh [9:46 PM] 
+видимо да. безжалостный и безпощадный ORM
+
+anpotashev [9:48 PM] 
+Зачем? просто не будем использовать поле user.
+
+
+kadmser 
+[9:48 PM] 
+@Valery чтобы видеть на примере как работает ORM, для этого добавили юзера
+
+
+
+Valery [9:59 PM] 
+теперь чтобы сохранить еду надо из UserRepository по userId найти User и передать его в сеттер еды. то есть, в классе MealRepo надо держать ссылку на UserRepo.
+
+
+Valery [10:21 PM] 
+это как-то не логично. не соблюдается принцип слабых связей.
+
+
+Katherine Buzatu [10:28 PM] 
+Коллеги, хочу поделиться граблями. Помните, Григорий говорил в теме тестов: "...И следите за тем, чтобы ваши константы не запортились..." Дело было так. Тестирую я метод - тест сам проходит. Запускаю все тесты - этот же тест не проходит. Полтора часа в отладке, и обнаруживаю, что у моей родной константы юзерИд-то не тот! Так вот, один метод менял значение входящего параметра, и так константа благополучно изменила свое состояние и изрядно подпортила мне нервы.
+
+
+grigory.kislin [10:36 PM] 
+@Katherine Buzatu опыт тяжело достается...
+
+
+
+RNG [11:25 PM] 
+По поводу тестов в`MealServiceTest`. Их можно починить при игноре поля `user` в `assertMatch`. Либо же установкой к каждой константе с едой подходящего юзера (типа такого `ADMIN_MEAL2.setUser(ADMIN)`) но при этом нужно еще добавить `@Transactional` для класса. Какой из подходов верный? Или можеть быть они оба неправильные и есть еще какой-то вариант? (edited)
+
+
+Katherine Buzatu [11:38 PM] 
+Если не собираешься игнорировать Юзера, его, конечно, надо добавить в тестовый набор. У меня получилось в тесте проверять userId без @Transactional
+
+
+RNG [11:39 PM] 
+Ну мне вот тоже не очень понравился вариант с игнором, но во втором включение транзакционности смущало.
+
+
+
+[11:39] 
+@Katherine Buzatu Если не секрет, каким образом?
+
+Anton K. [11:40 PM] 
+org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+Caused by: org.postgresql.util.PSQLException: ОШИБКА: столбец meal0_.datetime не существует
+Я же правильн опонимаю что причина в том что конвертер не работает??
+
+
+[11:40] 
+Подскажите пожалуйста
+
+Katherine Buzatu [11:41 PM] 
+@RNG в AssertJ есть где покопаться.
+
+
+
+RNG [11:43 PM] 
+@Katherine Buzatu то есть, никакого лишнего кода в `MealServiceTest` типа `updated.setUser(USER)` у тебя нету?
+
+
+Katherine Buzatu [11:46 PM] 
+Я Юзера добавляла в `MealTestData`. Не уверена, что ему именно там место, подумаю еще. Но метод сравнения от этого не зависит.
+
+RNG [11:46 PM] 
+@Anton K. может быть неправильно написан запрос? по идее столбец должен быть meal0_.date_time
+
+
+[11:47] 
+@Katherine Buzatu Окей, спасибо за наводку.
+
+
+Anton K. [11:51 PM] 
+просто даже тест get не работает, а там же не запрос пишу а метод у менеджера вызываю
+
+
+[11:51] 
+Не понимаю
+
+
+RNG [11:52 PM] 
+@Anton K. Тесты еды сломались после последних патчей
+
+
+Anton K. [11:53 PM] 
+а
+
+
+RNG [11:53 PM] 
+Мы вот собсно и пытаемся их починить)
+
+Katherine Buzatu [14 hours ago] 
+А чинятся, кстати, очень просто, заменой в одном месте в `JdbcMealRepositoryImpl`.
+
+
+Viktor [12:38 AM] 
+@Anton K. какой конвертер? у меня без него все работает
+
+
+
+Anton K. [12:43 AM] 
+Ну в meals localdatetime и чтобы он мапился из базы корректно нужен конвертер
+
+
+[12:43] 
+как я понял
+
+
+Katherine Buzatu [12:51 AM] 
+> hibernate-core 5.2.x включает hibernate-entitymanager и hibernate-java8, Time API конвертеры уже не нужны.
+
+Anton K. [12 hours ago] 
+Если я пишу на JPQL запрос и в нем буду использовать LocaclDateTime идея почеркивает и пишет, мол только number, date or string
+
+
+Few 
+[10 hours ago] 
+В запросе с Between у меня тоже подчеркивала идея,  но я поменял на >= AND <=,  так работает
+
+
+Katherine Buzatu [7 hours ago] 
+На between плюется, но работает
+
+
+Few 
+[7 hours ago] 
+ну да, но не люблю красноту эту :slightly_smiling_face:
+
+
+Tanya [6 hours ago] 
+сделай SuppressWarnings и краснота уйдет :wink:
+
+
+
+Katherine Buzatu [6 hours ago] 
+Пусть черкает. Лучше перебдеть, чем недобдеть :slightly_smiling_face:
+
+
+Tanya [5 hours ago] 
+смотря какая сторона перевешивает эстетическая или прагматическая :slightly_smiling_face:
+
+
+net_ [8:01 AM] 
+added and commented on this Plain Text snippet
+Expecting:
+ <[User{id=100001, email=admin@gmail.com, name=Admin, enabled=true, roles=[ROLE_USER, ROLE_ADMIN], caloriesPerDay=2000},
+  User{id=100001, email=admin@gmail.com, name=Admin, enabled=true, roles=[ROLE_USER, ROLE_ADMIN], caloriesPerDay=2000},
+  User{id=100010, email=new@gmail.com, name=New, enabled=false, roles=[ROLE_USER], caloriesPerDay=1555},
+  User{id=100000, email=user@yandex.ru, name=User, enabled=true, roles=[ROLE_USER], caloriesPerDay=2000}]>
+to be equal to:
+ <[User{id=100001, email=admin@gmail.com, name=Admin, enabled=true, roles=[ROLE_USER, ROLE_ADMIN], caloriesPerDay=2000},
+  User{id=100010, email=new@gmail.com, name=New, enabled=false, roles=[ROLE_USER], caloriesPerDay=1555},
+  User{id=100000, email=user@yandex.ru, name=User, enabled=true, roles=[ROLE_USER], caloriesPerDay=2000}]>
+1 Comment Collapse
+Всем привет. Если у пользователя больше одной роли, то тесты валятся. Кто-то сталкивался с таким?
+
+
+
+Few
+[8:03 AM] 
+а откуда дубль пользователя?
+
+
+[8:07] 
+это который тест?
+
+
+net_ [8:07 AM] 
+это create
+
+
+[8:08] 
+UnitServiceTest
+
+
+net_ [8:08 AM] 
+added and commented on this Plain Text snippet
+INSERT INTO users (name, email, password) VALUES
+ ('User', 'user@yandex.ru', 'password'),
+ ('Admin', 'admin@gmail.com', 'admin');
+INSERT INTO user_roles (role, user_id) VALUES
+ ('ROLE_USER', 100000),
+ ('ROLE_USER', 100001),
+ ('ROLE_ADMIN', 100001)
+ ;
+1 Comment Collapse
+Просто добавил еще одну роль админу
+
+
+
+net_ [8:09 AM] 
+дубль прилетает из базы
+
+Few [8:13 AM] 
+а в базе смотрел после этой вставки? там нет дубля?
+
+
+net_ [8:13 AM] 
+нет. там только два пользователя + тот которого добавил в тесте
+
+
+[8:14] 
+те дубль прилетает из Persistency?
+
+
+Few
+[8:15 AM] 
+а ты админу вторую роль добавил в тестовых данных и скрипте SQL?
+
+
+net_ [8:15 AM] 
+в скрипте populateDb.sql
+
+
+Few
+[8:16 AM] 
+а в тестовых данных?
+
+
+[8:16] 
+UserTestData
+
+net_ [8:17 AM] 
+added this Plain Text snippet
+  public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
+Add Comment
+
+
+
+Few [8:17 AM] 
+странно
+
+
+net_ [8:17 AM] 
+to be equal to:
+<[User{id=100001, email=admin@gmail.com, name=Admin, enabled=true, roles=[ROLE_USER, ROLE_ADMIN], caloriesPerDay=2000},
+
+[8:18] 
+попробуй у себя
+
+Few
+[8:18 AM] 
+да, сейчас попробую
+
+
+[8:20] 
+да, рушится, интересная ситуация, сейчас будем дебажить
+
+net_ [8:27 AM] 
+… причем get по админу возвращает все правильно
+
+
+Few [8:28 AM] 
+запрос с join похоже не верно отрабатывает
+
+
+net_ [8:28 AM] 
+да похоже в getAll
+
+Few [8:39 AM] 
+победил, но не уверен что самым правильным способом
+
+
+Few
+[9:09 AM] 
+Select distinct в запросе решает проблему
+
+
+Few [9:16 AM] 
+Насколько я понял из объяснения на stack overflow, это возвращаются две ссылки на один объект
+
+
+[9:21] 
+Можно собирать в сет,  тогда он их отфильтрует,  или добавить distinct чтобы  этим hibernate занимался
+
+Katherine Buzatu [9:24 AM] 
+> Можно собирать в сет
+Это как? Вытащить все с дубликатами, а потом собрать в Сет - типа как distinct, но на нашей стороне?
+
+
+Few
+[9:25 AM] 
+Ну да
+
+
+[9:26] 
+Я позже ссылку скину,  сейчас не могу,  на телефоне
+
+[9:27] 
+Это по сути не дубликаты,  у entitymanager дубликаиов нет,  это несколько ссылок на один объект
+
+
+[9:29] 
+https://stackoverflow.com/questions/18753245/one-to-many-relationship-gets-duplicate-objects-whithout-using-distinct-why
+stackoverflow.com
+One-To-Many relationship gets duplicate objects whithout using "distinct".Why?
+I have 2 classes in a one-to-many relationship and a HQL query that is a bit strange. Even if I have read some questions already posted, it does not seem clear to me. Class Department{ @OneToMany(
+ 
+
+
+net_ [10:18 AM] 
+@Few спасибо!
+
+
+Katherine Buzatu [11:04 AM] 
+Развлекалась с Юзерами и Ролями.
+```@Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> roles;```
+Не заметила в этом месте разницы между FetchType EAGER и LAZY. Логически вроде так и должно быть для таких типов, но прямого указания на такое поведение я нигде не нашла. Кто может подтвердить или опровергнуть?
+
+
+vch [11:06 AM] 
+А почему `Логически вроде так и должно быть для таких типов` ?
+Я не экспериментировал, но вроде раз это другая таблица, то при LAZY её подгружать не будем.
+
+
+Katherine Buzatu [11:07 AM] 
+@vch потому что енум сам себе PK. Вот и грузится PK, а по сути - вся информация.
+
+
+vch [11:12 AM] 
+@Katherine Buzatu Не понял...
+У нас есть таблица `user_roles` из 2 полей - `user_id` и `role`
+В таблице `User` никаких ролей не хранится.
+Соответственно, если мы читаем User с Lazy, то он таблицу `user_roles` не прочитает.
+Это в теории.
+
+
+Katherine Buzatu [11:17 AM] 
+Ну, да... фигню сморозила...
+
+
+[11:22] 
+Но в дебаге в обоих случаях в getAll есть и Юзеры, и Роли.
+
+
+vch [11:23 AM] 
+@Katherine Buzatu Так ты наверно в отладчике смотришь в репозитории? Когда транзакция ещё не закрыта. Поэтому автоматом подгружаются Lazy поля, к которым ты обращаешься
+
+
+
+Eugeniy [11:30 AM] 
+Подскажите, пожалуйста, что подразумевается под "проверкой Exception" и куда выводить сводку в конце класса?
+
+
+Katherine Buzatu [11:32 AM] 
+uploaded and commented on this image: Pasted image at 2017-11-27, 11:32 AM
+1 Comment
+@vch В тесте смотрю, перед сверкой результата. Вот так. И Фетч-Тайп Ленивый.
+
+
+
+vch [11:40 AM] 
+@Katherine Buzatu Ну, в таком виде информации мало...
+Надо смотреть на запрос в репозитории.
+Ещё кто-то хотел тесты оборачивать в транзакции, тогда тоже такой эффект будет.
+
+
+Katherine Buzatu [11:47 AM] 
+Это из патчей от Григория.
+```return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();```
+в репозитории
+```@NamedQuery(name = User.ALL_SORTED, query = "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email ")```
+в User .
+Про оборачивание тестов - это не я.
+
+
+vch [11:48 AM] 
+@Katherine Buzatu  Так ты убери `LEFT JOIN FETCH u.roles`
+
+Katherine Buzatu [2 hours ago] 
+Ой вэй!!! Надо отдыхать!!!
+
+
+vch [2 hours ago] 
+Да, иногда полезно. 
+Но во время topjava приходится жертвовать отдыхом...
+
+
+grigory.kislin [12:27 PM] 
+добавил в урок: 6: При записи в базу через namedQuery валидация ентити не работает, только валидация в бд
+
+
+[12:32] 
+> Если у пользователя больше одной роли, то тесты не проходят
+@net_ хорошо, что заметил:+1: мы специально будем добавлять роль и чинить (edited)
+
+
+grigory.kislin [12:36 PM] 
+@Katherine Buzatu на тему загрузке при дебаге есть же в https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson04.md#-Подсказки-по-hw4 жирным шрифтом: 
+*Внимание: проверять запросы Hibernate нужно через run. Если делаете debug и брекпойнт, то могут делаться лишние запросы к базе (дебаггер дергает toString)* (edited)
+
+Katherine Buzatu [1 hour ago] 
+Мы не ищем легких путей и подсказки смотрим после выполнения задания. Я благодаря этому многое потрогала своими руками и получила бесценный опыт.
+
+
+grigory.kislin [27 minutes ago] 
+может перенести не в подсказки а выше тогда?
+
+
+Katherine Buzatu [18 minutes ago] 
+Не, так неинтересно. А как же эксперименты?
+
+
+itAvgur [1:03 PM] 
+Кхм... при запуске тестов юзера ловлю:
+Invocation of init method failed; nested exception is java.lang.NoSuchMethodError: javax.persistence.Table.indexes()[Ljavax/persistence/Index
+Это бага или фича?
+
+
+grigory.kislin [1:18 PM] 
+@itAvgur это зависит от того, что делаешь:)
+
+
+itAvgur [1:19 PM] 
+т.е. это поведение норм?
+ок, тогда копаю дальше :slightly_smiling_face:
