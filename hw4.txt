@@ -1761,3 +1761,98 @@ Posted in #hw4Today at 4:31 PM
 
 Viktor [8:39 PM] 
 Задачка "вперед в неизвестность": написать код, который будет считать запросы к БД от jpa. Сам сейчас ищю-читаю, может кому-то тоже будет интересно. Заметил, что количество запросов меняется иногда и посчитать их точно не всегда возможно. Как подсказка и отправная точка - механизм называется inteceptor.
+
+
+Zamyslov Oleg [9:39 PM] 
+Всем привет. Пишу 
+@NamedQuery(name = Meal.ALL_BETWEEN, query = "SELECT m FROM Meal m WHERE m.user.id=:user_id AND m.dateTime BETWEEN :startdate AND :enddate ORDER BY m.dateTime DESC")
+Идея m.dateTime красным светит и пишет TypeMismatch:expected date,number or string
+не хочет с localDateTime работать ?
+
+
+[9:42] 
+если пишу m.dateTime >=:startdate AND m.dateTime<=:enddate нормально работает
+
+
+Few [9:43 PM] 
+используй так, работать будет
+
+
+russell [9:43 PM] 
+Коллеги , у меня у одного не подчеркивает dateTime?
+
+
+Few [9:43 PM] 
+а >= и т.д. если краснота раздражает )
+
+
+[9:44] 
+хммм, покажи свой запрос )
+
+Zamyslov Oleg [9:45 PM] 
+так это у многих такое?
+
+
+russell [9:46 PM] 
+uploaded and commented on this image: 2017-11-28_0144.png
+  1 Comment
+У меня мил красный
+
+
+
+Few [9:46 PM] 
+@Zamyslov Oleg у меня так же
+
+
+[9:47] 
+а всплывающая подсказка что говорит?
+
+
+[9:47] 
+на красный мил?
+
+
+Tanya [9:49 PM] 
+что надо подключить jpa и assign data resources
+
+
+russell [9:50 PM] 
+cannot resolve meal
+
+
+Few [9:51 PM] 
+uploaded this image: Pasted image at 2017-11-28, 12:51 AM
+  Add Comment
+
+
+
+Few
+[9:51 PM] 
+вот как с between
+
+
+Zamyslov Oleg [9:52 PM] 
+у меня заработало и с подчеркиванием красным. видать идея тупит
+
+
+
+----- Today November 28th, 2017 -----
+Anton K. [5:29 AM] 
+Ребят подскажите почему мы в уроке используем @Transactional(readOnly = true), если в источниках(https://www.ibm.com/developerworks/ru/library/j-ts1/) к уроку сказано что неэффективно открывать транзакцию для чтения и тут https://jira.spring.io/browse/DATAJPA-601 рекомендуют @Transactional(readOnly = true, propagation=Propagation.SUPPORTS), чтобы новая транзакция не открывалась
+ibm.com
+Распространенные ошибки
+В этой статье Марк Ричардс описывает распространенные подводные камни, которые могут привести к потере согласованности. Они объясняются на примерах, взятых из инфраструктуры Spring Framework и спецификации EJB (Enterprise JavaBeans) 3.0.
+ 
+
+
+Belstrel
+[10:01 AM] 
+Подскажите куда копать,такая ошибка org.hibernate.QueryException: Named parameter [user_id] not set
+есть опасения что чтото не так с заменой поля user_id  на просто user в еде,вот что на юзером в миле 
+@ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "user_id")
+   @CollectionTable(name = "users" , joinColumns = @JoinColumn(name = "user_id"))
+
+
+Katherine Buzatu [10:03 AM] 
+Как в репозитории вызываешь свою NamedQuery? Позоже, ты не определил user_id для нее. (edited)
