@@ -2453,3 +2453,14 @@ Rostish [11:26 AM]
 
 [11:27] 
 оно большое
+
+
+tema.emelyan [6:39 PM] 
+сайт, чтобы тестить sql
+
+
+[6:39] 
+http://sqlfiddle.com
+SQL Fiddle
+SQL Fiddle | A tool for easy online testing and sharing of database problems and their solutions.
+Application for testing and sharing SQL queries. (49 kB)

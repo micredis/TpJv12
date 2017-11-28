@@ -4325,3 +4325,11 @@ CRCx86 [6 hours ago]
 CRCx86 [11:28 AM] 
 commented on anpotashev’s file Pasted image at 2017-11-28, 12:01 PM
 спасибо!
+
+
+aanyukhin [9:03 PM] 
+@grigory.kislin а можно в методе в репозиториях в методах save вместо MapSqlParameterSource, использовать BeanPropertySqlParameterSource. Думаю более лаконично будет, за исключением случаев когда надо явно смапить.
+
+
+grigory.kislin [9:04 PM] 
+@aanyukhin :+1: можно! (edited)

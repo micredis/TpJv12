@@ -2153,3 +2153,98 @@ Few [5:09 PM]
 
 [5:10] 
 я добавлял в мастере потом делал из неё хв4 мож уехало что то
+
+
+Сергей Матвеев [5:26 PM] 
+org.hibernate.LazyInitializationException: could not initialize proxy - no Session Кто то может натыкался на такое не могу понять где я не то делаю
+
+
+Katherine Buzatu [5:28 PM] 
+Ты обращаешься к объекту, который не был загружен из БД, потому что у него FetchType.LAZY.
+
+
+Сергей Матвеев [5:48 PM] 
+java.lang.AssertionError: 
+Expecting:
+<"[Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+   Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+   Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+   Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+   Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+   Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@c5285de)">
+to be equal to:
+<"[Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+   Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+   Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+   Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+   Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+   Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@c5285de)">
+but was not.
+
+
+Вроде одинаково... подскажите пожалуйста с чем это связано может быть?
+
+
+Few
+[5:50 PM] 
+встречный вопрос, а как ты от предыдущей ошибки ушел?
+
+
+[5:50] 
+ибо это скорее всего связано
+
+
+Сергей Матвеев [5:50 PM] 
+left join FETCH m.user
+
+
+Few
+[5:52 PM] 
+чтобы достать юзера достаточно FetchType.EAGER сделать, но нам этого не надо
+
+
+Сергей Матвеев [5:54 PM] 
+это я в запрос добавил, насколько я понимаю оно добавит юзеров только с ИД
+
+
+Andrey [5:58 PM] 
+Ответ я писал в посте выше. Поищи мой пост про замену методов и у тебя все сложится. (В новый метод добавь как исключение "user")
+Сергей Матвеев
+java.lang.AssertionError: 
+Expecting:
+<"[Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+   Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+   Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+   Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+   Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+   Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@c5285de)">
+to be equal to:
+<"[Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+   Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+   Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+   Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+   Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+   Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@c5285de)">
+but was not.
+
+
+Вроде одинаково... подскажите пожалуйста с чем это связано может быть?
+Thread in #hw4Today at 5:48 PM
+
+
+Сергей Матвеев [6:06 PM] 
+там где компаратор меняется?
+Andrey O.
+Ответ я писал в посте выше. Поищи мой пост про замену методов и у тебя все сложится. (В новый метод добавь как исключение "user")
+Posted in #hw4Today at 5:58 PM
+
+
+RNG [6:37 PM] 
+@Сергей Матвеев Я, конечено, понимаю в этой ветке уже много нафлудили, Но попробуй  поиском воспользоваться. Выше по ветке все уже развжевано по этому поводу и нашлись даже способы починить тесты и без игнора поля `user`. (edited)
+
+
+grigory.kislin [9:08 PM] 
+коллеги, раз вопрос про тесты всплвавет несколько раз в день я поясню свою позицию:
+1. тестами мы тестируем функциональность и правильность работы нашего приложения. менять логику приложения из за тестов неверно
+2. когда мы достаем еду, юзер нам не нужен. он у нас уже есть- AuthorizedUser. Ни лишние запросы в базу ни лишние объекты не требуются
+3. чтобы тесты прошли нужно посмотреть в сторону `UserTestData`

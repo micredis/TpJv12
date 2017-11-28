@@ -82,3 +82,39 @@ Yuri [4:53 PM]
 Yuri [4:58 PM] 
 Или можно?
 16: Предпочтительно использовать DATA-JPA (можно без лишней делегации, напрямую из сервиса/контроллера дергать Repository). В случае JPA позаботьтесь о своем собственном generic DAO.
+
+
+Andrey [5:56 PM] 
+Юра, это сам спросил и сам ответил?)))
+Бывает.
+Эх.. я иногда по 2 часа обдумываю как метод назвать...:grinning:
+Yuri D. Beljaeff
+Или можно?
+16: Предпочтительно использовать DATA-JPA (можно без лишней делегации, напрямую из сервиса/контроллера дергать Repository). В случае JPA позаботьтесь о своем собственном generic DAO.
+Posted in #graduate_projectToday at 4:58 PM
+
+
+grigory.kislin [8:50 PM] 
+> Мы же Spring Data JPA будем разбирать
+@MetalBro @Yuri
+https://github.com/JavaWebinar/topjava, урок 5
+> надо использовать Hibernate, а не Spring Data JPA
+https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson04.md - см вопрос у рооке 4. большая путаница в голове
+> Чистого JPA не существует, т.е. это всего лишь интерфейс, спецификация? Говорим JPA, подразумеваем какой-то ORM фрэймворк? А что тогда используют чистый jdbc, Spring-jdbc, MyBatis? MyBatis не реализует JPA?
+ORM это технология связывания БД и объектов приложения, а JPA - это JavaEE спецификация (API) этой технологии. Реализации JPA - Hibernate, OpenJPA, EclipceLink, но, например, Hibernate может работать по собственному API (без JPA, которая появиласть позже). Spring-JDBC, MyBatis, JDBI не реализуют JPA, это обертки к JDBC. Все ORM и JPA также реализованы поверх JDBC.
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+Yuri [9:34 PM] 
+Андрей, да нет, не то что бы ответил, скорее непонятно мне))
+
+Yuri [9:50 PM] 
+Григорий, я наверно не очень вразумительно выразился. Я понимаю, что hibernate это абстракция над Jdbc, что jpa это интерфейс для привнесения стандарта... 
+Просто в формулировке задания было указано hibernate, а прочитав п.16 у меня по ассоциации проскочило в голове "spring Data jpa":) Вот поэтому и задал вопрос такой!
+
+
+Yuri [10:35 PM] 
+Просто понравилось, пишешь интерфейсы и все, очень лаконично:)
