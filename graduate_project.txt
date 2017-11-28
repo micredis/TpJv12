@@ -45,3 +45,40 @@ Katherine Buzatu [7:06 PM]
 
 anpotashev [7:12 PM] 
 Или несколько и будут продвигать нужные рестораны
+
+
+Ivanushka [12:25 PM] 
+Добрый день, начал копать проект, каждую строчку стараюсь вставить осознанно, застрял на том, что во вкладке Persistence (IDEA) есть мой проект, но, в отличии от TopJava, не могу туда добавить dataSource т.к. нет SessionFactory...
+
+anpotashev [4 hours ago] 
+И тебе добрый. У тебя в project structure -> modules или -> facets что есть? JPA или Hibernate?
+И там же в группе spring проверь, что подтянута конфигурация.
+
+
+grigory.kislin [1:00 PM] 
+@Ivanushka (выбрать нужный как головоломка:)
+Assign Data Source можно делать на датасорсы, которые у тебя есть в вкладке Database
+
+Ivanushka [2 hours ago] 
+Решил головоломку.:stuck_out_tongue_winking_eye:
+
+
+Ivanushka [1:10 PM] 
+Спасибо. Работает. Решил буквально только что - пересмотром видео (4_5_orm_jpa)
+
+
+MetalBro [2:51 PM] 
+Мы же Spring Data JPA будем разбирать? Его нельзя использовать?
+
+
+[2:51] 
+в этом проекте
+
+
+Yuri [4:53 PM] 
+Печально, что на выпускной проект надо использовать Hibernate, а не Spring Data JPA
+
+
+Yuri [4:58 PM] 
+Или можно?
+16: Предпочтительно использовать DATA-JPA (можно без лишней делегации, напрямую из сервиса/контроллера дергать Repository). В случае JPA позаботьтесь о своем собственном generic DAO.

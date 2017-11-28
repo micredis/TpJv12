@@ -1856,3 +1856,300 @@ Belstrel
 
 Katherine Buzatu [10:03 AM] 
 Как в репозитории вызываешь свою NamedQuery? Позоже, ты не определил user_id для нее. (edited)
+
+Belstrel [10:11 AM] 
+getAll(int user_id) {
+       return em.createNamedQuery(Meal.ALL_SORTED, Meal.class).getResultList();
+   }
+
+
+[10:11] 
+как то так
+
+
+[10:13] 
+@NamedQuery(name = Meal.ALL_SORTED, query = "SELECT  m FROM Meal m WHERE m.user.id=:user_id ORDER BY m.dateTime DESC ")
+
+
+[10:13] 
+это в миле
+
+
+russell [10:14 AM] 
+а ты же параметр юзер айди не сеттишь
+
+Belstrel [7 hours ago] 
+а если для тех кто в танке??
+
+
+Belstrel 
+[7 hours ago] 
+не вижу где сетить(
+
+
+russell [7 hours ago] 
+return em.createNamedQuery(Meal.ALL_SORTED, Meal.class).setParameter("user_id", userId).getResultList();
+
+
+Belstrel 
+[7 hours ago] 
+о круто,понял,буду пробовать,в юзере такого не было
+
+
+dyakoven [6 hours ago] 
+в юзере в delete и getByEmail есть
+
+
+Belstrel 
+[6 hours ago] 
+да спасибо,понял куда смотреть
+
+
+Belstrel [10:56 AM] 
+Спасибо Катя,дело было в этом.
+Katherine Buzatu
+Как в репозитории вызываешь свою NamedQuery? Позоже, ты не определил user_id для нее.
+Posted in #hw4Today at 10:03 AM
+
+
+ujwegh [11:16 AM] 
+Привет, в чем может быть проблема? никак понять не могу. метод update проходит нормально, a save выдает такую фигню
+java.lang.AssertionError: 
+Expecting:
+<null>
+to be equal to:
+<[Meal{id=100010, dateTime=2015-06-01T18:00, description='Созданный ужин', calories=300},
+   Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+   Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+   Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+   Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+   Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+   Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}]>
+when comparing elements using 'field/property by field/property comparator on all fields/properties' but was not.
+
+Belstrel [6 hours ago] 
+это ты тесты переписываешь или первую часть делаешь??
+
+
+Few [11:19 AM] 
+create имеешь в виду?
+
+
+vsimonov [11:20 AM] 
+у тебя ожидается null а equal простыня
+
+
+
+Few [11:21 AM] 
+по идее если тест не менял и тестовые данные, то сравниваться должны два набора по три объекта
+
+
+vsimonov [11:23 AM] 
+тут много народа кто без проберки дз?
+
+
+
+Belstrel
+[11:24 AM] 
+думаю большинство,хотя точную картину знает только Григорий и Таня
+vadim simonov
+тут много народа кто без проберки дз?
+Posted in #hw4Today at 11:23 AM
+
+
+vsimonov [11:25 AM] 
+Я думаю была бы хорошая идея скооперироваться и ,скажем , по средам проверять дз друг друга. Если кому интерсно плюсуйте (edited)
+
+
+
+Few 
+[11:26 AM] 
+@ujwegh какой тест выдает ошибку? тестовые данные менял? тест сам менял?
+
+
+ujwegh [6 hours ago] 
+testSave в MealServiceTest, Тестовые данные не менял, сам тест не менял
+
+
+Few 
+[6 hours ago] 
+getAll значит неверно отрабатывает
+
+
+Few [6 hours ago] 
+скинь namedQuery для getAll и метод save из репозитория
+
+
+Few 
+[6 hours ago] 
+точнее метод getAll
+
+
+ujwegh [5 hours ago] 
+о, все проблема  закрыта, прочитал ветку выше. я забыл просетить параметр в getAll
+
+
+Few 
+[5 hours ago] 
+ок
+
+
+ujwegh [5 hours ago] 
+спасибо за наводку)
+
+
+Few [11:26 AM] 
+для начала это надо знать
+
+
+Katherine Buzatu [11:28 AM] 
+...и не перепутаны ли expected и actual...
+
+
+
+vch [11:28 AM] 
+@vsimonov в topjava11 были идеи по взаимной проверке. Только были ли какие-то реальные действия в этом направлении - не знаю. Такие вещи обсуждаются напрямую между заинтересованными участниками, в общий чат информация не выходит.
+
+Belstrel [5 hours ago] 
+А ты второй раз тут??(я тоже так планирую,за раз сложнова-то такой объём переварить)
+
+
+vch [5 hours ago] 
+третий
+
+
+vsimonov [11:29 AM] 
+@vch Я как раз и ищу заинтересованных участников.Где их ещё искать если не в общем чате? (edited)
+
+
+
+vch [11:33 AM] 
+@vsimonov Нюанс в том, что ревью должен проводить не просто заинтересованный, а кто-то более знающий. 
+Люди себя уже в чате проявили, поэтому более практичный вариант, на мой взгляд, напрямую обращаться к тем участникам, чьё мнение ты считаешь ценным.
+
+
+
+grigory.kislin [12:45 PM] 
+@Anton K.
+> и тут https://jira.spring.io/browse/DATAJPA-601 рекомендуют @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
+тут НЕ рекомендуют  `propagation=Propagation.SUPPORTS`
+читай Oliver Gierke : I am strongly opposing this one for a few reasons (edited)
+
+
+Katherine Buzatu [12:53 PM] 
+Коллеги, с Рулами у кого-то получилось красиво отдельным классом (классами)?
+
+
+grigory.kislin [12:54 PM] 
+вчекинил НАШИ патчи
+
+
+Few [12:55 PM] 
+@Katherine Buzatu мне хватило готовых рулов вроде
+
+Katherine Buzatu [4 hours ago] 
+Уточню. Хватило и для измерения времени, и для вывода сводки *в конце класса*, и при необходимости прикрутить это к другому методу не придется дублировать логику?
+
+
+Few 
+[4 hours ago] 
+мда, при такой постановке вопроса не лучшее решение :slightly_smiling_face:
+
+
+Few [4 hours ago] 
+к другому классу с тестами придется переписывать
+
+
+
+Few 
+[4 hours ago] 
+Спасибо за идею, буду рефакторить )
+
+
+Katherine Buzatu [4 hours ago] 
+Да я полночи не спала! И все впустую... (edited)
+
+
+Few 
+[4 hours ago] 
+ну в итоге все получилось? все не зря? :slightly_smiling_face:
+
+
+Katherine Buzatu [4 hours ago] 
+Еще не все потеряно.
+
+
+Few 
+[4 hours ago] 
+хмм, я уже немного обеспокоен, вечером буду пробовать
+
+
+anpotashev [1:07 PM] 
+Мне не хватило - делал класс для тайминга
+
+
+RNG [2:33 PM] 
+@Katherine Buzatu c  использованием `Stopwatch` выходит вполне красивое решение. При этом если хочется реализовать для других тестов, то можно попробовать этот код вынести в абстрактный класс. (edited)
+1 reply Today at 3:08 PM View thread
+
+MetalBro [2:47 PM] 
+Еще можно в лог писать и оттуда брать)
+
+
+dyakoven [3:02 PM] 
+дайте подсказу по поводу @Transactional в тестах. прочитал статью на хабре, ничего не понял, куда копать)
+
+RNG [3:11 PM] 
+@dyakoven Попробуй тут почитать https://www.marcobehler.com/2014/06/25/should-my-tests-be-transactional/
+
+
+Антон Кляшторный [4:26 PM] 
+uploaded and commented on this image: Время тестов.PNG
+1 Comment
+вывод времени выполнения каждого теста
+
+
+
+Few [4:44 PM] 
+а если без идеи? :slightly_smiling_face:
+
+
+Сергей Матвеев [4:51 PM] 
+@Column(name = "date_time", nullable = false, unique = true) какое name мы пишем в анотации я взял то что в скрипте инициализации так оно подчёркивает красным если написать как имя параметра то не работает запрос
+
+
+Few [4:53 PM] 
+Это имя колонки в таблице
+
+
+[4:53] 
+с именем колонки работает?
+
+Сергей Матвеев [4:54 PM] 
+да
+
+
+Few
+[4:54 PM] 
+интеграция не работает
+
+
+[4:56] 
+ты в Facets добавлял JPA, базу указывал (как в видео)?
+
+
+Сергей Матвеев [5:07 PM] 
+да
+
+
+new messages
+Few [5:09 PM] 
+а @Table у класса поставил?
+
+
+Сергей Матвеев [5:10 PM] 
+посмотрел в фасет нет там того что я добавлял
+
+
+[5:10] 
+я добавлял в мастере потом делал из неё хв4 мож уехало что то
