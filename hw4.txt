@@ -2268,6 +2268,8 @@ Tanya [5 hours ago]
 Katherine Buzatu [25 minutes ago] 
 Интересно, почему этот всемогущий EntityManager не научили адекватно реагировать на потребности типа "update ... where ...". Или такие случаи редки?
 
+Tanya [2 hours ago] 
+наверное, обычно же merge / persist
 
 dyakoven [1:19 AM] 
 я сделал с помощью NamedQuery
@@ -2294,14 +2296,341 @@ Grigory Kislin
 3. чтобы тесты прошли нужно посмотреть в сторону `UserTestData`
 Thread in #hw4Yesterday at 9:08 PM
 
-Belstrel [38 minutes ago] 
+Belstrel [13 hours ago] 
 привет,я тоже не совсем понял этот вопрос,думаю сейчас почитать теорию,на край завтра Григорий покажет рассскажет
 
 
-Tanya [12 minutes ago] 
+Tanya [12 hours ago] 
 имелось в виду
 если приложение при смене бд не работает, а тесты проходят - то косяк в тестах, и надо искать баг в тестах, а не менять приложение (edited)
 
 
-Belstrel [< 1 minute ago] 
+Belstrel [12 hours ago] 
 а у нас приложение теперь должно с HDB работать?у меня просто после накатки патчей как то оно на постгрес дальше работает
+
+
+Tanya [12 hours ago] 
+загляни в spring_db (edited)
+
+
+Dmitry Makarov [12 hours ago] 
+HSQLDB будет работать если отредактируешь spring-db.xml, а Григорий хотел сказать, что не нужно подгонять программу под неправильно написаные тесты. Т.е. не нужно сверять поле user у еды которую ты уже сравниваешь с едой которая ему должна принадлежать, а не со всем списком еды.
+
+
+Belstrel [12 hours ago] 
+у меня в спринг дб проперти постгрес а на hsqldb закоментарии,и провери в патче так же
+
+
+Belstrel 
+[12 hours ago] 
+насчет редактирования то это понятно,просто вопрос был в том что сейчас ерез что тестировать-через постгрес или hsqldb
+
+
+Katherine Buzatu [12 hours ago] 
+Должно работать и так, и так.
+
+
+Belstrel 
+[11 hours ago] 
+Спасибо !
+
+
+MetalBro [10 hours ago] 
+@Belstrel и то, и то. Разницы не должно быть
+
+
+Belstrel 
+[9 hours ago] 
+Понял, спасибо за ответ!
+
+
+Belstrel [9:52 AM] 
+насчет редактирования то это понятно,просто вопрос был в том что сейчас ерез что тестировать-через постгрес или hsqldb
+
+
+Сергей Матвеев [11:20 AM] 
+что может быть таблицы от базы хибернейт не показывает, тесты работают конекшен тестируется ..
+
+Belstrel [8 hours ago] 
+seer_os: не показывает в плане не отображает на jsp или не выполняет запросы??
+
+
+Сергей Матвеев [8 hours ago] 
+в идее где базы подключены
+
+
+Belstrel [8 hours ago] 
+seer_os: ты имеешь ввиду что не показывает изменения в таблице в вкладке базы данных сбоку в идее
+
+
+Belstrel 
+[8 hours ago] 
+Если да то там надо смотреть вид отображения и проверить запустить чтоб хибирнейт изменял реально ланные
+
+
+Сергей Матвеев [8 hours ago] 
+так тесты идут логи ресует
+
+
+dyakoven [1:24 PM] 
+кто реализовал гет и апдейт не через namedQuery?
+
+Сергей Матвеев [8 hours ago] 
+гет делал
+
+
+Belstrel [8 hours ago] 
+Гет и апдейт и делит и бетвин тоже, апринципе все кроме сейва))
+
+
+Belstrel [8 hours ago] 
+Кстати ребята фотки на днях выкладыаали там все namedQuerys рабочие
+
+
+dyakoven [8 hours ago] 
+@Belstrel через namedQuery я сделал. нужно без них
+
+
+dyakoven [8 hours ago] 
+@Сергей Матвеев как ты userId учитывал?
+
+Сергей Матвеев [8 hours ago] 
+left join FETCH m.user
+
+Belstrel [8 hours ago] 
+Без join как то работает,вроде бы мы юзер I'd знаем до базы
+
+
+Belstrel 
+[8 hours ago] 
+А зачем надо без named query?для тестов??
+
+
+Belstrel [8 hours ago] 
+Блин я с телефона на ходу не заметил в твоём вопросе НЕ.)))
+
+
+dyakoven [8 hours ago] 
+через namedQuery нет валидации сущности
+
+
+Belstrel [7 hours ago] 
+И это нам не даст потом валидацию делать или уже тестам мешает?
+
+
+dyakoven [6 hours ago] 
+а `left join FETCH m.user` это не в namedQuery?
+
+
+Rostish [2:10 PM] 
+подскажите
+
+
+[2:11] 
+@NamedQuery(name = Meal.GET_BETWEEN, query = “SELECT m FROM Meal m WHERE m.user.id=:userId AND m.dateTime BETWEEN :startDate AND :endDate ORDER BY m.dateTime DESC”
+
+
+[2:11] 
+m.dateTime подчеркивает красным
+
+[2:11] 
+ставлю аннотацию
+
+
+[2:11] 
+@Column(name = “date_time”, nullable = false)
+   @NotBlank
+   @Temporal(TemporalType.TIMESTAMP)
+   private LocalDateTime dateTime;
+
+
+[2:11] 
+не помогает
+
+
+[2:11] 
+что делаю не так?
+
+Katherine Buzatu [2:12 PM] 
+Но работает же!
+
+
+Rostish [2:12 PM] 
+пока не проверил
+
+[2:12] 
+))
+
+[2:16] 
+java.lang.ClassNotFoundException: javax.xml.bind.JAXBException
+
+
+[2:16] 
+словил вот такое
+
+
+[2:16] 
+было у кого-нибудь?
+
+
+Konstantin [2:17 PM] 
+@Temporal не нужна в пятом Хибере
+
+
+Rostish [2:18 PM] 
+подчеркивание это нормально?
+
+[2:18] 
+он пишет, что ожидаю дату
+
+
+[2:18] 
+а тут не дата
+
+[2:18] 
+@NamedQuery(name = Meal.GET_BETWEEN, query = “SELECT m FROM Meal m WHERE m.user.id=:userId AND m.dateTime BETWEEN :startDate AND :endDate ORDER BY m.dateTime DESC”
+
+
+[10:11] 
+m.dateTime подчеркивает красным
+
+
+Katherine Buzatu [2:19 PM] 
+Да, у всех подчеркивает. Проверяешь, что работает, утираешь холодный пот и пишешь дальше :slightly_smiling_face:
+
+
+
+Rostish [2:20 PM] 
+я пытаюсь проверить
+
+
+[2:20] 
+и ловлю
+
+[2:20] 
+java.lang.ClassNotFoundException: javax.xml.bind.JAXBException
+
+
+[2:20] 
+javax.servlet.ServletException: Servlet.init() for servlet [mealServlet] threw exception
+
+
+Katherine Buzatu [2:21 PM] 
+Про сервлет мы уже забывать начинаем. Что запускаешь?
+
+
+Rostish [2:21 PM] 
+просто на томкате поднимаю
+
+
+[2:22] 
+тыкаю в юзера
+
+
+[2:22] 
+22:21:11.416 WARN  o.s.context.support.AbstractApplicationContext.refresh:557 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘entityManagerFactory’ defined in class path resource [spring/spring-db.xml]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError:
+
+
+[2:22] 
+в спринг дб описан бин ентити менеджер
+
+
+[2:22] 
+не создается такой
+
+Katherine Buzatu [2:23 PM] 
+А про dataSource дальше ничего не ругаются?
+
+
+Rostish [2:24 PM] 
+неа
+
+
+Katherine Buzatu [2:25 PM] 
+Весь Exception покажи
+
+Rostish [2:30 PM] 
+стек трейс большой
+
+
+[2:30] 
+самый нижний вот
+
+
+[2:30] 
+java.lang.ClassNotFoundException: javax.xml.bind.JAXBException
+
+[2:30] 
+далее
+
+[2:31] 
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘entityManagerFactory’ defined in class path resource [spring/spring-db.xml]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+
+
+Few
+[2:47 PM] 
+Подобная муть была уже однажды, решилась деплоем war вместо exploded
+
+
+[2:48] 
+Не утверждаю,  но попробуй
+
+Katherine Buzatu [2:49 PM] 
+А мне кажется, это что-то связанное с этим:
+> При настройке JPA в IDEA НЕ скачивайте библиотеку javaee.jar (и любую другую). Все зависимости в проект попадают только через Maven.
+
+
+Rostish [2:52 PM] 
+у меня в экстернал либрари нет не мавен библиотек
+
+Rostish [2:52 PM] 
+только джава 9
+
+Katherine Buzatu [6 hours ago] 
+Может, не в тему, но... https://github.com/eclipse/jetty.project/issues/1265
+GitHub
+JAXB not available in JDK 9 · Issue #1265 · eclipse/jetty.project
+JAXB was previously available directly from JDK 8 (javax.xml.bind.JAXB) because it was shipped in rt.jar. The JASPI integration relies on JAXB being available, but building the jetty-jaspi module w...
+
+
+Few [2:53 PM] 
+Очистить и пересинхронизировать мавен?
+
+
+Rostish [2:54 PM] 
+делал
+
+
+[2:54] 
+уже час на стаковерфлоу сижу)
+
+
+Dmitry Neustupov [9:05 PM] 
+Товарищи, что то у меня все тесты по DataTime валятся, и конвертер вроде запилил и в энтити его повесил над датой. А всё равно вот эта ошибка везде на тестах вываливается:
+
+
+Dmitry Neustupov [9:06 PM] 
+added this Java snippet
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not prepare statement; SQL [/* insert ru.javawebinar.topjava.model.Meal */ insert into meals (calories, datetime, description, user_id, id) values (?, ?, ?, ?, ?)]; nested exception is org.hibernate.exception.SQLGrammarException: could not prepare statement
+Add Comment
+
+
+
+russell [9:06 PM] 
+@Dmitry Neustupov конвертер не нужен больше
+
+
+Dmitry Neustupov [9:26 PM] 
+@russell почему не нужен? Оо...
+
+
+russell [9:28 PM] 
+https://topjava12.slack.com/archives/C84E4SJ11/p1511736661000015
+Katherine Buzatu
+> hibernate-core 5.2.x включает hibernate-entitymanager и hibernate-java8, Time API конвертеры уже не нужны.
+Thread in #hw4Nov 27th at 12:51 AM
+
+
+new messages
+Dmitry Neustupov [9:29 PM] 
+@russell спасибо! )

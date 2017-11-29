@@ -4355,3 +4355,156 @@ Posted in #hw3Today at 9:13 AM
 
 Shalukhau Dzmitry [9:15 AM] 
 @Maksim pgAdmin3 - deprecated. За DBeaver Community - спасибо.
+
+
+Maksim [9:50 AM] 
+Попробовал тоже через докер. Не видит он локальную базу и все тут.
+
+
+CRCx86 [9:50 AM] 
+доброе утро, почему при создании в initDB.sql двух полей в таблице meals с типом timestamp происходит ошибка? с одним полем всё нормально, таблица создаётся (edited)
+
+
+Shalukhau Dzmitry [10:01 AM] 
+@Maksim не увидит до тех пор пока ты postgres не скажешь, что к ней можно достучаться по сети.
+
+
+Shalukhau Dzmitry [10:02 AM] 
+http://vivazzi.ru/it/remote-access-postgresql/
+
+CRCx86 [11 hours ago] 
+CREATE TABLE meals
+(
+ id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+ user_id     INTEGER NOT NULL,
+ description VARCHAR NOT NULL,
+ calories    INTEGER NOT NULL,
+ dateTime   TIMESTAMP NOT NULL,
+
+ FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+
+CRCx86 [11 hours ago] 
+а на этом ошибка
+
+CREATE TABLE meals
+(
+ id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+ user_id     INTEGER NOT NULL,
+ description VARCHAR NOT NULL,
+ calories    INTEGER NOT NULL,
+ dateTime   TIMESTAMP NOT NULL,
+ localTime   TIMESTAMP NOT NULL,
+
+ FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+
+Shalukhau Dzmitry [11 hours ago] 
+@CRCx86 Назвать причину или подсказать, чтобы сам нашел?
+
+CRCx86 [11 hours ago] 
+подсказать, конечно лучше
+
+
+Shalukhau Dzmitry [11 hours ago] 
+@CRCx86 дай имя полю не localTime а например localTime1. Подумай, почему так работает. Второй вариант возьми localTime в кавычки (тоже должно сработать). (edited)
+
+
+CRCx86 [11 hours ago] 
+да, были подозрения, что localTime ключевое слово
+
+
+Shalukhau Dzmitry [11 hours ago] 
+Это функция :slightly_smiling_face:
+
+
+Shalukhau Dzmitry [10:02 AM] 
+@CRCx86 скинь sql
+
+
+CRCx86 [10:38 AM] 
+подскажите пожалуйста, вот у нас SpringMain переехал в test, тогда с т.з. работы приложения где у нас точка входа? вот начинает работать приложение, прежде чем вывести новую страничку в бразуере, что у нас начинает работать?
+
+
+Katherine Buzatu [10:46 AM] 
+В браузере - сервлет.
+
+CRCx86 [11 hours ago] 
+Но почему тогда если ставить точку останова и нажать дебаг попадаем в test/SpringMain?
+
+
+CRCx86 [11 hours ago] 
+просто у меня вылетает ошибка: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {} и я думаю, что это из-за того, что test не видит каких-то данных из основного приложения
+
+
+Katherine Buzatu [10 hours ago] 
+>  No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate.
+Он сообщает, что где-то ему нужен бин типа DataSource, а он такого не знает. Где у тебя DataSource прописан конфигурации?
+
+
+CRCx86 [10 hours ago] 
+spring-db.xml
+
+
+CRCx86 [10 hours ago] 
+я пытаюсь заставить работать ветку мастер
+
+
+Katherine Buzatu [10:55 AM] 
+uploaded and commented on this image: @CRCx86
+3 Comments
+Смотри, что у тебя тут.
+
+
+
+CRCx86 [11:24 AM] 
+у меня пока что 3 урок
+
+CRCx86 [11:26 AM] 
+коллеги, почему при попытке отладки всего приложения выполнение сначала попадает в test/.../SpringMain?
+
+
+[11:27] 
+а, всё, это мой косяк
+
+CRCx86 [11:28 AM] 
+commented on Katherine Buzatu’s file @CRCx86
+спасибо, разобрался)
+
+
+
+CRCx86 [11:47 AM] 
+подскажите пожалуйста, почему Number newKey = insertMeal.executeAndReturnKey(map); для  public Meal save(Meal meal, int userId) возвращает ошибку:
+
+org.springframework.dao.DataIntegrityViolationException: PreparedStatementCallback; SQL []; ОШИБКА: INSERT или UPDATE в таблице "meals" нарушает ограничение внешнего ключа "meals_user_id_fkey"
+ Подробности: Ключ (user_id)=(100001) отсутствует в таблице "users".; nested exception is org.postgresql.util.PSQLException: ОШИБКА: INSERT или UPDATE в таблице "meals" нарушает ограничение внешнего ключа "meals_user_id_fkey"
+ Подробности: Ключ (user_id)=(100001) отсутствует в таблице "users".
+
+
+[11:49] 
+ага, пустая база, ок
+
+
+CRCx86 [12:22 PM] 
+подскажите пожалуйста, почему это не работает:
+namedParameterJdbcTemplate.update("UPDATE meals SET description=:description, calories=:calories, " +
+                   "datetime=:datetime WHERE user_id =: user_id AND id =: id", map);
+
+
+[12:22] 
+валится с ошибкой: org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [UPDATE meals SET description=?, calories=?, datetime=? WHERE user_id =: user_id AND id =: id]; nested exception is org.postgresql.util.PSQLException: ОШИБКА: ошибка синтаксиса (примерное положение: ":")
+ Позиция: 74
+
+
+vch [12:23 PM] 
+пробелы убери после `:`
+
+
+Few [12:24 PM] 
+можешь ставить перед, но не после
+
+
+CRCx86 [12:29 PM] 
+@vch @Few спасибо!

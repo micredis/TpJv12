@@ -2464,3 +2464,57 @@ http://sqlfiddle.com
 SQL Fiddle
 SQL Fiddle | A tool for easy online testing and sharing of database problems and their solutions.
 Application for testing and sharing SQL queries. (49 kB)
+
+
+astronarh [10:40 AM] 
+Ни кто не в курсе, POST/GET пустое значение параметра, req.getParameter в doPost/doGet возвращает как пустую строку или как null? (edited)
+
+
+vch [10:42 AM] 
+@astronarh Если в url вообще не указано ( `\getItem` )- то null.
+Если указано пустое ( `\getItem?param`) - то как пустая строка
+
+
+astronarh [10:43 AM] 
+@vch Благодарю!
+
+
+anpotashev [4:45 PM] 
+Друзья, подскажите, плиз, по дженерикам. В объявлении класса: <T, K>
+public abstract Class<T> getClazz();
+Можно как-то это реализовать в generic классе, а не оверрайдить в наследниках?
+
+
+Few [4:48 PM] 
+я не понял
+
+
+anpotashev [4:54 PM] 
+вот так объявлен класс:
+public abstract class AbstractBasedRepository<T extends PrimaryKeyGettable<K>, K extends Serializable> {
+...
+public abstract Class<T> getClazz();
+...
+Переопределяю его в классах наследниках:
+public Class<Dish> getClazz() {
+       return Dish.class;
+   }
+Вот вопрос можно-ли его как-то реализовать в классе AbstractBasedRepository, чтобы он возвращал объект типа Class<T>?
+
+
+Few [5:08 PM] 
+через рефлексию наверное можно
+
+
+[5:09] 
+https://habrahabr.ru/post/66593/
+Хабрахабр
+Узнаем параметр Generic-класса в Java
+Если вы не очень часто программируете на Java, то этот топик скорее всего будет для вас бесполезен. Не читайте его :) Недавно понадобилось решить следующую... (50 kB)
+
+
+kadmser [7:37 PM] 
+https://habrahabr.ru/company/JetBrains/blog/343500/
+Хабрахабр
+Kotlin 1.2: общий код для JVM и JavaScript
+Вчера компания JetBrains выпустила релиз Kotlin 1.2. Новая версия — большой шаг на пути к тому, чтобы сделать Kotlin наиболее удобным инструментом для... (607 kB)
