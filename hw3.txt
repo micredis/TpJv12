@@ -4333,3 +4333,25 @@ aanyukhin [9:03 PM]
 
 grigory.kislin [9:04 PM] 
 @aanyukhin :+1: можно! (edited)
+
+
+Maksim [8:37 AM] 
+У меня тоже mint. Ничего сложного в поднятии postgresql нет. Справился за 15 минут. Причем еще стоит и mysql
+Shalukhau Dzmitry
+Я счас тоже pgAdmin4 веселился. У меня Linux Mint. И оптимальнее всего было подымать в Docker. Но я почему то не решил подымать postgres в докере. В общем, кому нужна информация postgres (на локалхосте)+ админка в докере и все работает - обращайтесь (не тратьте свое время, я 3 часа жизни у себя забрал :disappointed:
+Thread in #hw3Yesterday at 11:22 AM
+
+
+Shalukhau Dzmitry [9:13 AM] 
+@Maksim У меня проблемы не с postgres возникли, а с pgAdmin4 в докере (а по другому из исходников собирать), который не видел postgres на хосте
+
+
+Maksim [9:14 AM] 
+А. Понял. Я оставил pgAdmin3. А так пользуюсь DBeaver Community. Очень удобно.
+Shalukhau Dzmitry
+@Maksim У меня проблемы не с postgres возникли, а с pgAdmin4 в докере (а по другому из исходников собирать), который не видел postgres на хосте
+Posted in #hw3Today at 9:13 AM
+
+
+Shalukhau Dzmitry [9:15 AM] 
+@Maksim pgAdmin3 - deprecated. За DBeaver Community - спасибо.
