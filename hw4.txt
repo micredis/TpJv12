@@ -2634,3 +2634,77 @@ Thread in #hw4Nov 27th at 12:51 AM
 new messages
 Dmitry Neustupov [9:29 PM] 
 @russell спасибо! )
+
+
+Artem Pashkov [9:57 PM] 
+Случайно заметил, что при тестировании еды  и юзеров в postgreSQL заносятся разные данные. В populateDB.sql список еды и юзеров один. Как такое может быть?
+
+
+Viktor [10:27 PM] 
+@Artem Pashkov логи скиньте, которые перед тестом выполняются. Там написано, что исполняется
+
+
+Artem Pashkov [10:42 PM] 
+added this Plain Text snippet
+23:02:17.311 DEBUG o.s.jdbc.datasource.DriverManagerDataSource.getConnectionFromDriver:143 - Creating new JDBC DriverManager Connection to [jdbc:postgresql://localhost:5432/topjava]
+23:02:17.312 DEBUG org.postgresql.Driver.connect:240 - Connecting with URL: jdbc:postgresql://localhost:5432/topjava
+23:02:17.313 DEBUG org.postgresql.jdbc.PgConnection.<init>:182 - PostgreSQL JDBC Driver 42.1.4
+23:02:17.313 DEBUG org.postgresql.jdbc.PgConnection.setDefaultFetchSize:1012 -  setDefaultFetchSize = 0
+23:02:17.314 DEBUG org.postgresql.jdbc.PgConnection.setPrepareThreshold:1021 -  setPrepareThreshold = 5
+23:02:17.314 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:136 - Trying to establish a protocol version 3 connection to localhost:5432
+23:02:17.317 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:186 - Receive Buffer Size is 8 192
+23:02:17.318 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:187 - Send Buffer Size is 8 192
+23:02:17.936 DEBUG org.postgresql.jdbc.PgConnection.setAutoCommit:723 -  setAutoCommit = false
+23:02:17.937 INFO o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:442 - Executing SQL script from class path resource [db/populateDB.sql]
+23:02:17.943 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:474 - 2 returned as update count for SQL: DELETE FROM user_roles
+23:02:17.947 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:474 - 8 returned as update count for SQL: DELETE FROM meals
+23:02:17.953 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:474 - 2 returned as update count for SQL: DELETE FROM users
+23:02:17.961 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:474 - 0 returned as update count for SQL: ALTER SEQUENCE global_seq RESTART WITH 100000
+23:02:17.972 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:474 - 2 returned as update count for SQL: INSERT INTO users (name, email, password) VALUES ('User', 'user@yandex.ru', 'password'), ('Admin', 'admin@gmail.com', 'admin')
+23:02:17.974 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:474 - 2 returned as update count for SQL: INSERT INTO user_roles (role, user_id) VALUES ('ROLE_USER', 100000), ('ROLE_ADMIN', 100001)
+23:02:17.979 DEBUG o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:474 - 8 returned as update count for SQL: INSERT INTO meals (date_time, description, calories, user_id) VALUES ('2015-05-30 10:00:00', 'Завтрак', 500, 100000), ('2015-05-30 13:00:00', 'Обед', 1000, 100000), ('2015-05-30 20:00:00', 'Ужин', 500, 100000), ('2015-05-31 10:00:00', 'Завтрак', 500, 100000), ('2015-05-31 13:00:00', 'Обед', 1000, 100000), ('2015-05-31 20:00:00', 'Ужин', 510, 100000), ('2015-06-01 14:00:00', 'Админ ланч', 510, 100001), ('2015-06-01 21:00:00', 'Админ ужин', 1500, 100001)
+23:02:17.979 INFO o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:508 - Executed SQL script from class path resource [db/populateDB.sql] in 41 ms.
+23:02:18.037 DEBUG org.postgresql.jdbc.PgConnection.setAutoCommit:723 -  setAutoCommit = true
+23:02:18.039 DEBUG o.s.jdbc.datasource.DriverManagerDataSource.getConnectionFromDriver:143 - Creating new JDBC DriverManager Connection to [jdbc:postgresql://localhost:5432/topjava]
+23:02:18.040 DEBUG org.postgresql.Driver.connect:240 - Connecting with URL: jdbc:postgresql://localhost:5432/topjava
+23:02:18.040 DEBUG org.postgresql.jdbc.PgConnection.<init>:182 - PostgreSQL JDBC Driver 42.1.4
+23:02:18.041 DEBUG org.postgresql.jdbc.PgConnection.setDefaultFetchSize:1012 -  setDefaultFetchSize = 0
+23:02:18.042 DEBUG org.postgresql.jdbc.PgConnection.setPrepareThreshold:1021 -  setPrepareThreshold = 5
+23:02:18.043 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:136 - Trying to establish a protocol version 3 connection to localhost:5432
+23:02:18.052 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:186 - Receive Buffer Size is 8 192
+23:02:18.054 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl:187 - Send Buffer Size is 8 192
+23:02:18.145 DEBUG org.postgresql.jdbc.PgConnection.setAutoCommit:723 -  setAutoCommit = false
+Add Comment Collapse
+
+
+
+Andrew [11:06 PM] 
+Друзья, при вызове meal.getUser.getId кидает ексепшн... Как правильно? Это в методе Сейв пытаюсь сделать. Или там надо через квери а не персист и мердж
+
+
+[11:09] 
+Сменил в Мил инициализацию юзера на EAGER - не помогло
+
+
+russell [11:10 PM] 
+@Andrew а какой эксепшн?
+
+
+Andrew [11:11 PM] 
+Нулл поинтер, я понял почему, устал очень - пытался у нового милса вызвать юзер айди..
+
+
+[11:15] 
+Оно и при Update бросает нуллпоинтер когда пытаюсь сравнить сходятся ли юзерайди(не пытается ли обновить чужую еду)
+
+
+[11:15] 
+Или не нужная такая проверка?
+
+
+anpotashev [11:28 PM] 
+еда которая приходит на update тоже не содержит поля user.
+
+
+[11:30] 
+Проверка нужна, но другая. Надо удостоверится что в бд есть такая еда у которой meal.id и meal.user.id совпадают с параметрами

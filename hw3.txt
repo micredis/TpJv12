@@ -4508,3 +4508,16 @@ Few [12:24 PM]
 
 CRCx86 [12:29 PM] 
 @vch @Few спасибо!
+
+
+CRCx86 [9:07 AM] 
+доброе утро! подскажите пожалуйста такую вещь, исправляю работу UserServiceImpl и добавляю работу MealServiceImpl, а так же пытаюсь заставить работать SpringTest и InMemory**Test, все тесты валятся с ошибкой Error creating bean with name, а MealServiceTest и UserServiceTest еще и в **Impl предлагают выбрать квалификаторы. Подскажите куда идти? Самостоятельно уже не разобраться, а урок пока смотреть не хочу.
+
+Katherine Buzatu [8 minutes ago] 
+> Error creating bean with name
+Насколько я помню, дальше описана причина. Так? (edited)
+
+
+CRCx86 [9:08 AM] 
+если это уже было рассказано в видео, то ткните пальцем, будьте любезны
+спассибо
