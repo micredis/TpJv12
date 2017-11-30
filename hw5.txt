@@ -13,3 +13,104 @@ Contribute to topjava development by creating an account on GitHub.
 
 tema.emelyan [2:11 AM] 
 joined #hw5 along with 18 others.
+
+
+Ivanushka [12:00 PM] 
+added and commented on this Java snippet
+В соответствии с требованиями законодательства доступ к запрашиваемому Интернет-ресурсу 
+закрыт.
+​
+Интернет-ресурс запрещен к распространению судом и/или внесен в один из списков:
+​
+Федеральный список экстремистских материалов http://www.minjust.ru/nko/fedspisok/
+​
+Единый реестр доменных имен, указателей страниц сайтов в сети «Интернет» и сетевых адресов,
+позволяющих идентифицировать сайты в сети «Интернет», содержащие информацию,
+распространение которой в Российской Федерации запрещено http://eais.rkn.gov.ru/
+​
+Реестр доменных имен, указателей страниц сайтов в сети «Интернет» и сетевых адресов,
+позволяющих идентифицировать сайты в сети «Интернет», содержащие информацию,
+распространяемую с нарушением исключительных прав http://nap.rkn.gov.ru/
+3 Comments Collapse
+Проверьте, только у меня так? http://jeeconf.com/archive/jeeconf-2013/materials/spring-data/ -это после шестого видео.
+
+
+
+Few 
+[12:01 PM] 
+Открывается
+
+
+Ivanushka [12:03 PM] 
+@Few Cпасибо.
+
+
+philip.goldm [1:25 PM] 
+@grigory.kislin
+>Почему при запросе user.id нам не нужно нужно вытаскивать его из базы?
+есть два раза *нужно
+
+
+
+philip.goldm [2:44 PM] 
+>Раскрасил лог (в Spring Boot по умолчанию он тоже colored)
+>Apply 5_3_HW4_optional.patch
+кажется необходимо поменять на 5_4_log_colored.patch
+
+
+
+Katherine Buzatu [4:10 PM] 
+При прогоне тестов в консоли проплывают красивые синенькие логи. Потом они исчезают (*куда?*) и остаются только те, которые, видимо, "result" (но и они не magenta). *Куда уходят остальные логи?*
+
+
+anpotashev [4:23 PM] 
+uploaded this image: А ты где смотришь?
+Add Comment
+
+
+
+Katherine Buzatu [4:25 PM] 
+uploaded this image: Вроде там же...
+Add Comment
+
+
+
+anpotashev [4:30 PM] 
+хм. сменил тему на темную - тоже без проблем.
+
+
+anpotashev [4:32 PM] 
+а попробуй из консоли mvn test
+
+Katherine Buzatu [2 hours ago] 
+так все логи. И magenta. А в Run куда они деваются?
+
+
+anpotashev [4:41 PM] 
+uploaded this image: и да, магента:
+Add Comment
+
+
+
+anpotashev [4:52 PM] 
+commented on Ivanushka’s snippet Untitled
+видео доступно, а презентация блокирована
+
+
+
+grigory.kislin [5:01 PM] 
+у меня тоже - презентахи нет.. видео-ок
+
+
+
+Few
+[5:11 PM] 
+через анонимайзер и презентация есть
+
+Katherine Buzatu [2 hours ago] 
+И чем думают инициаторы ограничений в сети, которые обходятся в два клика?
+
+
+Few 
+[2 hours ago] 
+Это уже пахнет политикой, но тем кому положено думать иной раз не имеют подходящего инструмента :slightly_smiling_face:

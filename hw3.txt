@@ -4517,7 +4517,44 @@ Katherine Buzatu [8 minutes ago]
 > Error creating bean with name
 Насколько я помню, дальше описана причина. Так? (edited)
 
+Katherine Buzatu [10 hours ago] 
+> Error creating bean with name
+Насколько я помню, дальше описана причина. Так? (edited)
+
+
+CRCx86 [9 hours ago] 
+Error creating bean with name 'jdbcMealRepositoryImpl' defined in file
+
+
+CRCx86 [9 hours ago] 
+для UserServiceTest и MealServiceTest для конструктора предлагает, как одно из решений, выбрать квалификтор, о которых в видео было сказано вскользь
+
+
+CRCx86 [9 hours ago] 
+пока не знаю, как решать
+
+
+Katherine Buzatu [9 hours ago] 
+Не это ли про квалификаторы?
+```Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate.```
+
+
+CRCx86 [8 hours ago] 
+а что это значит? типа он пытается выбрать более чем из 1 одного кандидата на связывание?
+
+
+Katherine Buzatu [8 hours ago] 
+типа ему нужен хотя бы один, но он ни одного не находит.
+
 
 CRCx86 [9:08 AM] 
 если это уже было рассказано в видео, то ткните пальцем, будьте любезны
 спассибо
+
+
+grigory.kislin [10:14 AM] 
+@CRCx86 видео 9. Тестирование UserService через AssertJ.
+
+
+CRCx86 [10:51 AM] 
+@grigory.kislin спасибо!

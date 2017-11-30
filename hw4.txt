@@ -2708,3 +2708,243 @@ anpotashev [11:28 PM]
 
 [11:30] 
 Проверка нужна, но другая. Надо удостоверится что в бд есть такая еда у которой meal.id и meal.user.id совпадают с параметрами
+
+
+Katherine Buzatu [12:50 PM] 
+Коллеги, объясните, пожалуйста, по-простому смысловую нагрузку метода getReference на этом примере:
+```User user = em.getReference(User.class, userId); // 1
+//        User user = new User();  //2
+//        user.setId(userId);  //2
+        meal.setUser(user);
+        return em.merge(meal);```
+какая разница между 1 и 2?
+
+
+vch [12:52 PM] 
+@Katherine Buzatu полагаю, что будут работать оба варианта...
+
+Katherine Buzatu [12:53 PM] 
+Ну да, они работают. Но getReference зачем-то нужен.
+
+anpotashev [6 hours ago] 
+Предположу: А каскадное обновление полей юзера в базе во 2-ом варианте не произойдет ни при каких условиях?
+
+
+Katherine Buzatu [6 hours ago] 
+А вот каскадное обновление происходит только с getReference!
+
+
+Few [12:58 PM] 
+он по идее позволяет сразу получить эксепшн если такого юзера нет
+
+
+[12:58] 
+если бы это было нам нужно
+
+
+[12:59] 
+а если администратор удалил пользователя когда он уже авторизован и сохраняет свою еду?
+
+
+vch [12:59 PM] 
+@Few уверен? Помнится, он возвращает просто прокси-объект с установленным id. 
+В базе наличие объекта не проверяется.
+Верит нам на слово, что такой есть.
+
+
+Few [1:01 PM] 
+getReference
+
+<T> T getReference(java.lang.Class<T> entityClass,
+                  java.lang.Object primaryKey)
+Get an instance, whose state may be lazily fetched. If the requested instance does not exist in the database, the EntityNotFoundException is thrown when the instance state is first accessed.
+
+
+vch [1:02 PM] 
+`when the instance state is first accessed.` - я это так понял, что когда обратишься к какому-нибудь полю объекта, то будет запрос в БД, и в этом момент вылетит Exception
+
+
+Few [1:05 PM] 
+проверить надо будет
+
+Katherine Buzatu [1:07 PM] 
+В данном примере оба способа ведут себя идентично. Одинаковые запросы. Исключения бросаются от БД в случае несуществующих userId.
+
+vch [1:08 PM] 
+@Katherine Buzatu в какой момент бросается исключение? В момент вызова getReference? Или в момент `em.merge(meal);` ?
+
+Few
+[1:11 PM] 
+похоже что реально проскакивает
+
+
+[1:12] 
+а исключение во время записи в базу
+
+
+[1:12] 
+org.postgresql.util.PSQLException: ОШИБКА: INSERT или UPDATE в таблице "meals" нарушает ограничение внешнего ключа "meals_user_id_fkey"
+
+
+
+Few
+[1:18 PM] 
+проверил, реально создает объект с левым id, при это даже если к этому объекту обратиться, к полю id, то этот левый id и выдает без эксепшена )
+
+
+vch [1:20 PM] 
+@Few Патчи 5 занятия стоят уже?
+
+
+Few [1:20 PM] 
+только лог раскрасил пока, дальше не применял
+
+
+
+Katherine Buzatu [1:25 PM] 
+А вот каскадное обновление происходит только с getReference!
+
+
+Few [1:27 PM] 
+т.е. вытащить getReference прокси над юзером, поменять в нем поля и замержить?
+
+
+Few
+[1:33 PM] 
+да, если после getReference изменить в пользователе имя, после мерджа в базе обновляется пользователь
+
+
+Katherine Buzatu [1:39 PM] 
+Да. То есть тут будет обновлен не только Мил, но и Юзер:
+```User user = em.getReference(User.class, userId); // 1
+        user.setName("wwwwwwwwwwwww");
+        meal.setUser(user);
+        return em.merge(meal);```
+
+
+
+Few
+[1:41 PM] 
+ну для наших целей достаточно просто создать юзера и задать id,
+
+
+[1:41] 
+а если нужна возможность изменить юзера, то только getReference
+
+Konstantin
+[2:07 PM] 
+Не проходили тесты save, update из-за того, что у calories стояла аннотация @NotBlank. Устал ошибку искать
+
+
+dart_rabbit [2:55 PM] 
+added this Java snippet: А почему в UserJpaRepositoryIml мы возвращаем значение через DataAccessUtils, а не просто в один return с помощью .getSingleResult() ?
+@Override
+  public User getByEmail(String email) {
+    return em.createNamedQuery(User.BY_EMAIL, User.class)
+        .setParameter(1, email)
+        .getSingleResult();
+  }
+Add Comment Collapse
+
+
+
+dart_rabbit [2:55 PM] 
+Тесты проходят нормально.
+
+Few [3:01 PM] 
+Эксепшн другой, а точнее DataAccessUtils дает null, а getSingleResult кидает эксепшн (edited)
+
+Katherine Buzatu [3:06 PM] 
+@grigory.kislin есть вопросы по рулам (optional). Не пришло чувство удовлетворения от эталонного решения. Рула для измерения времени утитиларная, поэтому напрашивалось вынести ее в отдельный класс и не размазывать по всему тестовому. В процессе решения эта логика таки была вынесена в отдельный "рульный" класс, назначенный одновременно `@Rule`, и `@ClassRule`, но как-то все "неаккуратненько". К удивлению, не нашла простого и красивого способа в одном классе сделать четкое разделение "before/after test" и "before/after class". Какие есть варианты?
+
+
+Ivanushka [3:19 PM] 
+@Katherine Buzatu А TestWatcher, что я скидывал, тоже плохо?
+
+
+[3:20] 
+Ой, думал в личку пишу :stuck_out_tongue_winking_eye:
+
+
+dart_rabbit [3:35 PM] 
+@Few Может что поменялось, сейчас подебажил - в checkNotFoundWithId приходит null
+
+grigory.kislin [3:57 PM] 
+@Katherine Buzatu предлагай, рассмотрю:)
+
+
+Katherine Buzatu [4:05 PM] 
+added this Java snippet: Как-то так...
+public class TestTimeRule implements TestRule {
+  private final Logger log = LoggerFactory.getLogger(TestTimeRule.class);
+​
+  private final Map<String, Long> resultMap = new HashMap<>();
+​
+  private long startTime;
+​
+  private String getStatistics() {
+    return resultMap
+        .entrySet()
+        .stream()
+        .map((entry) -> String.format("%s - %s ms", entry.getKey(), entry.getValue()))
+        .collect(Collectors.joining("\n"));
+  }
+​
+  private void beforeTest() {
+    startTime = System.currentTimeMillis();
+  }
+​
+  protected void finished(Description description) {
+    long endTime = System.currentTimeMillis();
+    long testTime = endTime - startTime;
+    log.info("{} - {} ms", description.getMethodName(), testTime);
+    resultMap.put(description.getMethodName(), testTime);
+  }
+​
+  @Override
+  public Statement apply(Statement base, Description description) {
+    return new Statement() {
+      @Override
+      public void evaluate() throws Throwable {
+        if (base instanceof RunAfterTestMethodCallbacks)
+          beforeTest();
+        try {
+          base.evaluate();
+        } finally {
+          if (base instanceof RunAfterTestClassCallbacks)
+            log.info(getStatistics(), base.getClass().getSimpleName());
+          if (base instanceof RunAfterTestMethodCallbacks)
+            finished(description);
+        }
+      }
+    };
+  }
+}
+Add Comment Collapse
+
+
+
+Katherine Buzatu [4:06 PM] 
+added and commented on this Java snippet: И в тестовый класс идет аккуратно
+@Rule
+@ClassRule
+public static TestWatcher testTime = new TestTimeRule();
+1 Comment
+@grigory.kislin
+
+
+
+Few [4:08 PM] 
+@dart_rabbit надо разобраться
+
+
+sm29alex [4:25 PM] 
+2.
+
+
+grigory.kislin [5:14 PM] 
+обновил мертвую ссылку "Описание связей в модели. Ленивая загрузка объекта." осле патча  4_6_add_jpa.patch
+https://web.archive.org/web/20170514002949/http://java.devcolibri.com:80/post/15
+web.archive.org
+Связывание сущностей в JPA | Devcolibri
+Наверное не существует разработчика, который бы не работал с базами данных, ведь данные это наше все и если вы работаете с Java вы точно столкнетесь с такой штукой как JPA и Entity, и связи таблиц.
