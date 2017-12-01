@@ -135,3 +135,10 @@ grigory.kislin [3:54 PM]
 
 Few [4:00 PM] 
 @grigory.kislin Я даже не сомневаюсь что там есть еще сотня очень полезных функций )
+
+
+Katherine Buzatu [9:38 AM] 
+Idea 2016.1.2 - проблема с цветными логами. Похоже, баг версии. https://youtrack.jetbrains.com/issue/IDEA-156183
+YouTrack
+IDEA-156183: Bug with Unicode escape characters breaking JUnit console colored output at the Test class-level
+log4j.rootLogger=INFO, StdoutDebug log4j.appender.StdoutDebug=org.apache.log4j.ConsoleAppender log4j.appender.StdoutDebug.encoding=UTF-8 log4j.appender.StdoutDebug.layout=org.apache.log4j.PatternLayo…

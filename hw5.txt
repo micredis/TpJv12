@@ -114,3 +114,105 @@ Katherine Buzatu [2 hours ago]
 Few 
 [2 hours ago] 
 Это уже пахнет политикой, но тем кому положено думать иной раз не имеют подходящего инструмента :slightly_smiling_face:
+
+Ivanushka [2 hours ago] 
+Решил проблему аналогично, спасибо.
+
+
+Viktor [10:02 PM] 
+мне интересно про 5 пункт задания, в частности "HSQLDB (она не умеет работать с Java8 Time API)", не совсем понял. Прогнал тесты на hsqldb. все прошли успешно, т.е. данные в LocalDateTime попали без конвертера, что именно не умеет hsqldb?
+
+
+anpotashev [10:07 PM] 
+конвертацию делает не бд а hibernate, он знает какая база к нему подцеплена и преобразует localdatetime в тот формат, что нужен именно этой субд
+
+
+RNG [10:10 PM] 
+Вот любопытно, hibernate много кто ругает, но при этом он все равно в тренде. Получается никаких серьёзных альтернатив пока нету? (edited)
+
+
+Viktor [10:11 PM] 
+все понял, опять невнимательно прочитал. Говорится именно про jdbc
+
+
+
+vch [10:11 PM] 
+@Viktor В последней версии hsqldb уже есть поддержка новых типов данных.
+Но вроде у вас должна использоваться более старая версия
+
+
+anpotashev [10:13 PM] 
+@RNG альтернатива - реализация jpa на серверах приложений, например.
+
+
+Viktor [10:15 PM] 
+@vch да сейчас перенастроил на jdbc и получил ошибку, иногда туго доходит :smiley:
+
+
+RNG [10:19 PM] 
+@anpotashev Это как? Типа брать чистый jpa и реализовывать самому под свои нужды?
+
+
+vch [10:20 PM] 
+@RNG вот вместо hibernate можно: https://habrahabr.ru/post/247885/
+На маленьких проектах - почему бы и нет. (edited)
+
+
+anpotashev [10:22 PM] 
+@RNG если будешь развертывать на сервере приложений поддерживающем javaee 6 или 7 и в приложении у тебя не будет ничего кроме jpa2.0 / 2.1 соответственно, то hibernate там не нужен. JPA - это всего лишь интерфейс.
+
+
+RNG [10:24 PM] 
+@vch Спасибо! Но тут же вопрос, где грань между маленьким проектом и средним к примеру?
+
+
+vch [10:27 PM] 
+@RNG ну вот как станет лень вручную писать sql-запросы и работать без автоматических связей между объектами - значит пора переходить на JPA
+
+
+RNG [10:36 PM] 
+@anpotashev @vch Спасибо за информацию!
+
+
+RNG [10:42 PM] 
+Собсно, к чему я это все спрашивал. Хочу на тестовом задании (которое Григорий дал) заюзать какую-то альтернативу для Hibernate. И судя по всему MyBatis неплох для этой цели.
+
+
+vch [10:43 PM] 
+@RNG на masterjava можно будет с jdbi поиграться (это ещё одна замена hibernate)
+
+
+grigory.kislin [11:56 PM] 
+на тему работы с базой:
+MyBatic используют и на больших проектах... все от нужд и тимлида-архитектора зависит
+если простой crud- то data-jpa самое удобное
+реализаций JPA основных 3 (вторая ссылка сверху у меня в гугл): https://stackoverflow.com/questions/576659/jpa-implementations-which-one-is-the-best-to-use
+Toplink / EclipseLink  имеют своих фанатов.. но попурярнее да, hibernate.
+вот еще: https://s3-eu-west-1.amazonaws.com/presentations2012/50_presentation.pdf
+я не думаю что на данный момент вам надо этим голову нагружать
+stackoverflow.com
+JPA Implementations - Which one is the best to use?
+I have made use of the following JPA implementations: Hibernate, Toplink, OpenJPA Each of them has their own strengths and weaknesses. I found Hibernate the most advanced of the three except that...
+
+itAvgur [9 hours ago] 
+Не проникся я пока Hibernate'ом.
+ИМХО костыль для тех, кто в SQL лезть не хочет (а надо).
+MyBatis, как обертка к JDBC - интересный продукт. :ok_hand:
+
+
+Few [6:23 AM] 
+В разделе про транзакции ссылка "How does Spring @Transactional Really Work" у кого-нибудь открывается?
+
+
+Tanya [7:04 AM] 
+не работает, надо поправить
+скорее всего эта статья
+https://dzone.com/articles/how-does-spring-transactional (edited)
+
+
+Few [7:05 AM] 
+@Tanya спасибо
+
+
+Tanya [7:06 AM] 
+пожалуйста :slightly_smiling_face:

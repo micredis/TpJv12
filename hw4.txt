@@ -2948,3 +2948,167 @@ https://web.archive.org/web/20170514002949/http://java.devcolibri.com:80/post/15
 web.archive.org
 Связывание сущностей в JPA | Devcolibri
 Наверное не существует разработчика, который бы не работал с базами данных, ведь данные это наше все и если вы работаете с Java вы точно столкнетесь с такой штукой как JPA и Entity, и связи таблиц.
+
+
+Maksim [7:27 PM] 
+Метод getAll(int userId) возвращает список объектов Meal (запрос правильно оценивает userId), но поле user пустое, это нормальная практика для ORM или я что-то упускаю? Что прочитать по данному вопросу?
+```to be equal to:
+ <[Meal{dateTime=2015-05-31T20:00, description='Ужин', calories=510, user=null},
+    Meal{dateTime=2015-05-31T13:00, description='Обед', calories=1000, user=null},
+    Meal{dateTime=2015-05-31T10:00, description='Завтрак', calories=500, user=null},
+    Meal{dateTime=2015-05-30T20:00, description='Ужин', calories=500, user=null},
+    Meal{dateTime=2015-05-30T13:00, description='Обед', calories=1000, user=null},
+    Meal{dateTime=2015-05-30T10:00, description='Завтрак', calories=500, user=null}]>
+when comparing elements using 'field/property by field/property comparator on all fields/properties' but was not.```
+
+
+Viktor [7:37 PM] 
+@Katherine Buzatu я сделал так, сначала написал через наследование, прочитав ваш коммент, решил попробовать по другому получилось так:
+
+
+Viktor [7:37 PM] 
+added this Plain Text snippet
+public class TimerTest extends Stopwatch {
+  private static final Logger LOG = getLogger(TimerTest.class);
+  private String className;
+  private Map<String, Long> testTimer = new HashMap<>();
+  @Override
+  protected void finished(long nanos, Description description) {
+    LOG.info("{} - {} ms", description.getMethodName(), nanos/1000000);
+    testTimer.put(description.getTestClass().getSimpleName()+"."+description.getMethodName(), nanos/1000000);
+    className = description.getTestClass().getSimpleName();
+  }
+  public String getResult(){
+    StringBuilder result = new StringBuilder();
+    result.append("==========================================================\n");
+    result.append("=          TEST TIMER RESULT          =\n");
+    result.append("=          "+className+".class       =\n");
+    result.append("==========================================================\n");
+    for (Map.Entry<String, Long> test : testTimer.entrySet()) {
+      result.append(String.format("Method: %s, time: %d ms\n",
+          test.getKey(), test.getValue()));
+    }
+    result.append("==========================================================\n");
+    return result.toString();
+  }
+}
+Add Comment Collapse
+
+
+
+Viktor [7:38 PM] 
+если убрать лишний вывод то так:
+Viktor [7:38 PM] 
+added this Plain Text snippet
+public class TimerTest extends Stopwatch {
+  private static final Logger LOG = getLogger(TimerTest.class);
+  private Map<String, Long> testTimer = new HashMap<>();
+  @Override
+  protected void finished(long nanos, Description description) {
+    LOG.info("{} - {} ms", description.getMethodName(), nanos/1000000);
+    testTimer.put(description.getTestClass().getSimpleName()+"."+description.getMethodName(), nanos/1000000);
+  }
+  public String getResult(){
+    StringBuilder result = new StringBuilder();
+    for (Map.Entry<String, Long> test : testTimer.entrySet()) {
+      result.append(String.format("Method: %s, time: %d ms\n",
+          test.getKey(), test.getValue()));
+    }
+    return result.toString();
+  }
+}
+1 Comment Collapse
+
+
+
+Katherine Buzatu [8:05 PM] 
+А вывод статистики в конце класса?
+
+
+
+Viktor [8:05 PM] 
+в самом классе.
+
+Katherine Buzatu [8:07 PM] 
+То есть не получается "из коробки", все равно надо `@AfterClass` делать дополнительно.
+
+Viktor [8:23 PM] 
+можно и из коробки, правда через рефлексию :smiley:
+
+Andrew [9:38 PM] 
+Чем плохо AfterClass?
+
+
+Andrew [9:50 PM] 
+added this Plain Text snippet
+java.lang.AssertionError: 
+Expecting:
+ <"[Meal{id=100010, dateTime=2015-06-01T18:00, description='Созданный ужин', calories=300},
+  Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+  Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+  Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+  Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+  Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+  Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@1e75d6a6)">
+to be equal to:
+ <"[Meal{id=100010, dateTime=2015-06-01T18:00, description='Созданный ужин', calories=300},
+  Meal{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510},
+  Meal{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000},
+  Meal{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500},
+  Meal{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500},
+  Meal{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000},
+  Meal{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500}] (ArrayList@1e75d6a6)">
+but was not.
+Add Comment Collapse
+
+
+
+Andrew [9:51 PM] 
+Подскажите кто-то, почему не равно? Ведь показывает одинаковые результаты
+
+
+Viktor [9:52 PM] 
+юзера из сравнения убери
+
+anpotashev [9:52 PM] 
+У тебя тут показан вывод toString, а юзера в методе нет
+
+
+[9:52] 
+Поэтому визуально они одинаковы
+
+
+Maksim [10:36 PM] 
+а если ставишь fetch = FetchType.EAGER почему он не вытаскивает объект User в объект Meal?
+
+anpotashev [10:39 PM] 
+А почему ты решил что не вытаскивает?
+
+
+dyakoven [10:39 PM] 
+над филдом, по которому связываются таблицы нужно поставить соответствующую аннотацию
+
+
+Maksim 
+[10:47 PM] 
+@anpotashev спасибо за вопрос, помог разобраться
+это в тестовых данных user = null
+
+anpotashev [10:48 PM] 
+@Maksim вообще посмотри комментарий Григория (вчера или позавчера) относительно необходимости проверки поля юзер.
+
+
+grigory.kislin [11:48 PM] 
+@Maksim
+> но поле user пустое, это нормальная практика для ORM
+посмотри видео и ссылки урока на тему EAGER и LAZY
+ну и еще дальше со всем этим будем работать
+@Katherine Buzatu @Viktor вообще мы сделаем в HW5 наследование тестов и Stopwatch у нас будет единственный в базовом классе
+но идея сгруппировать код мне нравится.. только действительно переиспользовать код Stopwatch 
+попробуйте у себя в базовом классе сделать а я у себя сделаю
+
+
+
+----- Today December 1st, 2017 -----
+Viktor [1:29 AM] 
+@grigory.kislin у меня первоначальный вариант такой и был. Но потом где-то прочитал, что рулы и нужны, чтобы избавиться от наследования.  Обоснования особого не нашел, но смог нафантазировать :smiley: Правило - это как модуль, написав много таких модулей их можно компоновать в любом виде. С наследованием так не получиться.
