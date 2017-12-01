@@ -272,3 +272,11 @@ Few [7:06 PM]
 
 Dmitry Makarov [8:16 PM] 
 у кого валидация работает?
+
+
+Argentum_kuh [12:00 AM] 
+Народ, после патча 5.5 падает тест на Postrges. Так и задумано?
+
+
+Argentum_kuh [12:12 AM] 
+Говорит dataSource не могет создать
