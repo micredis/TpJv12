@@ -142,3 +142,11 @@ Idea 2016.1.2 - проблема с цветными логами. Похоже,
 YouTrack
 IDEA-156183: Bug with Unicode escape characters breaking JUnit console colored output at the Test class-level
 log4j.rootLogger=INFO, StdoutDebug log4j.appender.StdoutDebug=org.apache.log4j.ConsoleAppender log4j.appender.StdoutDebug.encoding=UTF-8 log4j.appender.StdoutDebug.layout=org.apache.log4j.PatternLayo…
+
+
+grigory.kislin [11:30 AM] 
+Idea 2016.1.2- чото совсем старенькое... (edited)
+
+
+Few [11:31 AM] 
+до 2017.3 уже рискнул обновить :slightly_smiling_face:
