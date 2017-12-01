@@ -553,6 +553,23 @@ micredis [4:40 PM]
 defneo [5:23 PM] 
 thank you very much
 
+micredis [10:33 AM] 
+http://www.sciencemag.org/news/2017/11/artificial-intelligence-goes-bilingual-without-dictionary
+Tproger
+Нейросети научились переводить текст без словаря
+Нейросети помогут сделать редкие языки более доступными.
+Yesterday at 9:17 PM
+ 
+(edited)
+
+
+[10:35] 
+Although the title is quite flashy, that kind of approach is worth your consideration, in my opinion.
+
+
+[10:37] 
+There's no dictionaries, no grammar rules, just a plain input. Even without a teacher (i.e. unsupervised) :slightly_smiling_face: It also says (and this might encourage you) that humans who had resorted to that same approach outperformed the AI (so it works for humans even better:). (edited)
+
 Personal corrrespondence with levrun:
 -------------------------------------
 micredis [3:50 PM] 
@@ -573,4 +590,100 @@ I've sent you a letter with recommendations. You may find that the tone is a bit
 
 levrun [6:58 PM] 
 Thanks a lot!
+
+
+levrun [1:27 AM] 
+Thanks for email. Really interesting stuff. Some podcast I started to listen 3-5 years ago. But in the end only tv-shows survived.
+
+
+[1:27] 
+Чтобы научиться думать нужно обеспечить "массированный ввод данных". Другими словами - нужно реально много СЛУШАТЬ и ЧИТАТЬ. <--- here you are not saying about 70 20 rule :slightly_smiling_face:
+
+
+[1:30] 
+But I intuitively I feel that it should be everyday practice with 80% understandable inputs(LISTENING, READING) As if it's boring searching of vocabularly I wouldn't last 2 weeks of such training.
+
+
+[1:30] 
+Material should be interesting and addicted.
+
+
+[1:31] 
+And easy enough so you can browse it even if you sleepy or tired from work.
+
+[1:33] 
+A.J. Hoge - Real English Conversation Pack [2008, PDF + MP3] <--- this one seems like good stuff I always wanted to find
+
+[1:33] 
+are going to give it a try.
+
+[1:33] 
+BTW your writing skills are very good. I don't believe you havent' trained it somehow.
+
+
+micredis [9:23 AM] 
+Hey, I'm glad that you found something useful there.
+
+[9:23] 
+Speaking of 20% of reading, I'm not contradicting myself :slightly_smiling_face:
+
+[9:24] 
+I really think that 20% is A LOT
+
+
+[9:24] 
+Consider this:
+
+
+[9:24] 
+> нужно реально много СЛУШАТЬ и ЧИТАТЬ
+
+[9:27] 
+so you need a lot of listening and reading (instead of studying grammar, or forcing back upon output, i.e. premature writing and speaking). (edited)
+
+micredis [9:36 AM] 
+As for my writing, I've encountered that kind of slightly suspicious attitude before, especially from natives. But my answer is still, no, I've only resorted to such kind of approach when I was preparing to my IELTS exam, but that's another story and the amount of time that I spent preparing to writing part was really insignificant.
+
+[9:40] 
+> Some podcast I started to listen 3-5 years ago
+
+[9:41] 
+Then you do something wrong )))
+
+[9:43] 
+Because I've started practicing only in summer of 2014 :slightly_smiling_face:
+
+[9:44] 
+when I was in my mid thirties)))
+
+
+[9:44] 
+So I wasn't a 5-6 year old kid at that moment.
+
+[9:46] 
+> But I intuitively I feel that it should be _everyday practice_ with 80% *understandable inputs* (LISTENING, READING) As if it's boring searching of vocabularly I wouldn't last 2 weeks of such training.
+(edited)
+
+
+[9:47] 
+One hundred percent hit!
+
+
+[9:47] 
+> Material should be interesting and addictive.
+
+
+[9:47] 
+That's for sure!
+
+
+[9:47] 
+> And easy enough so you can browse it even if you sleepy or tired from work.
+
+
+[9:49] 
+I can't agree more :slightly_smiling_face:
+
+[9:50] 
+It seems that you'll be on the right track soon :smiley: (edited)
 -------------------------------------
