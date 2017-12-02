@@ -4558,3 +4558,94 @@ grigory.kislin [10:14 AM]
 
 CRCx86 [10:51 AM] 
 @grigory.kislin спасибо!
+
+
+Lezenford [5:03 PM] 
+Кто то ловил ошибку org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar []; nested exception is org.postgresql.util.PSQLException: ERROR: syntax error at or near ")"
+ Position: 19
+при тестировании метода create? В дебаге не вижу запроса, на который ругается... падает в коде
+Number newKey = insertMeal.executeAndReturnKey(map);
+аналогичном из userService...
+
+
+[5:03] 
+не могу разобраться что именно ему не нравится...
+
+
+[5:04] 
+при этом оба sql скрипта корректны, работают, прогонял их тестово
+
+
+[5:04] 
+Ошибка падает еще на этапе подключения к базе:
+17:58:34.825 DEBUG o.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection:329 - Returning JDBC Connection to DataSource
+17:58:34.826 DEBUG o.s.jdbc.support.SQLErrorCodesFactory.getErrorCodes:176 - SQL error codes for 'PostgreSQL' found
+17:58:34.826 DEBUG o.s.jdbc.support.SQLErrorCodesFactory.registerDatabase:244 - Caching SQL error codes for DataSource [org.springframework.jdbc.datasource.DriverManagerDataSource@1dc5318]: database product name is 'PostgreSQL'
+17:58:34.827 DEBUG o.s.j.support.SQLErrorCodeSQLExceptionTranslator.logTranslation:397 - Translating SQLException with SQL state '42601', error code '0', message [ERROR: syntax error at or near ")"
+ Position: 19]; SQL was [] for task [PreparedStatementCallback]
+
+
+grigory.kislin [8:48 PM] 
+@Lezenford я подозреваю проблема у тебя в Sql, как написано в exception
+
+
+Lezenford [8:49 PM] 
+Другие тесты, например на get all проходят корректо
+
+
+[8:50] 
+Падает именно создание объекта и при этом ошибочного запроса я в дебаге не вижу...
+
+[8:50] 
+В частности ругается на метод, который идет после проверки на isNew
+
+
+grigory.kislin [8:50 PM] 
+скажи, как нам тебе помочь, если ты его не показываешь???
+
+Lezenford [8:51 PM] 
+Что именно нужно показать?) укажи вещи какие ты хочешь видеть. Либо могу показать в репозитории
+
+
+grigory.kislin [8:53 PM] 
+почитай еще раз внимательно ексепшен. и подумай с чем он связан. это и показывай
+
+
+Lezenford [8:54 PM] 
+Я вижу ошибку грамматическую в эксепшенн. Вопрос в том, что дебаг не выводит мне запрос, который он считает ошибочным.
+
+
+[8:54] 
+Все падает до того как проходит транзакция в базу
+
+[8:54] 
+Это меня в тупик и ставит
+
+
+[8:55] 
+Домой приду еще буду ковырять...
+
+
+grigory.kislin [8:55 PM] 
+> падает в коде Number newKey = insertMeal.executeAndReturnKey(map);
+не тут?
+
+
+Lezenford [8:56 PM] 
+Тут
+
+
+grigory.kislin [8:57 PM] 
+ну.. :slightly_smiling_face:?
+
+
+Lezenford [8:58 PM] 
+Рпзмотать цепочку не получилось))) приду еще буду ковырять. Грешил на присвоение идентификатора. Но в базе он корректен
+
+
+grigory.kislin [9:12 PM] 
+@Lezenford судя по эксепшену и месту у меня подозрение на твой sql в инсерте (edited)
+
+
+Lezenford [9:15 PM] 
+До него не доходит, инечн бы он в качестве дебега в лог упал.. Или я не прав?

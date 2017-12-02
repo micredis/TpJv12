@@ -268,3 +268,39 @@ anpotashev [12:48 PM]
 
 russell [12:48 PM] 
 а все уловил
+
+
+anpotashev [7:49 PM] 
+Привет!
+Почему-то не работает валидация на уровне модели.
+Мы вроде в topjava специально ее нигде не включали, только добавили аннотации к полям модели и hibernate-validator в pom.xml
+
+
+[7:49] 
+Или еще что-то было сделано?
+
+
+grigory.kislin [8:47 PM] 
+@anpotashev hibernate-validator при сохранение в базу через hibernate делает валидацию (edited)
+
+
+anpotashev [8:47 PM] 
+Спасибо. Только что разобрался. javax.el забыл включить в зависимости.
+
+
+anpotashev [11:18 PM] 
+Друзья, еще один вопрос. По кэшу.
+Есть метод с кэшем: 
+@Cacheable("menu")
+   public DayMenu getDayMenu(LocalDate date) {
+...
+и есть второй метод в этом же классе:
+   public DayMenu getDayMenu() {
+       LocalDate date = LocalDate.now();
+       return getDayMenu(date);
+   }
+Почему при вызове первого метода из второго не срабатывает кэш, а идет обращение к бд? (edited)
+
+
+[11:21] 
+Или это компилятор так оптимизирует

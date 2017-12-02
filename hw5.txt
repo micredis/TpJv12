@@ -407,3 +407,218 @@ https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-me
 Andrey Klimenko
 где-нибудь есть описание встроенного парсера методов DATA JPA, не только исходники?
 Posted in #hw5Today at 1:39 PM
+
+
+
+Антон Кляшторный [4:37 PM] 
+сколько тестов в итоге получится должно? у меня Tests run: 58, Failures: 0, Errors: 0, Skipped: 0
+
+
+anpotashev [5:38 PM] 
+@Dmitry Makarov ого, откуда столько?
+
+
+MetalBro [5:41 PM] 
+у кого-нибудь работает MealServiceTest если менять профили в spring-db.xml, а не вкидывать вручную @ActiveProfiles () ?
+
+
+[5:42] 
+environment тоже видеть не хочет
+
+
+anpotashev [5:52 PM] 
+@MetalBro тесты в мавен можно запускать с указанием профиля (который из pom), mvn -Phsqldb clean test - запустить тесты на hsql, mvn clean test - на профиле по умолчанию, т.е. postgres.
+Если правильно понял вопрос
+
+
+anpotashev [5:56 PM] 
+А как ты делаешь профиль активным в spring-db?
+
+MetalBro [5 hours ago] 
+через идею change profiles. Кстати, посмотрел твой гит, неужели у тебя работает? (edited)
+
+
+Dmitry Makarov [5:56 PM] 
+@anpotashev на самом деле "Tests run: 103, Failures: 0, Errors: 0, Skipped: 0" сделал clean
+
+
+MetalBro [5:58 PM] 
+после например такого переноса     <beans profile="jdbc">
+       <context:component-scan base-package="ru.javawebinar.**.repository.jdbc"/>
+       <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+           <constructor-arg ref="dataSource"/>
+       </bean>
+
+       <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+           <constructor-arg ref="dataSource"/>
+       </bean>
+   </beans>
+
+
+[5:58] 
+он не может загрузить контекст
+
+[5:59] 
+ни отдельно MealService ни Maven. Кстати, у нас ведь на MealServiceTest стоит автоматический resolver, и он распознает только базу
+
+
+[5:59] 
+если ему вручную добавить в параметрах какой-нибудь профиль реализации репозитория, то он работает, а так нет
+
+
+[5:59] 
+хз почему
+
+[6:01] 
+может где-то баг, не должно же быть так
+
+[6:02] 
+контекстные файлы указаны перед тестами, а вот с профилями возникают проблемы
+
+anpotashev [6:05 PM] 
+3: Сделать тесты всех реализаций (jdbc, jpa, datajpa) через наследование (без дублирования)
+3.1 сделать один базовый класс для MealServiceTest и UserServiceTest.
+ты сейчас над этим работаешь?
+
+
+MetalBro [6:06 PM] 
+Нет, я вынес репозитории в профили и попробовал запустить тесты, меняя профили в идее
+
+
+[6:07] 
+Разве не должно работать?
+
+MetalBro [6:12 PM] 
+Если определить репозиторий вне профиля и выше базы, то работает, иначе нет
+
+
+anpotashev [6:14 PM] 
+в идее ты меняешь профили мавена
+
+MetalBro [6:17 PM] 
+ты пробовал писать ActiveProfileResolver?
+
+anpotashev [6:17 PM] 
+Нет
+
+
+MetalBro [6:20 PM] 
+[ERROR]   MealServiceTest.testDelete ? IllegalState Failed to load ApplicationContext
+на всех
+
+[6:20] 
+хз
+
+anpotashev [6:25 PM] 
+Можно спросить, а на основании каких данных ты резолвишь профили?
+
+
+MetalBro [6:27 PM] 
+ха, вот еще WARNING] The requested profile "jdbc" could not be activated because it does not exist
+
+
+[6:27] 
+какие данные
+
+[6:28] 
+реализован datajpa
+
+
+[6:28] 
+ну и все, остальное стандартное. Что имеешь в виду, на какие данные смотреть?
+
+
+anpotashev [6:28 PM] 
+Ну вот с бд понятно - там данные наличие или отсутствие jdbc-драйвера postgres, а вот как с выбором профиля имплементации поступить можно не представляю.
+
+
+MetalBro [6:30 PM] 
+ощущение, что просто не видятся профили
+
+
+[6:30] 
+репозиториев
+
+[6:30] 
+неясно почему
+
+MetalBro [6:36 PM] 
+Наверно так не должно работать без реализации всех по профилям. Будем проверять. Вот если отправлять профиль сразу в метод MealServiceTest, тогда этого не надо, и абстрактных классов тоже. Но как это сделать? Базу он ищет очень интересно
+
+
+Dmitry Makarov [6:45 PM] 
+какие профили ты указал в MealServiceTest?
+
+
+MetalBro [6:46 PM] 
+там походу без абстраций не будет работать
+
+[6:47] 
+в самом MealServiceTest специально не указана реализация репозитория, как и было раньше, она только в конфиге spring-db.xml
+
+
+[6:47] 
+а там разделено по профилям
+
+Dmitry Makarov [6:47 PM] 
+Все правильно. Попробуй 2 профиля укажи в аннотации (edited)
+
+
+MetalBro [6:48 PM] 
+ну да, если профиль конкретно указать, resolver + например, "jdbc", то заработает
+
+
+[6:48] 
+я вообще пытался автоматическое распознавание репозиториев сделать, но там что-то вообще хитрое делать надо
+
+
+Dmitry Makarov [6:49 PM] 
+давно спал?
+
+
+MetalBro [6:49 PM] 
+верней в резолвере сделать так
+
+
+[6:49] 
+return new String[]{Profiles.getActiveDbProfile(), "jdbc"};
+
+
+[6:50] 
+базу определяем автоматически, а репозиторий даже интересно стало как можно
+
+[6:51] 
+спал вроде нормально, но надо было все пункты пройти, а то голова вспухла)
+
+
+[6:51] 
+когда с этим начал разбираться
+
+[6:51] 
+Григорий еще константы зашил     public static final String
+           JDBC = "jdbc",
+           JPA = "jpa",
+           DATAJPA = "datajpa";
+
+   public static final String REPOSITORY_IMPLEMENTATION = DATAJPA;
+
+[6:52] 
+чтобы запутать еще
+
+
+
+Dmitry Makarov [6:52 PM] 
+Я вообще с этим резолвером ничего не делал. Ты сейчас на каком-то пункте или сам по себе код ковыряешь?
+
+
+MetalBro [6:52 PM] 
+я после 2 пункта попробовал запустить тесты и они не пошли. Думал без абстрактных должны
+
+
+[6:53] 
+ладно, но пытался ковырять
+
+
+philip.goldm [11:01 PM] 
+>8: Для достать по id пользователя вместе с его едой я в User добавил List<Meal> meals
+В User нет List<Meal> meals. Может быть имеется ввиду добавить List<Meal> meals в User?

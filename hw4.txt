@@ -3123,3 +3123,21 @@ CRCx86 [11:33 AM]
 
 Katherine Buzatu [19 minutes ago] 
 Патчи к 4 уроку выполняют все ДЗ-3, если вопрос об этом.
+
+CRCx86 [9 hours ago] 
+хочется объяснения, а не решения сразу. так до меня не дойдёт
+
+
+Katherine Buzatu [9 hours ago] 
+Это та же проблема, что и тут? https://topjava12.slack.com/archives/C812ENFT5/p1512025624000028 Если нет, стоит понятее описать свою проблему: что значит "не работают", что именно подчеркивается, что при этом Идея пишет в подсказке.
+AleksandrZinov
+доброе утро! подскажите пожалуйста такую вещь, исправляю работу UserServiceImpl и добавляю работу MealServiceImpl, а так же пытаюсь заставить работать SpringTest и InMemory**Test, все тесты валятся с ошибкой Error creating bean with name, а MealServiceTest и UserServiceTest еще и в **Impl предлагают выбрать квалификаторы. Подскажите куда идти? Самостоятельно уже не разобраться, а урок пока смотреть не хочу.
+From a thread in #hw3Nov 30th at 9:07 AM
+
+
+grigory.kislin [8:52 PM] 
+@CRCx86 сразу после Разбор домашнего задания HW3:
+SpringMain, InMemoryAdminRestControllerTest, InMemoryAdminRestControllerSpringTest починим в патче 4_5_create_mock_test_ctx.patch (видео 4)
+
+CRCx86 [2 hours ago] 
+ок, спасибо!
