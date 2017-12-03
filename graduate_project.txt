@@ -304,3 +304,12 @@ anpotashev [11:18 PM]
 
 [11:21] 
 Или это компилятор так оптимизирует
+
+
+grigory.kislin [11:14 AM] 
+@anpotashev хорошо, что споткнулся:) как работает @Cacheable? (edited)
+
+
+
+anpotashev [12:04 PM] 
+understood. 10x

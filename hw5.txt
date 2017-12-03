@@ -622,3 +622,183 @@ MetalBro [6:52 PM]
 philip.goldm [11:01 PM] 
 >8: Для достать по id пользователя вместе с его едой я в User добавил List<Meal> meals
 В User нет List<Meal> meals. Может быть имеется ввиду добавить List<Meal> meals в User?
+
+
+Tanya [11:45 PM] 
+@philip.goldm да, добавить в класс User
+
+
+
+----- Today December 3rd, 2017 -----
+Ivanushka [8:50 AM] 
+Товарищи, выручайте. Не получается накатить патчи начиная с 5_5 ругается на строчку с версией "TomCat" (121 строка в файле). Сегодня увидел в Project_change изменения в патчах, выкачал их по новой из Google_drive, а там никаких изменений. Подскажите как быть?
+
+philip.goldm [8 hours ago] 
+>5_5 ругается на строчку с версией "TomCat" (121 строка в файле).
+
+
+Пришли детали ошибки.
+
+
+Ivanushka
+[7 hours ago] 
+IDEA говорила, что не может вставить 19 строку "TomCat-version", и далее во всех следующих патчах ошибок от 3 до 6. 
+
+Перекачал ветку мастер из оригинального https://github.com/JavaWebinar/topjava.git - тесты на User проходят, продолжаю изучать материал.
+Спасибо.
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+Ivanushka [8:54 AM] 
+...
+Туплю, это же просто Григорий накатил патчи... И они накатились...
+
+
+grigory.kislin [11:12 AM] 
+> 5_5 ругается на строчку с версией "TomCat"
+https://github.com/JavaOPs/topjava/wiki/git#patch-%D0%BD%D0%B5-%D0%BD%D0%B0%D0%BA%D0%B0%D1%82%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F-%D0%BF%D1%80%D0%B5%D0%B4%D0%BB%D0%B0%D0%B3%D0%B0%D0%B5%D1%82-merge
+GitHub
+JavaOPs/topjava
+topjava - Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery
+ 
+
+
+Serge [11:15 AM] 
+uploaded this image: Ребят, помогите… готлова-стол…
+  Add Comment
+
+Serge [11:15 AM] 
+uploaded this image: 2017-12-03 в 12.02.00.jpg
+Add Comment
+
+
+
+Serge [11:15 AM] 
+почему?
+
+
+Few 
+[11:20 AM] 
+тут говорили что может не найти из-за пробелов в пути
+
+[11:20] 
+у тебя не?
+
+
+[11:20] 
+подозрительно выглядит участок пути google........
+
+
+Serge [11:23 AM] 
+не думаю, остальное все находит же по этому пути, только cache ему не угодил чем то
+
+Few 
+[11:24 AM] 
+Вот посмотри
+Vladimir Khmelnitsky
+после установки последнего патча проект перестал запускаться. Выдавал длиннющую простыню в консоль, мол не может найти файл ehcache.xml, хотя файл был на месте. После (не)продолжительных танцев-с-бубном выяснилось, что у одной из папок, в которой лежит проект, был пробел в названии. Переименовал папку и всё заработало
+Posted in #hw5Yesterday at 9:09 AM
+
+
+grigory.kislin [11:24 AM] 
+@Serge не должно в пути быть пробелов, русских букв и пр. ктото обязательно споткнется
+у меня про tomcat написано
+
+
+Few 
+[11:24 AM] 
+минимум двое с этим столкнулись
+
+
+Serge [11:30 AM] 
+действительно в этом дело… удивительно что конфиги спринга и логгера до этого находил нормально…  плавающий баг видимо
+
+
+Ivanushka 
+[12:00 PM] 
+У кого-то получился метод "Meal...getAll" через "private static final Sort SORT_DATA_DESC = new Sort(Sort.Direction.DESC, "date_time");"?
+Сам смог только через Query сделать. Если не жалко скиньте в личку. (Докопался до того, что Hibernate не знает Java8 нужно добавить зависимостей... https://stackoverflow.com/questions/40616629/spring-data-repository-find-method-with-orderby-gets-the-wrong-order)
+stackoverflow.com
+Spring Data Repository: "find" method with orderBy gets the wrong order
+I have a Spring Boot application with some JPA repositories. I defined the following method inside one of the repository interfaces: public List<Post> findAllByOrderByPublishedOnDesc(); ...
+ 
+
+
+Valery [12:52 PM] 
+как подружить resolver и profiles в @ActiveProfiles? когда задаю 2 профиля - работает. 1 профиль + резолвер = Failed to load ApplicationContext.
+
+philip.goldm [4 hours ago] 
+Убедись, что у всех  классов repository добавил анатацию @Profile(..). А также, в spring-db.xml настроены профили. 
+
+>Failed to load ApplicationContext.
+Пришли детали ошибки
+
+
+Valery [3 hours ago] 
+проблема устранена. профиль репо надо было  в наследнике задавать. 
+а по аннотиции @Profile(..) не совсем ясно. она нужна когда весь контекст задается в классе. в нашем проекте все бины описаны в xml файлах.
+
+
+philip.goldm [3 hours ago] 
+>в нашем проекте все бины описаны в xml файлах.
+Не совсем так. Если посмотришь, то в pring-db.xml увидишь, что идет сканирование всех классов
+>p:packagesToScan="ru.javawebinar.**.model"
+Посмотри, здесь есть пример использование @Profile
+https://www.mkyong.com/spring/spring-profiles-example/
+
+
+philip.goldm [3 hours ago] 
+На пример, @Profile(Profiles.JDBC) 
+JdbcUserRepositoryImpl позволяет явно указать, что будет сканировать только в случает если используется профиль JDBC
+
+
+Valery [3 hours ago] 
+сканирование, как я понимаю, нужно для автосвязывания. в примере бины описаны в AppConfig.java, посему и нужна аннотация @Profile
+
+
+Andrew [4:03 PM] 
+После последнего патча с кешем, падают тесты для юзера с java.lang.IllegalStateException: Failed to load ApplicationContext. Это только у меня?)
+
+
+Дима Жуков 
+[4:06 PM] 
+У меня вроде норм
+
+
+Few [4:17 PM] 
+Почитай подробнее лог, там объяснение должно быть
+
+
+[4:17] 
+Ищи самую длинную строку
+
+
+Andrew [4:20 PM] 
+Error parsing XML configuration at /topjava-1/target/classes/cache/ehcache.xml (edited)
+
+
+Few
+[4:23 PM] 
+Возможно не находит конфиг,  у тебя в пути к проекту нет пробелов или русских букв?
+
+Andrew [4:24 PM] 
+Есть... но только на кеше упало?( Попробую странить
+
+Few
+[4:28 PM] 
+не сомневайся, в этом проблема
+
+Andrew [4:30 PM] 
+Убрал пробел, ексепшн поменялся. org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+
+
+Few
+[4:33 PM] 
+снова надо искать объяснение в логе
+
+
+Andrew [4:39 PM] 
+Блин, беда была в том, что упал сервис постгреса, но в логах было непонятно

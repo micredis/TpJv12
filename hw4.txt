@@ -3141,3 +3141,180 @@ SpringMain, InMemoryAdminRestControllerTest, InMemoryAdminRestControllerSpringTe
 
 CRCx86 [2 hours ago] 
 ок, спасибо!
+
+
+CRCx86 [8:00 AM] 
+здравствуйте! при накатке фиксов патчей 4.0, 4.1 и 4.2 InMemoryAdminRestControllerTest, UserTestData.java не работают, а именно, подсвечиваются красным InMemoryUserRepositoryImpl в InMemory** и assertThat в UserTestData, галочки в Insepct стоят. Почему не работает?
+
+
+[8:00] 
+спасибо
+
+
+CRCx86 [8:05 AM] 
+почему-то класс UserTestData дублируется ветках main и test, правильно ли этоН
+
+Katherine Buzatu [6 hours ago] 
+В инструкции написано, что перед каким-то патчем (не помню номер) надо создать папку test
+
+
+CRCx86 [8:05 AM] 
+?
+
+
+[8:06] 
+откат производил два раза, всё тоже самое
+
+
+[8:08] 
+InMemoryAdminRestControllerTest тоже дублируется
+
+
+CRCx86 [8:34 AM] 
+uploaded this image: image.png
+Add Comment
+
+
+
+CRCx86 [8:34 AM] 
+uploaded this image: image.png
+Add Comment
+
+
+
+CRCx86 [8:58 AM] 
+у меня вообще приложение перестало работать после накатки 4х патчей
+
+[8:58] 
+так должно быть?
+
+Дима Жуков [9:02 AM] 
+Не знаю правильно или нет. Я эти патчи накатываю без просмотра работает или нет. Просто изменения просмотриваю Ctrl D вроде. Потом после всех патчей пока всегда работало)) хотя между патчами иногда много ошибок, то ипморта нет то ещё чего. (edited)
+
+
+CRCx86 [9:04 AM] 
+очень странно, хочется просмотреть работу после накатки пачтей, а у меня ошибки
+
+[9:09] 
+вот это вообще что за шляпа?
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'ru.javawebinar.topjava.repository.UserRepository' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Qualifier(value=jdbcUserRepositoryImpl)}
+    org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1502)
+    org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1099)
+    org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1060)
+    org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:809)
+    org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:715)
+    org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:192)
+    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1269)
+    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1126)
+    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:545)
+    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+    org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+    org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+    org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+    org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+    org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:756)
+    org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:868)
+    org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+    org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:144)
+    org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:95)
+    ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+    org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
+    org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+    org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:650)
+    org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+    org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:803)
+    org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+    org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+    org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1459)
+    org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+    java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+    java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+    java.lang.Thread.run(Thread.java:748)
+
+
+[9:09] 
+хотя в сервисе юзера всё есть
+
+[9:09] 
+@Autowired
+   public UserServiceImpl(@Qualifier(value = "jdbcUserRepositoryImpl") UserRepository repository) {
+       this.repository = repository;
+   }
+
+Дима Жуков 
+[9:11 AM] 
+Ну по ошибке в UserRepository стоит Autowired а никакого подходящего бина нет для него.
+
+CRCx86 [9:13 AM] 
+так вон есть же
+
+[9:14] 
+чёто странно всё в нашем царстве-государстве(
+
+
+Дима Жуков [9:16 AM] 
+В спринг-апп или спринг-бд есть такой jdbcUserRepositoryImpl или scan пакета с ним что там). Я вообще забыл что у нас Qualifier где то есть)
+
+
+CRCx86 [9:18 AM] 
+нету там ничего похожего
+
+Дима Жуков [9:22 AM] 
+Ну на сколько я понимаю он ищет в контексте бинов бин с таким айди, раз qualifier указан, ну или с таким типом. Контекст бинов - это бины в наших конфиг файликах. Там такого нет и валится. Я могу быть кэпом конечно) или не правильно ляпнуть. Добавь туда
+
+
+CRCx86 [9:24 AM] 
+что добавить?
+
+
+Дима Жуков [9:25 AM] 
+Ну scan пакета где лежит userrepositoryimpl, ну или бин прям
+
+[9:26] 
+Хотя я нуб, не факт что правильно. Тут ребята поопытней есть, выйдут подскажут
+
+
+CRCx86 [9:27 AM] 
+если так, то не
+
+
+[9:27] 
+<context:component-scan base-package="ru.javawebinar.**.topjava.repository.jdbc"/>
+
+[9:28] 
+не рулИт
+
+
+[9:28] 
+там после 4х патчей всё перестроилось, я не знаю почему ошибка, да еще и на мастере
+
+
+Дима Жуков [10:03 AM] 
+Да вообще всякой "магии" много) я помню решил заменить jpa p:packagesToScan на persistenceUnit. Создал META-INF/persistence.xml выкинул всю эту инициализацию хибернейта - hibernate.connection.driver_class,  showsql и прочее туда. сразу же не понял откуда берется datasource, pool не pool... добавил property enf на persistenceUnit. написал тест getAll - все заработало прекрасно, чистый spring-app. потом закомментил property с persistenceUnit и тест также прошел... откуда он берет соединение с бд, как он ищет классы модели в persistence.xml этого не было, только свойства хибера... Возможно конечно когда em.createQuery("from User", User.class) он понял где модель взять и META-INF особая папка... короче закрыл и думаю ну ее нафиг)
+
+
+CRCx86 [10:12 AM] 
+@grigory.kislin без вас не обойтись
+
+[10:12] 
+т.е. откывататься до нуля и всё завново?(((
+
+
+grigory.kislin [11:09 AM] 
+@CRCx86
+1. у тебя тестовые классы попали в проект
+а там нет JUnit (он со скопе test подтягивается)
+перед накаткой 3_07_add_junit.patch - создавал каталог test? (edited)
+
+
+[11:10] 
+2. можешь просто вычекать проект еще раз. я туда патчи 4го урока накатил
+
+
+CRCx86 [12:34 PM] 
+блин, вот я двоечник
+
+
+[12:34] 
+@grigory.kislin спасибо!
