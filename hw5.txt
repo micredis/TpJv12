@@ -1236,3 +1236,65 @@ Viktor [8:40 AM]
 
 anpotashev [10:20 AM] 
 @Антон Кляшторный д.б. два разных метода: достать юзера и достать сытого юрера.
+
+
+ujwegh [12:03 PM] 
+Всем привет, такой вопрос: при запуске тестов, какой бы профиль не выбрал, не проходят тесты в JDBC Meal (testSave, testUpdate, testGetBetween). Ругается на неправильную грамматику SQLorg.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: incompatible data type in conversion. Саму jdbc репу не менял
+
+
+Dmitry Makarov [12:08 PM] 
+jdbc postgres тоже не проходит?
+
+
+ujwegh [12:08 PM] 
+да
+
+
+[12:09] 
+хотя нет
+
+
+[12:09] 
+с postgre прошло(сделал clean)
+
+
+Dmitry Makarov [12:09 PM] 
+5 пункт делал?
+
+
+ujwegh [12:10 PM] 
+нет еще
+
+Dmitry Makarov [12:10 PM] 
+он эту проблему решает
+
+
+ujwegh [12:10 PM] 
+ну хорошо
+
+
+Katherine Buzatu [1:12 PM] 
+У Spring Data отличаются префиксы get и find, или это синонимы?
+
+
+Few [1:14 PM] 
+find, read, query, get, вроде все синонимы
+
+
+Katherine Buzatu [1:27 PM] 
+Озадачило это:
+>  В Data-Jpa метод для ссылки на entity (аналог em.getReference) : T getOne(ID id)
+
+
+Vladimir_X [1:48 PM] 
+а кто-то смог сделать метод save для CrudMealRepository в стиле сохраниПожалуйстаЭтуЕдуСВотЭтимЮзером()??? хочется все методы в таком стиле сделать, но не вижу среди вариантов слова "save "
+З.Ы. все уже видели новый гугловский дудл про алгоритмы?:grinning:
+
+
+Katherine Buzatu [1:59 PM] 
+Кажется, с save они нас прокатили.
+
+
+Few [2:09 PM] 
+Даже пожалуйста не поможет? :slightly_smiling_face:
+ 
