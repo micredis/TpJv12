@@ -1298,3 +1298,144 @@ Katherine Buzatu [1:59 PM]
 Few [2:09 PM] 
 Даже пожалуйста не поможет? :slightly_smiling_face:
  
+
+vsimonov [2:35 PM] 
+Посоны, почему в профилях dataSource не виден?
+
+
+Дима Жуков [2:37 PM] 
+А профили можно объединять? Типо JPA и DataJpa ну как Css стили типо?))
+
+
+Katherine Buzatu [2:38 PM] 
+Так, что ли?
+> Разделить реализации Repository по профилям Spring: jdbc, jpa, datajpa (общее в профилях можно объединять, например <beans profile="datajpa,jpa">)
+
+
+
+Дима Жуков 
+[2:38 PM] 
+Ооо
+
+
+[2:38] 
+Да
+
+
+[2:38] 
+Спасибо
+
+
+vsimonov [2:50 PM] 
+added this Plain Text snippet: ребята в jpa datasource такой же должен быть?
+<bean id="dataSource"
+       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="org.postgresql.Driver"/>
+      <property name="url" value="${database.url}"/>
+      <property name="username" value="${database.username}"/>
+      <property name="password" value="${database.password}"/>
+    </bean>
+Add Comment Collapse
+
+
+
+Katherine Buzatu [2:56 PM] 
+dataSource относится к самой БД, не к реализации нашего обращения к ней.
+
+
+vsimonov [3:22 PM] 
+без этого ркгается
+
+
+Viktor [4:53 PM] 
+при указании профиля в тестах надо указывать 2: профиль бд и профиль репозитория
+
+
+Антон Кляшторный [6:51 PM] 
+findMealByUserIdAndDateTimeBetweenOrderByDateTimeDesc(userId, startDate, endDate); вот так заклинание :slightly_smiling_face:
+
+
+Zamyslov Oleg [6:56 PM] 
+зато сразу все понятно )
+
+
+Дима Жуков [6:58 PM] 
+Я как getBetween оставил
+
+
+[6:59] 
+Но твое прям вписывается в Спринг.
+
+
+Valery [7:03 PM] 
+>findMealByUserId
+в классе еды нету поля userId, магия не срабатывает в этом случае.
+или вы в еде храните и user, и userId?
+
+
+Few [3 hours ago] 
+Однако спринг волшебным образом соображает, что Id надо взять из объекта User
+
+
+Few 
+[3 hours ago] 
+вложенного
+
+
+Дима Жуков [7:07 PM] 
+Я названия методов копернул с jpa, зря видно я так сделал
+
+
+Антон Кляшторный [7:08 PM] 
+только user в классе Meal
+
+
+[7:09] 
+сначала тоже с JPA, теперь попереписывал все на магические
+
+
+Andrew [10:01 PM] 
+"при указании профиля в тестах надо указывать 2: профиль бд и профиль репозитория"
+Когда ставлю галку на два профиля, то идея не включает никакой из них.. Так и должно быть? Вручную надо их переключать в spring-db.xml? Так ведь не кошерно
+
+
+Few [10:10 PM] 
+ты сейчас про какие галки говоришь?
+
+
+Andrew [10:11 PM] 
+Когда попадешь в Чендж профайл диалог спринга
+
+
+[10:11] 
+Там есть галки около профилей
+
+
+Few 
+[10:11 PM] 
+это только интеграция с идеей, чтоб она не подчеркивала лишнего
+
+
+[10:12] 
+активировать профили надо отдельно, способ зависит от того, что ты хочешь запустить
+
+[10:13] 
+в тестах через @ActiveProfiles, для сервлета и SpringMain есть разные варианты
+
+
+Andrew [10:13 PM] 
+А для главного сервера?
+
+
+Few 
+[10:14 PM] 
+для запуска сервлета на томкате?
+
+
+Andrew [10:14 PM] 
+Да, или там тоже надо указать профили?
+
+
+Few 
+[10:14 PM] 
+скину в личку если надо, сюда пока не будем решение выкладывать
