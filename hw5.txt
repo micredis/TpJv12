@@ -1037,3 +1037,202 @@ Dmitry Makarov [8:49 PM]
 
 Katherine Buzatu [9:00 PM] 
 @Dmitry Makarov Еще в прошлый раз. Жду, когда его красивше сделают/
+
+
+dyakoven [12:05 AM] 
+после реализации DataJpaMealRepositoryImpl приложение валится. хотя все тесты проходят нормально
+
+
+[12:05] 
+вот такой эксепшн бросает
+
+
+dyakoven [12:06 AM] 
+added this Plain Text snippet
+java.lang.IllegalArgumentException: Invalid boolean value [${jpa.showSql}]
+  org.springframework.beans.propertyeditors.CustomBooleanEditor.setAsText(CustomBooleanEditor.java:126)
+  org.springframework.beans.TypeConverterDelegate.doConvertTextValue(TypeConverterDelegate.java:465)
+  org.springframework.beans.TypeConverterDelegate.doConvertValue(TypeConverterDelegate.java:438)
+  org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:192)
+  org.springframework.beans.AbstractNestablePropertyAccessor.convertIfNecessary(AbstractNestablePropertyAccessor.java:585)
+  org.springframework.beans.AbstractNestablePropertyAccessor.convertForProperty(AbstractNestablePropertyAccessor.java:604)
+  org.springframework.beans.BeanWrapperImpl.convertForProperty(BeanWrapperImpl.java:219)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.convertForProperty(AbstractAutowireCapableBeanFactory.java:1656)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1612)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1352)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+  org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveInnerBean(BeanDefinitionValueResolver.java:312)
+  org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:124)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1607)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1352)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+  org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+  org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+  org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+  org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+  org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1083)
+  org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:858)
+  org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:144)
+  org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:95)
+  ru.javawebinar.topjava.web.MealServlet.init(MealServlet.java:31)
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:624)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1455)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+  java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+  java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.lang.Thread.run(Thread.java:748)
+Add Comment Collapse
+
+
+
+dyakoven [12:07 AM] 
+когда нажимаешь на переменную, то перебрасывает в проперти файл
+
+
+Viktor [12:12 AM] 
+"Ненавижу магию", вопрос с горяча, кто смог создать метод получения всей еды пользователя в интерфейсе?
+
+Katherine Buzatu [11 hours ago] 
+Ты про метод типа ДайМнеВсеВКрасивомВиде?
+
+
+Viktor [11 hours ago] 
+типо того, сейчас прокатило и я немного в шоке :smiley:
+
+
+Viktor [11 hours ago] 
+блин даже delete так сделал.... ненавижу магию.
+
+
+Viktor [11 hours ago] 
+единственный метод который мне пришлось писать - save
+
+
+Viktor [11 hours ago] 
+все остальное магия в именах методов
+
+
+Katherine Buzatu [11 hours ago] 
+...и в генерируемых запросах...
+
+
+Viktor [11 hours ago] 
+ну если не смотреть в лог, то все что нужно написать правильно имя метода в интерфейсе, при это имя состоит из 13 слов
+
+
+Viktor [11 hours ago] 
+если бы идея не начала подсказывать, я бы их все писал бы через аннотацию, а так ни одного запроса, и всего 1 метод реализован.
+
+
+Viktor [11 hours ago] 
+а не это метод для получения еды между датами в 13 слов, получение всей еды 9 слов.
+
+
+Viktor [12:12 AM] 
+@dyakoven при запуске надо указать нужный профиль спринга
+
+
+[12:13] 
+@dyakoven Если запускаешь через IDEA добавь в параметры запуска -Dspring.profiles.active=test(тут имя профиля)
+
+
+dyakoven [12:16 AM] 
+@Viktor спасибо
+
+
+dyakoven [12:49 AM] 
+что должно входить в настройки спринг профиля jdbc/jpa/datajpa?
+
+
+Viktor [1:11 AM] 
+ответы тут пока не выкладываем :smiley: а так все что к каждому их них относится
+
+
+Viktor [1:57 AM] 
+не совсем понял, что делать "3.1 сделать один базовый класс для MealServiceTest и UserServiceTest.". Попробовал вынести в общий класс таймер, но как-то не очень, все тесты в кучу сваливаются в итоговом отображении.
+
+
+Tanya [2:05 AM] 
+ну так не сваливай
+
+
+Viktor [2:36 AM] 
+так вопрос, что выносить в общий класс? у меня просто подозрение, что я опять что-то не понял
+
+
+Tanya [2:40 AM] 
+@Viktor
+> вынести в общий класс таймер
+выноси таймер, но надо поправить, чтобы итоги не копились, а обнулялись для каждого класса
+
+
+Viktor [2:51 AM] 
+@Tanya да посидел - придумал кажется :smiley:
+
+
+[2:52] 
+я сначала подумал, что это как-то конкретно связанно с тестами, т.к. подпункт к созданию тестов.
+
+
+Few [6:17 AM] 
+И все-таки как правильно задействовать профили спринга для сервлета и SpringMain: через -Dspring.profiles.active или программно?
+
+
+Anton K. [7:37 AM] 
+Подскажите куда смотреть, чтобы починить сервлет, в web.xml вставил строчки для active prоfile согласно документации, но когда поднимается контекст спринга он сразу же падет т.к. не видит имплементацию для репозитория (edited)
+
+Dmitry Makarov [4 hours ago] 
+AbstractApplicationContext, ConfigurableEnvironment, AbstractRefreshableConfigApplicationContext
+
+
+Dmitry Makarov [7:49 AM] 
+@Few я думаю spring.profiles.active более гибкое решение
+
+
+Few [7:51 AM] 
+Григорий в 6 пункте пишет: Попробуйте поднять Spring контекст без использования spring.profiles.active.
+
+
+Dmitry Makarov [7:53 AM] 
+Григорий хочет, чтобы мы документацию по классам почитали :slightly_smiling_face: (edited)
+
+
+Few [7:55 AM] 
+ну я пока разбирался три варианта освоил :slightly_smiling_face:, но оставил все-таки один из программных
+
+
+Dmitry Makarov [7:56 AM] 
+я тоже посмотрел варианты, попробовал
+
+
+Dmitry Neustupov [8:07 AM] 
+Товарищи, подскажите, после патча 5.6 не схватывает Постгрес, с HSQLDB работает нормально, тесты проходят, переключаю везде на Постгрес и не видит в Profiles драйвер на Постгрес. Вроде делаю всё как написано в уроке ( Куда копать? В мавене профиль поменял, реимпорт сделал, в впринге профиль поменял - колин в мавене сделал...
+
+
+CRCx86 [8:29 AM] 
+у меня странное поведение в гите, делаю ветку HW4, делаю доработки в ней, а доработки попадают и на мастер
+
+
+[8:29] 
+подскажите, что не так?
+
+Viktor [8:40 AM] 
+@Dmitry Neustupov "Вопросы с просьбами помочь с отладкой («почему этот код не работает?») должны включать желаемое поведение, конкретную проблему или ошибку и минимальный код для её воспроизведения прямо в вопросе. " из правил SO
+
+
+Антон Кляшторный [9:17 AM] 
+Привет всем! В 7.1 достаю юзера с едой, а обратно он не засовывается, валятся все тесты с update, save :( нужно usera настраивать или тест подгонять?
+
+
+anpotashev [10:20 AM] 
+@Антон Кляшторный д.б. два разных метода: достать юзера и достать сытого юрера.
