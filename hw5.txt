@@ -1599,8 +1599,115 @@ skipTest - где она?
 
 Dmitry Makarov [10:59 AM] 
 в Maven projects
-
-
+	
+fbochkarev 13 hours ago
+Спасибо, я понял, что в maven-е.
 
 Антон Кляшторный [11:00 AM] 
 :zap:
+
+
+	
+anpotashev 11:45 AM
+Нашлось слово "пожалуйста" для получения lazy полей без использования @Query. В комментарии подсказка. (edited)
+
+	
+anpotashev 12 hours ago
+зовется @EntityGraph
+
+
+	
+Few 11:46 AM
+договаривай )
+anpotashev 11:47 AM
+Сейчас добавлю комментарий, кому надо - развернет
+vsimonov 12:29 PM
+Народ почему магия не работает ?
+   @Transactional
+   int deleteByIdAndUserId(int id,int userId);
+dyakoven 12:31 PM
+@Modifying
+vsimonov 12:33 PM
+не, не в этом дело
+dyakoven
+@Modifying
+Posted in #hw5Yesterday at 12:31 PM
+dyakoven 12:36 PM
+а, да, без @Modifying у меня работает
+Marina 1:43 PM
+У меня именно в таком виде работает, хотя совсем недавно не работало, зато List<Meal>findAllByUserId(int id, int userId) наоборот работал, а теперь перестал, причем ничего не меняла. Так что мне эта магия пока не поддается. Если разберешься - напиши, пожалуйста.
+vadim simonov
+Народ почему магия не работает ?
+   @Transactional
+   int deleteByIdAndUserId(int id,int userId);
+Posted in #hw5Yesterday at 12:29 PM
+1:46
+Ошиблась в предыдущем сообщении, не работает - List<Meal>findAllByUserId(int userId, Sort sort)
+russell 1:46 PM
+а что пишет?
+Антон Кляшторный 1:51 PM
+deleteByIdAndUserId нужно поконкретнее deleteMealByIdAndUserId еду удалить
+dart_rabbit 1:54 PM
+@Marina попробуй возвращать Optional<List<Meal>> - вдруг у юзера еды нет? (edited)
+Marina 2:01 PM
+org.springframework.data.mapping.PropertyReferenceException: No property time found for type LocalDate! Traversed path: Meal.date.
+Ruslan Shakirov
+а что пишет?
+Posted in #hw5Yesterday at 1:46 PM
+2:01
+И если Optional возвращать тоже самое
+russell 2:02 PM
+а почему дейт у нас же вроде дейтТайм
+Marina 2:07 PM
+И именно в таком виде работает в прошлом коммите
+2:07
+Вот и мне не понятно, почему он date ищет
+itAvgur 2:07 PM
+Наводящие вопросы к п7:
+1) mealOfUser @Transient?
+2) одним запросом дергаем и User и Meal к нему в репозитории?
+Все верно?
+Ганичев Максим 2:14 PM
+Подскажите пожалуйста "6: Починить MealServlet ". Тут достаточно просто выставить любые два контекста программным путем или тоже должно быть как в тестах с резолвером в зависимости от профеля мавена?
+
+itAvgur 9 hours ago
+Резолвер на основе maven - автоматом,
+соединение к БД - вручную, из Profiles.
+
+
+	
+Сергей Матвеев 3:52 PM
+Подскажите, uptadeTest валиться вот с таким логом Caused by: javax.validation.ConstraintViolationException: Validation failed for classes [ru.javawebinar.topjava.model.Meal] during update time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+    ConstraintViolationImpl{interpolatedMessage='должно быть задано', propertyPath=user, rootBeanClass=class ru.javawebinar.topjava
+russell 3:54 PM
+ты юзера вставляешь?
+
+	
+Сергей Матвеев 8 hours ago
+реализация выглядит вот так @Override
+   public Meal save(Meal meal,int id) {
+       if(meal.isNew()){
+       User ref = new User();
+       ref.setId(id);
+       meal.setUser(ref);
+       return crudRepository.save(meal);}
+       else return crudRepository.save(meal);
+   }
+russell 8 hours ago
+так если не новый там тоже юзера вставлять надо, глян как в jpa Григорий реализовал
+Сергей Матвеев 8 hours ago
+Спасибо!
+
+
+	
+Nick 7:31 PM
+Почему то TestUpdateNotFound не проходит. Как можно проверить принадлежит ли еда пользователю  в save?
+Viktor 7:38 PM
+@Nik проверить владельца
+Nick 7:46 PM
+Решил проблему. Все оказалось гораздо проще.
+Антон Кляшторный 8:26 PM
+при пользовании метода <T> getOne(userId) возвращается user но с пораженным полем javassistlazyinitializer handler
+anpotashev 8:27 PM
+Все правильно. getOne - это аналог getReference
