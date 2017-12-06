@@ -1711,3 +1711,71 @@ Nick 7:46 PM
 при пользовании метода <T> getOne(userId) возвращается user но с пораженным полем javassistlazyinitializer handler
 anpotashev 8:27 PM
 Все правильно. getOne - это аналог getReference
+
+
+Anton K. [6:50 AM] 
+Ребят, вопросик такой по п. 7 надо просто поменять текущие методы get или нужно создать отдельные методы соотвественно в сервисе-репозитории??
+
+
+RNG [7:15 AM] 
+@Anton K. Отдельные, хотя они мало чем отличаются от самих `get`.
+
+
+Rostish [7:32 AM] 
+Ни у кого в пятой задаче не было Error creating bean with name ‘mealServiceImpl’ defined in file [/Users/alex/Documents/GitHub/topjava/target/classes/ru/javawebinar/topjava/service/MealServiceImpl.class]:?
+
+
+[7:32] 
+при запуске тестов?
+
+
+Few
+[7:37 AM] 
+Там больше должно быть в логе
+
+
+Rostish [7:47 AM] 
+там больше)
+
+
+Rostish [7:52 AM] 
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name ‘mealServiceImpl’ defined in file [/Users/alex/Documents/GitHub/topjava/target/classes/ru/javawebinar/topjava/service/MealServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type ‘ru.javawebinar.topjava.repository.MealRepository’ available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type ‘ru.javawebinar.topjava.repository.MealRepository’ available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+
+
+[7:52] 
+я вроде реализовал meal datajpa
+
+
+[7:52] 
+профили сделал
+
+
+[7:52] 
+а тесты чет не запускаются
+
+
+Few
+[7:57 AM] 
+Либо профили недобавлены либо в профиле нет ни одного бина репозитория
+
+
+Rostish [7:59 AM] 
+у меня включен постгресс и datajpa
+
+
+[7:59] 
+там вроде все есть
+
+
+[7:59] 
+ща поищу
+
+
+CRCx86 [8:53 AM] 
+здравствуйте! после выбора пользователя при попытки инициализации на строке 
+springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+приложение падает с ошибкой
+java.lang.IllegalArgumentException: Invalid boolean value [${jpa.showSql}]
+что не так?

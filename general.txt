@@ -3481,3 +3481,22 @@ Sergey 3:14 PM
 itAvgur 3:41 PM
 Григорий, для сборки в travis-ci пришлось юзера для базы topjava менять с user на topjava, ибо имя user, он как зарезервированное принимает (или есть варианты?).
 Может имеет смысл сразу поменять во всем курсе имя пользователя с самого начала?
+
+
+grigory.kislin [12:09 AM] 
+@itAvgur а что- как у нас в .travis.yml - не работает?
+```before_script:
+  - psql -c 'create database topjava' -U postgres
+  - psql -c 'create user "user"; grant all privileges on database topjava to "user"' -U postgres
+```
+(edited)
+
+
+itAvgur [4:47 AM] 
+Да, через двойные кавычки заработало. :ok_hand:
+Ну еще 'with password password'
+
+
+[4:49] 
+А, я через cmd запускаю, там в таком виде не принимает.
+Ладно, разберемся...
