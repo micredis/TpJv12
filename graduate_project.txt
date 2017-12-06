@@ -363,3 +363,80 @@ philip.goldm 9:32 PM
 lunchvote.org
 lunch vote!
 Vote on where to go for lunch with your co-workers. 
+
+
+Ivanushka [10:14 AM] 
+Поделитесь мыслями на счёт архитектуры проекта. На TopJava у нас 2 репозитория и 2 сервиса (User, Meal) сделано это, я так понимаю, в учебных целях, или нет? В нашем проекте хочу обойтись одним, или это не верно?
+
+
+Viktor [10:32 AM] 
+@Ivanushka обычно 1 репозиторий отвечает за 1 таблицу, а если более общим словом то 1 класс отвечает за 1 конкретное занятие "Принцип единой\единственной ответственности".
+
+
+[10:35] 
+Если вы ещё не знакомы с SOLID, это набор принципов объектно-ориентированного дизайна (ООД), которые популяризовал дядя Боб Мартин. SOLID — это акроним для:
+
+S – SRP – Принцип единственной ответственности (Single Responsibility Principle)
+O – OCP – Принцип открытости/закрытости (Open Closed Principle)
+L – LSP – Принцип подстановки Барбары Лисков (Liskov Substitution Principle)
+I – ISP – Принцип разделения интерфейса (Interface Segregation Principle)
+D – DIP – Принцип инверсии зависимостей (Dependency Inversion Principle)
+https://habrahabr.ru/post/343966/
+Хабрахабр
+Принципы SOLID в действии: от Slack до Twilio
+Похоже, что в наши дни RESTful API существует абсолютно для всего. От платежей до бронирования столиков, от простых уведомлений до развёртывания виртуальных... (53 kB)
+
+
+Ivanushka 
+[10:38 AM] 
+@Viktor Спасибо. Изучу.
+
+
+Viktor [10:51 AM] 
+не особо внимательно, сам читал в пол глаза :smiley:
+
+
+anpotashev [4:37 PM] 
+Привет!
+Кто может помочь с jpql?
+Надо чтобы на выходе было что-то вроде: (edited)
+
+
+anpotashev [4:41 PM] 
+added this Java snippet
+select
+*
+from
+restaurant
+left join
+(select * from vote where date='today') votes1_
+on restaurant.id=votes1_.restaurant_id
+Add Comment Collapse
+
+
+
+Дима Жуков 
+[4:44 PM] 
+left join (select * from vote) нельзя ли заменить просто left join vote where
+
+
+[4:44] 
+ну или on вместо where
+
+
+
+[4:45] 
+?
+
+
+anpotashev [5:01 PM] 
+В этом случае в результате не будет тех у кого нет vote в этот день
+
+
+Дима Жуков 
+[5:11 PM] 
+аааа, просто если без подготовки или по не знанию даже, глянуть, то бьет по глазам конструкция
+
+
+anpotashev [5:14 PM] 
+Ответ нашел. Отбой.

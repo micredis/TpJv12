@@ -1779,3 +1779,446 @@ springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spr
 приложение падает с ошибкой
 java.lang.IllegalArgumentException: Invalid boolean value [${jpa.showSql}]
 что не так?
+при попытке инициализации в MealServlet
+
+
+CRCx86 [9:02 AM] 
+в spring-db.xml в строке jdbc:initialize-database data-source="dataSource" enabled="true" - dataSource подчеркивается красным, 
+то же самое и в строке 
+<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+         p:dataSource-ref="dataSource"
+         p:packagesToScan="ru.javawebinar.**.model">
+
+
+[9:02] 
+спасибо
+
+Few [9:03 AM] 
+А ты профили для сервлета активируешь?
+
+
+CRCx86 [9:04 AM] 
+насколько я помню из лекции Change profie никак не влияет на работоспособность, а только на подсветку
+
+
+[9:04] 
+но там у меня галочка стоит на jdbc
+
+
+Few
+[9:05 AM] 
+Это интеграция, это не то, а активировать то все равно надо,
+
+
+[9:05] 
+В тестах аннотация
+
+[9:06] 
+В сервлете другие методы
+
+CRCx86 [9:07 AM] 
+не совсем понимаю о чём речь, это вот об этих вещах?
+<beans profile="jdbc">
+   </beans>
+   <beans profile="jpa">
+   </beans>
+   <beans profile="datajpa">
+   </beans>
+
+
+Few
+[9:14 AM] 
+Это оно, но их сначала надо заполнить в рамках второго пункта дз
+
+CRCx86 [8 hours ago] 
+<beans profile="jdbc">
+       <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
+       <bean id="dataSource"
+             class="org.apache.tomcat.jdbc.pool.DataSource"
+             p:driverClassName="org.postgresql.Driver"
+             p:url="${database.url}"
+             p:username="${database.username}"
+             p:password="${database.password}"/>
+   </beans>
+   <beans profile="jpa">
+       <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
+       <bean id="dataSource"
+             class="org.apache.tomcat.jdbc.pool.DataSource"
+             p:driverClassName="org.postgresql.Driver"
+             p:url="${database.url}"
+             p:username="${database.username}"
+             p:password="${database.password}"/>
+   </beans>
+   <beans profile="datajpa">
+       <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
+       <bean id="dataSource"
+             class="org.apache.tomcat.jdbc.pool.DataSource"
+             p:driverClassName="org.postgresql.Driver"
+             p:url="${database.url}"
+             p:username="${database.username}"
+             p:password="${database.password}"/>
+   </beans>
+
+
+CRCx86 [8 hours ago] 
+вообще он падает на этом бине
+<bean id="entityManagerFactory"
+
+
+CRCx86 [9:22 AM] 
+ветке HW5 они у меня заполнены
+
+
+Viktor [9:36 AM] 
+@CRCx86 если профили заполнены, то тебе надо решить проблему. 
+При загрузке контекста он уже должен знать какой профиль грузить. Это и есть задача из дз сделать так, чтобы профили работали в сервлете
+
+CRCx86 [8 hours ago] 
+а профили правильно заполняю?
+<beans profile="jdbc">
+       <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
+       <bean id="dataSource"
+             class="org.apache.tomcat.jdbc.pool.DataSource"
+             p:driverClassName="org.postgresql.Driver"
+             p:url="${database.url}"
+             p:username="${database.username}"
+             p:password="${database.password}"/>
+   </beans>
+   <beans profile="jpa">
+       <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
+       <bean id="dataSource"
+             class="org.apache.tomcat.jdbc.pool.DataSource"
+             p:driverClassName="org.postgresql.Driver"
+             p:url="${database.url}"
+             p:username="${database.username}"
+             p:password="${database.password}"/>
+   </beans>
+   <beans profile="datajpa">
+       <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
+       <bean id="dataSource"
+             class="org.apache.tomcat.jdbc.pool.DataSource"
+             p:driverClassName="org.postgresql.Driver"
+             p:url="${database.url}"
+             p:username="${database.username}"
+             p:password="${database.password}"/>
+   </beans>
+
+
+Viktor [8 hours ago] 
+не совсем. ДатаСорс'ы принадлежат профилям баз
+
+
+Viktor [8 hours ago] 
+т.к. сейчас у тебя настроено все на постгрес, а должна быть возможность переключаться с постгреса на hsqldb
+
+CRCx86 [7 hours ago] 
+а что значит "ДатаСорс'ы принадлежат профилям баз"
+
+
+Viktor [7 hours ago] 
+У тебя есть профили для соединения с базами данных (postgres и hsqldb) и есть профили мапинга (jdbc, jpa, datajpa)/
+
+
+Viktor [7 hours ago] 
+За соединение отвечают первые, поэтому они решают какой data source использовать
+
+Viktor [7 hours ago] 
+jdbc, jpa, datajpa отвечают только за то, как отображать строку из БД в объект java и по сути они не должны зависеть от конкретной БД
+
+
+CRCx86 [7 hours ago] 
+т.е. класс Profiles - это фактически правило соединения с базами, а spring-db  bean profile - это описание?
+
+
+CRCx86 [7 hours ago] 
+и от этого надо идти?ъ
+
+Viktor [7 hours ago] 
+нет классы тут вообще ни при чем, мы же сейчас говорим об xml конфигурации spring
+
+Viktor [7 hours ago] 
+класс Profiles это просто набор констант, чтобы не ошибиться при выборе профиля
+
+
+CRCx86 [7 hours ago] 
+а, значит надо каким-то образом в jdbc, jpa и datajpa сослаться на <beans profile="postgres"> или  <beans profile="hsqldb">
+
+
+Viktor [7 hours ago] 
+нет :smiley:
+
+
+Viktor [7 hours ago] 
+ты в курсе, что в работе можно использовать несколько профилей сразу?
+
+
+CRCx86 [7 hours ago] 
+Мои рассуждения основаны на лекции, в ней рассказывается, что через запятую можно перечислить профили и указать значения внутри. Текущий мой вариант не работает, стало быть что-то не так. Не понимаю что
+
+
+Viktor [7 hours ago] 
+через запятую указать в xml? (edited)
+
+CRCx86 [7 hours ago] 
+ну типа такого <beans profile="datajpa, jpa, jdbc">
+
+Viktor [7 hours ago] 
+да так можно, но в данном случае у тебя будет много дублирования. Т.е. в каждую реализацию мапинга, тебе придется положить по драйверу. При этом оба драйвера будут грузиться всегда.
+
+
+Viktor [7 hours ago] 
+Я немного не точно выразился в вопросе. Теперь конкретнее. Ты знаешь что тесты можно запустить указав не один а несколько профилей спринга? (edited)
+
+
+CRCx86 [7 hours ago] 
+да я пока до тестов еще на добрался, я всё хочу запустить основное приложение
+
+CRCx86 [7 hours ago] 
+а на Ваш вопрос отвечу, что нет, не знаю
+
+
+Viktor [7 hours ago] 
+Ну стоит начать с тестов, там попроще :smiley:
+
+
+Viktor [7 hours ago] 
+Теперь знаешь, что можно указать несколько профилей. Т.е. ты можешь указать отдельно профиль БД и отдельно реализации мапинга. Дальше подсказывать или оставить место фантазии? :smiley:
+
+
+CRCx86 [5 hours ago] 
+реализации мапинга это вот как раз <beans profile="jdbc">?
+
+
+CRCx86 [9:46 AM] 
+@Viktor а...вона что...спасибо!
+
+
+dyakoven [11:44 AM] 
+если в maven включены оба профиля postgres и hsqldb, тесты проходят для обеих репозиториев?
+
+
+Viktor [11:48 AM] 
+@dyakoven с одним профилем или с друмя, они всегда проходят :smiley:
+
+
+dyakoven [11:54 AM] 
+т.е. maven все равно прогоняет все существующие тесты, вне зависимости, что выбрано?
+
+
+Viktor [12:19 PM] 
+да, т.к. профиль мавена ни как не влияет на ваши классы. Профиль мавена определяет только какой драйвер БД класть в собранный проект. Если вы включите 1 профиль, то мавен положит его драйвер и он будет использоваться в тестах. Если включите оба, то положит оба драйвера и использовать будет первый, какой указан в резолвере. Если не выберите профиль, то не будет ни одного драйвера и вылетит ошибка
+
+dyakoven [4 hours ago] 
+спасибо
+
+
+CRCx86 [2:18 PM] 
+подскажите что примерно должно быть в
+<beans profile="jdbc">
+
+   </beans>
+
+   <beans profile="jpa">
+
+   </beans>
+
+   <beans profile="datajpa">
+
+   </beans>
+или хотя бы где почитать об этом?
+
+
+Few
+[2:21 PM] 
+Посмотри через гит все реализации jdbc, jpa, spring data jpa. Разберись что должно быть настроено для каждой и соответственно распредели по профилям
+
+CRCx86 [3 hours ago] 
+как это сделать? у меня на гитхабе при переходе на  JavaOPs/topjava
+стартовый проект
+
+
+Few 
+[3 hours ago] 
+У себя в логе коммитов ПКМ на любом коммите и выбери checkout revision, как то так помоему называется
+
+
+Few [3 hours ago] 
+Потом как все посмотришь сделай чекаут своей ветки hw5 и все
+
+
+CRCx86 [3 hours ago] 
+не, чёт не то
+
+
+Few [3 hours ago] 
+Точнее сейчас не подскажу, нет перед глазами
+
+
+Marina [2 hours ago] 
+Там и не нужно смотреть другие реализации, в том что нам дано уже все разделено практически, только по профилям растащить, jdbc по названию понятно, а у datajpa и jpa практически все одинаковое, кроме сканируемых пакетов, поэтому все общее <beans profile="datajpa,jpa">, а пакеты отдельно. Все, что необходимо есть в нашем файле, что-то закомменчено.
+
+
+CRCx86 [2 hours ago] 
+спасибо!
+
+
+CRCx86 [2 hours ago] 
+почему вот эти вещи красным подчеркиваются?
+p:driverClassName
+
+
+Few [2 hours ago] 
+@Marina а посмотреть все-таки полезно если совсем не понятно что делать
+
+
+Marina [2 hours ago] 
+@Few я и не спорю, просто написала, что можно и не смотреть, если посмотреть не получается, все необходимое уже у нас есть.
+
+
+CRCx86 [2 hours ago] 
+@Marina как узнать что должно быть в datajpa и jpa когда мы их только что сделали
+
+
+Marina [2 hours ago] 
+@CRCx86 что-то не понимаю вопрос?
+
+
+CRCx86 [2 hours ago] 
+@Marina для меня всё еще остаётся загадкой, что класть в 
+<bean id="dataSource"         class=???              p:driverClassName="???
+p:url=???           
+p:username=???             p:password=???/>
+для datajpa, jpa, jdbc
+что я должен узнать из логов я тоже не понимаю, там этого еще нет
+
+
+Marina [2 hours ago] 
+сейчас то все это уже есть и все работает
+
+
+CRCx86 [2 hours ago] 
+нет
+
+
+CRCx86 [2 hours ago] 
+все тесты валяться с ошибкой
+
+
+CRCx86 [2 hours ago] 
+Error creating bean with name 'entityManagerFactory'
+
+
+Anton K. [2:53 PM] 
+Ребят такой вопрос возник с магией спринга -
+Если в UserCrudRepositry написать метод - 'int deleteById (int id)' тесты не отрабатывают с ошибкой (org.springframework.aop.AopInvocationException: Null return value from advice does not match primitive return type for: public abstract int ru.javawebinar.topjava.repository.datajpa.CrudUserRepository.deleteById(int)), но если поменять метод на 'int removeById(int id)' все отрабатывает нормально. С другой стороны в MealCrudRepositroy метод - 'int deleteByIdAndUserId' отрабатывает нормально (edited)
+
+
+[2:56] 
+как так
+
+
+Marina [3:03 PM] 
+Ребят, подскажите, кто сделал пункт 6: Починить MealServlet, что еще можно попробовать, где посмотреть? Уже и env.setActiveProfile пробовала, и в web.xml вставляла, ничего не получается - не хочет работать.
+
+Katherine Buzatu [2 hours ago] 
+Посмотри подсказки к ДЗ. п. 3.
+
+
+Marina [2 hours ago] 
+я по ней и делала @Autowired
+   ConfigurableEnvironment env а затем env.setActiveProfile() перед SpringContex, но видимо как то сложнее все должно быть
+
+
+dart_rabbit [2 hours ago] 
+Ты ставишь профили в окружение пустого контекста)
+
+Попробуй создавать springContext сразу как ClassPathXmlApplicationContext... появятся новые методы )
+
+
+Marina [2 hours ago] 
+Спасибо
+
+
+anpotashev [3:16 PM] 
+@Anton K. тоже обращал на это внимание. Могу только предположить, что метод deleteByIdAndUserId формируется через CriteriaBuilder по ходу компиляции, а методы delete и deleteById уже где-то оперделены 
+В данном случае прекрасно сработает метод int removeById(int).
+Ну да, в org.springframework.data.repository.CrudRepository определены:
+   void deleteById(ID var1);
+   void delete(T var1); (edited)
+
+
+vsimonov [3:44 PM] 
+uploaded this image: Кто может пролить свет из за чего так?
+Add Comment
+
+
+
+anpotashev [3:45 PM] 
+@vsimonov а где у тебя определен datasource? Не где-нибудь в профилях часом?
+
+
+Anton K. [3:51 PM] 
+Он и должен быть в профиле, наверное просто галочку не поставил (не выбрал профиль)
+
+anpotashev [2 hours ago] 
++1 про тоже.
+
+
+vsimonov [3:54 PM] 
+я его вообще скрыл, рядом поставил теперь всё норм)
+Aleksandr N Potashev
+@vsimonov а где у тебя определен datasource? Не где-нибудь в профилях часом?
+Posted in #hw5Today at 3:45 PM
+
+
+vsimonov [4:13 PM] 
+если в интерфейс CrudMealRepository добавить метод типа (List<Meal>findAllByUserIdAndOrderByDateTime(int userId);) потом все тесты крашатся(Failed to load ApplicationContext), это нормальная работа?
+
+
+Anton K. [4:14 PM] 
+And не надо вроде
+
+
+Few
+[4:15 PM] 
+И порядок сортировки не тот
+
+
+CRCx86 [4:21 PM] 
+подскажите, почему тест валится с ошибкой?
+Error creating bean with name 'ehCacheManager' defined in class path resource [spring/spring-tools.xml]: Cannot create inner bean 'org.springframework.cache.jcache.JCacheManagerFactoryBean#1f53a5dc' of type [org.springframework.cache.jcache.JCacheManagerFactoryBean] while setting bean property 'cacheManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.cache.jcache.JCacheManagerFactoryBean#1f53a5dc' defined in class path resource [spring/spring-tools.xml]: Invocation of init method failed; nested exception is javax.cache.CacheException: org.ehcache.xml.exceptions.XmlConfigurationException: Error parsing XML configuration at file:/D:/%25d0%2590%25d0%25a0%25d0%25a5%25d0%2598%25d0%2592%25202/OneDrive/IDEA/JavaOnlineIntership/topjava/target/classes/cache/ehcache.xml
+
+
+Viktor [4:23 PM] 
+@CRCx86 вот проблема
+
+
+[4:23] 
+%25d0%2590%25d0%25a0%25d0%25a5%25d0%2598%25d0%2592%25202
+
+
+[4:24] 
+в пути к файлу с настроками кэша не должнобыть ни кириллицы, ни пробелов
+
+
+CRCx86 [4:24 PM] 
+а перенастроить никак нельзя?
+
+
+Viktor [4:25 PM] 
+можно, правой кнопкой мыши на папке - переименовать
+
+
+CRCx86 [4:26 PM] 
+в идее
+
+
+RNG [4:58 PM] 
+У кого проблемы с починкой сервлета и СпрингМейн вот вам ссылка (мне очень помогла): 
+https://dzone.com/articles/using-spring-profiles-xml?fromrel=true (edited)
