@@ -3523,3 +3523,118 @@ error)
 
 Viktor [5:30 PM] 
 это была философия :smiley:
+
+
+evgeny [5:40 PM] 
+вот, если быть точнее
+
+
+[5:40] 
+java.lang.IllegalArgumentException: Entity not managed
+org.hibernate.ejb.AbstractEntityManagerImpl.refresh(AbstractEntityManagerImpl.java:268)
+
+
+Few [5:43 PM] 
+в момент рефреша твоя entity находится не в состоянии managed
+
+
+[5:44] 
+либо ты передаешь не entity
+
+evgeny [5:45 PM] 
+а есть альтернативы рефреша?
+
+
+Few
+[5:46 PM] 
+метод бы где рефреш используешь (edited)
+
+
+evgeny [5:49 PM] 
+ShopEntity shopToEdit = new ShopEntity();
+       shopToEdit.setId(1);
+       shopToEdit.setName("NAME");
+       shopToEdit.setAddress("ADDRESS");
+       shopToEdit.setMap("MAP");
+       entityManager.refresh @(shopToEdit);
+
+
+[5:50] 
+@ случайно
+
+[5:50] 
+если так написать, то будет исключение
+
+Few [5:50 PM] 
+персист сначала надо
+
+anpotashev [5:50 PM] 
+Entity not managed - Что с entity до вызова этого метода делали?
+
+
+evgeny [5:51 PM] 
+ShopEntity shopToEdit = entityManager.find(ShopEntity.class, 1);
+       shopToEdit.setId(1);
+       shopToEdit.setName("NAME");
+       shopToEdit.setAddress("ADDRESS");
+       shopToEdit.setMap("MAP");
+       entityManager.refresh(shopToEdit);
+
+
+[5:51] 
+а если так, то нет ошибки, но и изменения нет
+
+Few [5:51 PM] 
+рефреш это обновить из базы
+
+
+Дима Жуков 
+[5:52 PM] 
+Check if your entity is mapped (using @Entity, or with .xml configuration)
+Your entity must be persistent - i.e. managed by the entityManager. So if your entity is detached, merge() it first, and then refresh() it.
+
+
+Few [5:53 PM] 
+если ты хочешь ее обновить в базе, то flush
+
+anpotashev [5:53 PM] 
+uploaded this image: Вот например из гугла
+Add Comment
+
+
+
+evgeny [5:57 PM] 
+@Few добавил в конец entityManager.flush(); все заработало. Спасибо большое :slightly_smiling_face:
+
+Few
+[6:01 PM] 
+по идее, если ты достаешь entity при помощи find, достаточно просто ничего не делать в конце после установки полей. Когда транзакция закроется все автоматически сохранится в базу
+
+
+[6:02] 
+flush заставляет entityManager сразу сохранить все свои энтити в базу
+
+evgeny [6:04 PM] 
+То есть мне достаточно было получить объект с помощью find и изменить поля?
+
+
+Few [6:04 PM] 
+да
+
+[6:04] 
+проверь
+
+evgeny [6:16 PM] 
+да, все работает
+
+
+Few
+[6:20 PM] 
+http://www.objectdb.com/java/jpa/persistence/managed
+objectdb.com
+Working with JPA Entity Objects (Lifecycle, Persistence Context)
+Explains the entity object lifecycle and the persistence context.
+
+
+[6:20] 
+вот, коротко и по делу

@@ -2222,3 +2222,502 @@ CRCx86 [4:26 PM]
 RNG [4:58 PM] 
 У кого проблемы с починкой сервлета и СпрингМейн вот вам ссылка (мне очень помогла): 
 https://dzone.com/articles/using-spring-profiles-xml?fromrel=true (edited)
+
+
+Chaika [6:12 PM] 
+подскажите, пожалуйста, я делаю дз к этому занятию и не могу запустить тесты. Они вываливаются с ошибкой инициализации EntityManagerFactory
+
+
+Few
+[6:13 PM] 
+какие пункты задания уже выполнил?
+
+
+[6:13] 
+ну и естественно нужен stack trace
+
+
+Chaika [6:15 PM] 
+сделал первый  и второй пункт, сверился с кодом на проекте
+
+
+[6:15] 
+вылетает
+
+Chaika [6:16 PM] 
+added this Plain Text snippet
+java.lang.IllegalStateException: Failed to load ApplicationContext
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125)
+  at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:107)
+  at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+  at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+  at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:242)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:227)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+  at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:246)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+  at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+  at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+  at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+  at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+  at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+  at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+  at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+  at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+  at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
+  at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+  at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+  at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
+  at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
+  at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [spring/spring-db.xml]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1704)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:583)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+  at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+  at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+  at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1083)
+  at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:858)
+  at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+  at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+  at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+  at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:109)
+  at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:246)
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+  at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117)
+  ... 24 more
+Caused by: java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+  at org.hibernate.boot.spi.XmlMappingBinderAccess.<init>(XmlMappingBinderAccess.java:43)
+  at org.hibernate.boot.MetadataSources.<init>(MetadataSources.java:87)
+  at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.<init>(EntityManagerFactoryBuilderImpl.java:208)
+  at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.<init>(EntityManagerFactoryBuilderImpl.java:163)
+  at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:51)
+  at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:358)
+  at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:384)
+  at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:373)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1763)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1700)
+  ... 39 more
+Caused by: java.lang.ClassNotFoundException: javax.xml.bind.JAXBException
+  at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:582)
+  at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:185)
+  at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:496)
+  ... 49 more
+Add Comment Collapse
+
+
+
+Few [6:22 PM] 
+у тебя случайно 9 джава не стоит?
+
+
+Chaika [6:23 PM] 
+да
+
+Few [3 hours ago] 
+уже была такая проблема, сейчас попробую найти
+
+
+Few [3 hours ago] 
+<dependency>
+ <groupId>javax.xml.bind</groupId>
+ <artifactId>jaxb-api</artifactId>
+ <version>2.3.0</version>
+</dependency>
+
+
+Few [3 hours ago] 
+добавь в пом
+
+
+Chaika [3 hours ago] 
+не прокатило)
+
+
+Few [3 hours ago] 
+сек
+
+Few 
+[3 hours ago] 
+возможно у тебя с профилями напутано
+
+
+Few [3 hours ago] 
+он не может найти бин EntityManagerFactory, а он у нас в spring-db.xml определяется
+
+
+Few 
+[3 hours ago] 
+либо бина нет в профиле который ты активировал, либо ты не активировал профиль )
+
+
+Chaika [3 hours ago] 
+сча проверю
+
+Chaika [3 hours ago] 
+<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+         p:dataSource-ref="dataSource"
+         p:packagesToScan="ru.javawebinar.**.model">
+
+
+Chaika [3 hours ago] 
+он определен
+
+
+Viktor [3 hours ago] 
+в каком профиле он?
+
+
+Few [3 hours ago] 
+ты же третий пункт еще не делал?
+
+
+Few 
+[3 hours ago] 
+а значит у тебя в тестовых классах только профиль базы активен
+
+
+Few [3 hours ago] 
+а профиль реализации репозитория подключишь во время выполнения третьего пункта
+
+
+Chaika [3 hours ago] 
+сек
+
+Chaika [2 hours ago] 
+народ, объясните плз, какой профиль
+
+
+Chaika [2 hours ago] 
+что-то я не догоняю
+
+
+Few [2 hours ago] 
+второе задание було разнести настройки в spring-db.xml по профилям
+
+
+Few 
+[2 hours ago] 
+<beans profile="jdbc">
+   </beans>
+   <beans profile="jpa">
+   </beans>
+   <beans profile="datajpa">
+   </beans>
+
+
+Chaika [2 hours ago] 
+аа
+
+
+Chaika [2 hours ago] 
+я не про это:)
+
+
+Few [2 hours ago] 
+если ты его выполнил, то теперь где бы ты ни пытался поднять контекст спринга, у тебя должны быть активированы два профиля
+
+
+Chaika [2 hours ago] 
+я к этому 5-му заданию делаю дз
+
+Chaika [2 hours ago] 
+hw4
+
+
+Chaika [2 hours ago] 
+там нужно протестировать mealservisetest
+
+
+Chaika [2 hours ago] 
+при запуске любого теста дает этот ексепшн
+
+
+Few 
+[2 hours ago] 
+я запутался
+
+
+Chaika [2 hours ago] 
+прошлое дз короч)
+
+
+Few 
+[2 hours ago] 
+ты делаешь HW4 или HW5?
+
+
+Chaika [2 hours ago] 
+4
+
+Chaika [2 hours ago] 
+и не могу протестировать
+
+
+Few [2 hours ago] 
+оу, это надо смотреть что там было )
+
+
+Chaika [2 hours ago] 
+1: Сделать из Meal Hibernate entity
+Hibernate Validator: @NotNull, @NotEmpty, @NotBlank
+Реализация ManyToOne
+2: Имплементировать и протестировать JpaMealRepositoryImpl
+Optional
+
+3: Добавить в тесты MealServiceTest функциональность @Rule:
+3.1: проверку Exception
+3.2: вывод в лог времени выполнения каждого теста
+3.3: вывод сводки в конце класса: имя теста - время выполнения
+
+
+Chaika [2 hours ago] 
+я сделал 1 и реализовал 2
+
+
+Chaika [2 hours ago] 
+но тесты сваливаются
+
+Viktor [2 hours ago] 
+покажи как ты грузишь контекст и скинь весь стек ошибки
+
+
+Chaika [2 hours ago] 
+вон в общем чате весь стек
+
+Few [2 hours ago] 
+весь стек уже есть в основной ветке hw5 чуть выше
+
+
+Chaika [2 hours ago] 
+@ContextConfiguration({
+       "classpath:spring/spring-app.xml",
+       "classpath:spring/spring-db.xml"
+})
+
+
+Few [2 hours ago] 
+spring-db.xml скинь
+
+Chaika [2 hours ago] 
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:p="http://www.springframework.org/schema/p"
+      xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+      xmlns:tx="http://www.springframework.org/schema/tx"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+   <!-- Change DB by comment/uncomment property-placeholder -->
+
+   <!--<context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>-->
+   <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
+
+   <context:component-scan base-package="ru.javawebinar.**.repository.jpa"/>
+
+   <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+       <jdbc:script location="classpath:db/${jdbc.initLocation}"/>
+       <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+   </jdbc:initialize-database>
+
+   <!--no pooling-->
+   <bean id="dataSource"
+         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+       <property name="driverClassName" value="${database.driverClassName}"/>
+       <property name="url" value="${database.url}"/>
+       <property name="username" value="${database.username}"/>
+       <property name="password" value="${database.password}"/>
+   </bean>
+
+   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+         p:dataSource-ref="dataSource"
+         p:packagesToScan="ru.javawebinar.**.model">
+       <!--p:persistenceUnitName="persistenceUnit">-->
+
+       <property name="jpaPropertyMap">
+           <map>
+               <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
+               <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}" value="${hibernate.use_sql_comments}"/>
+               <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="${hibernate.hbm2ddl.auto}"/>-->
+           </map>
+       </property>
+
+       <property name="jpaVendorAdapter">
+           <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                 p:showSql="${jpa.showSql}">
+           </bean>
+       </property>
+   </bean>
+
+   <tx:annotation-driven/>
+
+   <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
+   <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+         p:entityManagerFactory-ref="entityManagerFactory"/>
+
+<!--
+   <context:component-scan base-package="ru.javawebinar.**.repository.jdbc"/>
+   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+       <constructor-arg ref="dataSource"/>
+   </bean>
+
+   <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+       <constructor-arg ref="dataSource"/>
+   </bean>
+-->
+</beans>
+
+
+Viktor [2 hours ago] 
+стек из 5 строк, чет маловато для спринга :smiley:
+
+Few 
+[2 hours ago] 
+снипет глючит
+
+Few [2 hours ago] 
+открой в новом окне
+
+
+Chaika [2 hours ago] 
+ctr
+
+
+Chaika [2 hours ago] 
+сек
+
+
+Viktor [2 hours ago] 
+@Chaikaпопробуй сделать mvn clean
+
+
+Viktor [2 hours ago] 
+и потом запусти проект заново
+
+
+Viktor [2 hours ago] 
+мавен подгрузил JABAX?
+
+
+Chaika [2 hours ago] 
+да
+
+Chaika [2 hours ago] 
+я делал это
+
+
+Chaika [2 hours ago] 
+мавен не собирает проект
+
+
+Chaika [2 hours ago] 
+я походу нашел
+
+
+Chaika [2 hours ago] 
+такая же фигня была в прошлом дз
+
+
+Chaika [2 hours ago] 
+maven-surefire-plugin
+
+
+Chaika [2 hours ago] 
+2.20.1 которая у нас в проекте не хочет работать
+
+
+Chaika [2 hours ago] 
+я поставил 2.20
+
+
+Chaika [2 hours ago] 
+он собирает еще
+
+
+Few 
+[2 hours ago] 
+да он только тестами занимается этот плагин
+
+
+Chaika [2 hours ago] 
+ошибки еще не вылетело так что скорее всего заработает
+
+
+Few 
+[2 hours ago] 
+вручную через класс тетсы должны запускаться
+
+
+Few [2 hours ago] 
+https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j
+stackoverflow.com
+How to resolve java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException in Java 9
+I have some code that uses JAXB API classes which have been provided as a part of the JDK in Java 6/7/8. When I run the same code with Java 9, at runtime I get errors indicating that JAXB classes ...
+ 
+
+
+Viktor [2 hours ago] 
+ну у меня тоже 2.20.1 падало
+
+
+Chaika [2 hours ago] 
+короч после подключения JAXB стал другой стэк трейс
+
+
+Chaika [2 hours ago] 
+оказалось проблема в HSQL
+
+Chaika [2 hours ago] 
+поменял на POstgres
+
+Chaika [2 hours ago] 
+и пошло
+
+
+Viktor [2 hours ago] 
+@Chaika хорошо, что решилось, но научитесь лучше формировать вопросы. В идеале описать что вы делали, чего ждали и что получили. Т.к. вы спрашивали про нерабочие тесты а не про нерабочую базу.
+
+
+Chaika [2 hours ago] 
+я понял, спасибо большое за помощь, совет про JAXB помог
+
+
+Alexander _Gubanow [7:23 PM] 
+uploaded and commented on this image: изображение.png
+1 Comment
+При запуске test в Maven (п.4 задания) вываливается ошибка. Так должно быть?
+
+
+
+Viktor [7:32 PM] 
+где ошибка то? у вас просто проект не собирается...
+
+Alexander _Gubanow [7:38 PM] 
+Неправильно вопрос сформулировал.. А из-за чего проект не собирается?
+
+Viktor [7:40 PM] 
+хз, вы же прячите от нас что вам мавен говорит, гадалок тут вроде нет :smiley:
+
+
+Alexander _Gubanow [7:40 PM] 
+Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.20.1:test (default-test) on project topjava: There are test failures. - из-за этого?
+
+
+Viktor [7:41 PM] 
+хотя увдели, косяк похожий на мой
+поменяйте версию плагина :maven-surefire-plugin на 2.20
+
+
+Антон Кляшторный [7:42 PM] 
+у меня не собирался проект после патчей (stage clean), удалил вручную папку target и все заработало. Пробовал из лога идеи поискать решение проблемы, советовали поудалять сторонние плагины (но не помогало). (edited)
+
+
+Alexander _Gubanow [7:51 PM] 
+да, версия плагина 2.20 помогла
