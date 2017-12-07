@@ -3638,3 +3638,17 @@ Explains the entity object lifecycle and the persistence context.
 
 [6:20] 
 вот, коротко и по делу
+
+
+grigory.kislin [6:40 AM] 
+@here
+*выложил 6е занятие: #hw6*
+Welcome!
+
+
+Few [6:40 AM] 
+Спасибо
+
+
+philip.goldm [7:12 AM] 
+:+1:

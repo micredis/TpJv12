@@ -2721,3 +2721,145 @@ Viktor [7:41 PM]
 
 Alexander _Gubanow [7:51 PM] 
 да, версия плагина 2.20 помогла
+
+
+Dmitry Neustupov [9:35 PM] 
+Товарищи, удалось кому save реализовать с магией?
+
+
+anpotashev [9:39 PM] 
+@Dmitry Neustupov А в чем проблема? Там все можно без @Query
+
+
+[9:39] 
+А save он и есть save
+
+
+Andrew [9:40 PM] 
+Не могу додуматься, как сервлету профили задать так, чтобы до определения контекста задавались... Киньте полезную ссылку, кто-нибудь, пожалуйста
+
+
+anpotashev [9:40 PM] 
+@Andrew GenericXmlApplicationContext
+
+
+[9:41] 
+Сначала создаете без параметров, потом профили, а уже потом load (edited)
+
+
+[9:42] 
+И refresh напоследок
+
+
+Andrew [9:50 PM] 
+Делаю, но всё равно падает ... видимо ошибка где-то ещё
+
+
+Andrew [10:00 PM] 
+Порешал...
+
+
+Andrew [10:12 PM] 
+Друзья, надо в Юзера добавлять моле Милс? Для поиска по айди вытсаскивания с едой? А то тут надо многое поменять , чтобы так заработало
+
+Dmitry Makarov [11 hours ago] 
+Надо
+
+
+Andrew [11 hours ago] 
+Но тогда делаю Join column и Update test падает, ведь Фетч лейзи, и у еды  user_id null, и вытаскивать всю еду с юзером всегда - оч дорогое решение
+
+
+Dmitry Makarov [11 hours ago] 
+вытаскивать всю еду с юзером нужно только в новом методе (edited)
+
+
+Andrew [11 hours ago] 
+Но когда поле создано - милс, то апдейт тоже туда лезет, ведь у ющера поле милс ManyToOne
+
+
+Andrew [11 hours ago] 
+Или я что-то не понимаю..
+
+
+Dmitry Makarov [11 hours ago] 
+ты в updateTest хочешь проверить не затер ли апдейтом еду или что?
+
+Andrew [10 hours ago] 
+Не, просто запускаются все тесты из ДатаДжипиаЮзерСервисТест, и когда они раннятся, то апдейт не проходит
+
+Dmitry Makarov [10 hours ago] 
+что пишет?
+
+
+Dmitry Makarov [10 hours ago] 
+предполагаю что ты в тесте не игнорируешь поле meals
+
+
+Andrew [10 hours ago] 
+игнорирую конечно
+
+Andrew [10 hours ago] 
+Но при тесте Апдейт, оно ругается, что у еды поле Юзер Айди нулловое
+
+Andrew [10 hours ago] 
+ERROR org.hibernate.engine.jdbc.spi.SqlExceptionHelper.logExceptions:131 - ERROR: null value in column "user_id" violates not-null constraint
+
+
+Andrew [10 hours ago] 
+Он же сохраняет вместе с едой при апдейте, ведь при Get методе в апдейт тесте юзер (у которого уже есть поле милс) получает и проксики с едой..
+
+
+Dmitry Makarov [10 hours ago] 
+"Но тогда делаю Join column и Update test падает" это ты аннотацию сделал @JoinColumn ?
+
+
+Andrew [10 hours ago] 
+Да.. Для поля Милс, если её убрать, то вообще всё падает
+
+
+Andrew [10 hours ago] 
+Если оставить OneToMany, то больше тестов падает, и не работает новый метод с аннотацией @Query
+
+
+Dmitry Makarov [10 hours ago] 
+https://stackoverflow.com/questions/11938253/jpa-joincolumn-vs-mappedby
+stackoverflow.com
+JPA JoinColumn vs mappedBy
+What is the difference between: @Entity public class Company { @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY) @JoinColumn(name = "companyIdRef", referencedColumnName = "
+ 
+
+
+Andrew [10 hours ago] 
+Спасибо , сработало..
+
+
+Andrew [10 hours ago] 
+Только не могу понять, почемут маппед бай "user" рабоатет, такого поля ведь нет..
+
+Andrew [10 hours ago] 
+Понял, к полю юзер.. :disappointed:
+
+Andrew [10 hours ago] 
+Но почему именно для Дата JPA? Ведь магия тут не работает..
+
+Dmitry Makarov [10 hours ago] 
+что именно для DataJpa?
+
+
+Andrew [10 hours ago] 
+Этот метод надо сделать
+
+Andrew [10 hours ago] 
+для дата джпа реализации
+
+Dmitry Makarov [10 hours ago] 
+ну не все сразу
+
+
+Andrew [10 hours ago] 
+То есть это не с намёком , что должна быть использована магия?
+
+
+Dmitry Makarov [10 hours ago] 
+если хочешь использовать магию гугли EntityGraph

@@ -1,0 +1,21 @@
+grigory.kislin [6:26 AM] 
+joined #hw6 along with Few.
+
+
+grigory.kislin [6:37 AM] 
+6е занятие: начинаем изучать Spring-MVC и слой Web:
+https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson06.md
+Занятие и домашнее задание относительно большие, поэтому следующее занятие будет через 2 недели, 21.12
+Отстающие могут догнать группу, остальные- заняться  выпускным проектом.
+
+Планирую 14.12 в 20.00 (Москва, Минск, 19.00 Киев) провести вебинар на тему ~ "Взросление  в программировании".
+Буду делать доп. рассылку (+ напишу в slack). Готовьте вопросы по любой теме
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+(edited)
+
+
+itAvgur [6:40 AM] 
+joined #hw6 along with 17 others.
