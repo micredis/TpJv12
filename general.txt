@@ -3637,7 +3637,23 @@ Explains the entity object lifecycle and the persistence context.
 
 
 [6:20] 
-вот, коротко и по делу
+вот, коротко и по делуAndrew [10:50 PM] 
+Ребята, после патча 6.08 в AbstractUserServiceTest идея ругается на Cllections.emptySet(), только со мной такое?)
+
+
+[10:52] 
+Оно же даже не даёт запустить тест
+
+
+dyakoven [10:54 PM] 
+@Andrew вопросы по урокам пиши в соответствующем канале #hw6
+masurganova
+После накатки патча 6-8 add test validation, idea подчеркивает передачу emptySet в качестве     ролей юзеру и из-за этого выдает ошибку, так и должно быть и это после починится или у меня что-то не так пошло? Накатила следующий патч, но эта ошибка так и осталась.
+Thread in #hw6Yesterday at 9:04 PM
+ 
+itAvgur [19 hours ago] 
+У меня та же хрень.
+Значит в нашем проекте это ФИЧА! :grimacing:
 
 
 grigory.kislin [6:40 AM] 

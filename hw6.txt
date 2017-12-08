@@ -52,3 +52,123 @@ Marina [9:23 PM]
 
 [9:25] 
 смотрю в первом патче, там у юзера не добавляется такой конструктор без даты регистрации
+
+
+RNG [9:42 PM] 
+@Marina только что проверил и у меня тоже валятся тесты с подобной ошибкой
+
+
+Andrew [11:02 PM] 
+Нет нужного конструктора, может один из дальнейших патчей добавит
+
+
+RNG [11:12 PM] 
+Ну можно еще добавить дату в тесты перед проблемным местом (к примеру `new Date()`). (edited)
+
+
+
+
+----- Today December 8th, 2017 -----
+Ivanushka [3:22 AM] 
+У меня такая же проблема, но вчера заметил, что есть ещё несколько отличий от эталонного кода после накатки патчей, вчера пришлось выкачать всё по новой.
+
+
+Sergey [10:12 AM] 
+Да, подтверждаю. После 8 патча всё валится, следующими патчами не чинится
+
+
+Сергей Матвеев [10:48 AM] 
+залил 11 патч томкат не поднимает  org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [spring/spring-db.xml]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment
+
+
+Sergey [11:05 AM] 
+RNG+ добавление даты решает проблему, конструктор не нужен.
+
+
+[11:06] 
+У меня после всех патчей не работают тесты jdbcUserServiceTest и InMemoryAdminRestControllerSpringTest Тесты InMemoryAdminRestControllerTest - ignored (Это что значит ?)
+
+Few 
+[11:06 AM] 
+Домашнее задание HW06
+
+1.1 Починить тесты InMemoryAdminRestControllerSpringTest/InMemoryAdminRestControllerTest (в новой версии Spring классы spring-mvc требуют WebApplicationContext, поэтому поправьте mock.xml)
+
+
+Sergey [11:16 AM] 
+Да, верно это нужно сделать в ДЗ. Второй раз уже дают нерабочий проект и сиди разбирайся, то ли патч не так поставился, то ли задумано так.
+
+
+Sergey [11:30 AM] 
+Ещё патчи расходятся с коммитами, Например тот же AbstractUserServiceTest.java в коммите на 8 патч testValidation с newDate() https://github.com/JavaWebinar/topjava/blob/778176c2001160eac6efdae76fa252c65e40cec4/src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java А в патче без.
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+Ivanushka [2:03 PM] 
+На самом деле, это всё не страшно - мы же учимся. Тут важно понять @grigory.kislin специально нас в "миску носом тыкает" или мы где-то сворачиваем не туда по своей невнимательности.
+
+
+Sergey [3:32 PM] 
+После патча 6_14 у меня дочерняя страница валится (meals) валится страница с ошибкой 404. Никакого лога ни в браузере ни в TomCat Log тоже не выдаёт. А после патча 6_15 вообще tomCat валится с ошибкой 500. Логи показывают, что это из за замены fmt на spring в index.jsp Так и должно быть или только у меня упало ?
+
+
+Chaika [3:32 PM] 
+Блин, опять какая-то фигня:) Я накатил патчи до 6.02 , запускаю тесты и сразу java.lang.IllegalStateException: Failed to load ApplicationContext
+
+
+[3:32] 
+Я думал что в дз косячу, решил на ветке master проверить
+
+Few [3:41 PM] 
+А почему все думают, что после патчей должно все работать? Как раз в рамках дз часто нужно что-нибудь починить :slightly_smiling_face:
+
+
+Sergey [3:43 PM] 
+ну до 5 занятия после патчей всё работало)
+
+
+Chaika [4:43 PM] 
+это все java 9
+
+
+[4:43] 
+<dependencies>
+       <dependency>
+           <groupId>com.sun.xml.bind</groupId>
+           <artifactId>jaxb-impl</artifactId>
+           <version>2.2.11</version>
+       </dependency>
+
+       <dependency>
+           <groupId>com.sun.xml.bind</groupId>
+           <artifactId>jaxb-core</artifactId>
+           <version>2.2.11</version>
+       </dependency>
+       <dependency>
+           <groupId>javax.xml.bind</groupId>
+           <artifactId>jaxb-api</artifactId>
+           <version>2.3.0</version>
+       </dependency>
+       <dependency>
+           <groupId>javax.activation</groupId>
+           <artifactId>activation</artifactId>
+           <version>1.1.1</version>
+       </dependency>
+
+
+[4:43] 
+если будут проблемы)
+
+Sergey [5:00 PM] 
+У меня Java 8 используется в проекте
+
+
+grigory.kislin [5:47 PM] 
+коллеги, привет!
+1. по поводу нерабочего проекта- в ДЗ написано что чинить и после патчей также стараюсь писать. Учимся мы здесь все таки программировать, а не патчи накатывать и нажимать на зеленую кнопку, поэтому на meals 404 полезно подумать, что произошло. я бы сказал даже что если это не делается, то стажировка прошла даром и нужен повтор
+2. в 6_08_add_test_validation действительно ошибка- нужно в вызов конструктора до коллекций добавить new Date(). Патчи я уже вчекинил- то можно сравнить с github
+3. наконец воспринимайте все как возможность поучиться. в реальном проекте таких ситуаций будет гораздо больше
+4. извиняюсь за опоздание с письмом- сейчас вышлю
