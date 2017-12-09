@@ -172,3 +172,66 @@ grigory.kislin [5:47 PM]
 2. в 6_08_add_test_validation действительно ошибка- нужно в вызов конструктора до коллекций добавить new Date(). Патчи я уже вчекинил- то можно сравнить с github
 3. наконец воспринимайте все как возможность поучиться. в реальном проекте таких ситуаций будет гораздо больше
 4. извиняюсь за опоздание с письмом- сейчас вышлю
+
+
+MetalBro [3:15 PM] 
+Не работают тесты сразу после патчей домашнего HW5, так должно быть? Как вообще тогда проверить правильность?
+
+
+MetalBro [3:26 PM] 
+SEVERE: Unable to create initial connections of pool.
+java.sql.SQLException: Driver:org.postgresql.Driver@12365c88 returned null for URL:jdbc:hsqldb:file:D:/temp/topjava
+
+
+[3:27] 
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [spring/spring-db.xml]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+Caused by: org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+
+
+MetalBro [3:36 PM] 
+честно говоря, раздражают очень сильно такие ситуации, когда после решения ДЗ хочешь посмотреть как сделано master
+
+
+MetalBro [3:54 PM] 
+Проблема разрешилась внесением небольшого изменения
+
+
+[3:54] 
+Значит с 6.08 основные проблемы?
+
+
+Sergey [4:22 PM] 
+Да,ещё будут с 6,14 и 6,15
+
+MetalBro [7 hours ago] 
+ну те хоть плановые, для ДЗ по новой теме. Считай не проблемы) (edited)
+
+
+Dmitry Neustupov [6:17 PM] 
+@MetalBro У меня тесты работали на всех патчах до 6.08
+
+
+meldenev.aleksandr [7:38 PM] 
+Не подскажете куда копать?  Тест JdbcUserServiceTest,  тест getAll если запускать отдельно, то все ок,  если в составе модуля,  то находит только одну запись в базе (с админом) и, соответственно не проходит. Другие тесты(dataJpa и jpa) при этом работают нормально. (edited)
+
+
+Few
+[8:04 PM] 
+ощущение что у тебя между тестами база не восстанавливается
+
+
+[8:06] 
+это ты уже HW6 делаешь?
+
+
+Few
+[8:11 PM] 
+еще кэш не валидный может так влиять по идее
+
+
+meldenev.aleksandr [9:13 PM] 
+Больше  похоже на кеш - скрипты запускаются,  по крайней мере в логе пишутся. По поводу кеша,  я думал что мы работаем с кешем хибернейта и на jdbc он не распространяется. Видимо там копать надо.
+
+Few [25 minutes ago] 
+Теперь могу с уверенностью сказать, что копать нужно в сторону кэша :slightly_smiling_face:
