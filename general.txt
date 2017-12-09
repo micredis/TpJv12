@@ -3730,3 +3730,22 @@ uploaded this file
 13 MB
 PDF
  Click to view
+
+
+Viktor [11:48 PM] 
+думаю и в доках есть и по зависимостям можно.
+
+
+[11:51] 
+https://docs.jboss.org/hibernate/orm/5.0/manual/en-US/html/ch03.html#configuration-logging
+
+
+
+----- Today December 9th, 2017 -----
+itAvgur [6:07 AM] 
+Благодарю! :+1:
+Значит текущая версия напрямую с оберткой работает.
+Sergeev Viktor
+думаю и в доках есть и по зависимостям можно.
+Posted in #generalYesterday at 11:48 PM
+(edited)
