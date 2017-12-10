@@ -4649,3 +4649,18 @@ grigory.kislin [9:12 PM]
 
 Lezenford [9:15 PM] 
 До него не доходит, инечн бы он в качестве дебега в лог упал.. Или я не прав?
+
+
+Ma3stro [2:10 PM] 
+uploaded and commented on this image: image.png
+1 Comment
+Как сие исправить? У меня из-за этого ломается всё, лишнего ничего не трогал
+
+
+
+Ma3stro [2:12 PM] 
+После накатки патча 3_08 add Spring test (edited)
+
+
+grigory.kislin [5:04 PM] 
+@Ma3stro ответил в личку- попробуй проект скомпилировать чз maven
