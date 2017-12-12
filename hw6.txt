@@ -512,3 +512,191 @@ Few [8:13 AM]
 
 CRCx86 [8:19 AM] 
 здравствуйте! вопрос по патчу 6_04. "зайдите в исходники @Profile и посмотрите (подебажте) его реализацию через @Conditional(ProfileCondition.class)" что значит подебажить через аннотацию?
+
+
+grigory.kislin [11:45 AM] 
+@Few если начинать пусть с "/" - то он считается от домена, если без- то он относительный
+ссылка из урока https://stackoverflow.com/questions/4764405/how-to-use-relative-paths-without-including-the-context-root-name
+но если есть лучше- тоже буду благодарен
+stackoverflow.com
+How to use relative paths without including the context root name?
+To working my static file (CSS, JS) I have to write absolute path like /AppName/templates/style/main.css. Is there any solution, that I could write relative path like style/main.css?
+ 
+
+
+[11:46] 
+@CRCx86 подебажить можно ProfileCondition
+
+
+Few 
+[11:50 AM] 
+@grigory.kislin если в href и action написать /meals/save, то попадем на http://localhost:8080/meals/save тут от домена, а если из контроллера вернуть "redirect:/meals", то http://localhost:8080/topjava/meals, здесь относительно приложения получается
+
+
+grigory.kislin [11:52 AM] 
+на Spring редирект есть 2я ссылка.  
+`A logical view name such as redirect:/myapp/some/resource will redirect relative to the current Servlet context`
+
+
+Few [11:57 AM] 
+немного сбивает с толку /myapp в этом примере, напрашивается мысль что в нашем случае /topjava. Так то вроде и понятно, но сбивают эти маленькие различия. У себя в итоге в формах использовал servletRelativeAction
+
+
+Katherine Buzatu [11:57 AM] 
+А как бы не упоминать meals в href... (`href="delete..."`)
+
+Few [22 hours ago] 
+это вопрос? :slightly_smiling_face:
+
+
+Few 
+[22 hours ago] 
+ради эксперимента указал <base href="/topjava/meals/"/> в голове страницы и теперь работает href="update?id=${meal.id}"
+
+
+
+anpotashev [19 hours ago] 
+@Few вот проект в урл указывать не стоит. 
+1) Ты можешь задеплоить проект на сервер в корень и у тебя будет адресация типа http://localhost:8080/meals/
+2) Или может быть настроен "маппинг" адресов, где адрес http://topjava.server.com/ будет переадресовываться на http://localhost:8080/topjava/. 
+В обоих случаях /topjava/ будет лишней в адресации.
+
+
+Few [19 hours ago] 
+Да это я экспериментирую
+
+
+Few 
+[19 hours ago] 
+для эксперимента и захардкодить пойдет, а в рабочем варианте можно вычислять из запроса базу наверное
+
+
+Few [12:08 PM] 
+@grigory.kislin спасибо, еще раз перечитаю по этим ссылкам
+
+
+vsimonov [3:43 PM] 
+uploaded and commented on this image: wtf.jpg
+1 Comment
+У всех такое или это у меня касяк с патчами?
+
+
+
+Few [3:57 PM] 
+сравни с доступными конструкторами
+
+
+[3:57] 
+надо параметр Date добавить (new Date())
+
+
+
+vsimonov [4:29 PM] 
+@Few я про то что должна быть такая ошибка или это мой косяк. Вместо Date стоит emptyset, такого контрукотра нет. (edited)
+
+
+Few [4:34 PM] 
+Да, эта ошибка у всех (edited)
+
+
+
+Dmitry Makarov [8:51 PM] 
+это только у меня mealForm.jsp не видит css?
+
+
+Katherine Buzatu [8:54 PM] 
+не только
+
+
+
+Dmitry Makarov [9:11 PM] 
+проблема нашлась в headTag.jsp :grinning:
+
+
+
+Andrew [10:23 PM] 
+В AbstractUserSrivceTest у меня не цепляется JPAUtil, плохо патч встал или так норм?
+
+
+Andrew [10:33 PM] 
+В профиле JDBC нет такого бина, а когда вставляю, бин нот фаунд ексепшн :disappointed:
+
+
+kadmser [10:34 PM] 
+У всех через плагин добавленный патчем 6.13 мавен деплоится без проблем?
+
+Andrew [10:37 PM] 
+Andrew [9:23 PM] 
+В AbstractUserSrivceTest у меня не цепляется JPAUtil, плохо патч встал или так норм?
+
+Беда в том, что в JPAUtil нужен Entuity Manager.. Надо прикрутить его и к JDCB профилю? Или игнорировать ?
+
+
+[10:42] 
+В общем, добавил интити менеджер для JDBC, глупо, но работает
+
+
+anpotashev [10:55 PM] 
+@Andrew здря
+
+[10:56] 
+не нужен там ни em ни jpaUtil
+
+
+[10:57] 
+Ищи как его убрать только из jdbc
+
+Andrew [11:06 PM] 
+Можно переопределить метод, где он рабоатет с кешем
+
+
+anpotashev [11:14 PM] 
+Не пойму о чем ты.
+
+
+Andrew [11:15 PM] 
+Не могу понять, почему падает на jsp, когда в контроллере отдаю милс атрибутом? Никакой инфы из эксепшна не вытянуть..
+
+
+Argentum_kuh [11:15 PM] 
+@kadmser Вот такое говорит и падает:  Failed to execute goal org.codehaus.cargo:cargo-maven2-plugin:1.6.5:deployer-start (default-cli) on project topjava
+
+
+Andrew [11:15 PM] 
+На метод getAll... Проверил, отдаётся нормально
+
+
+Argentum_kuh [11:16 PM] 
+@kadmser Еще это: 
+You did not specify a container home nor any installer.
+
+
+[11:16] 
+Копаю сейчас
+
+
+Andrew [11:21 PM] 
+java.lang.ClassCastException: ru.javawebinar.topjava.model.Meal cannot be cast to ru.javawebinar.topjava.to.MealWithExceed - вот , что перестало работать..
+
+
+[11:22] 
+Понял, я глупышка
+
+
+
+----- Today December 12th, 2017 -----
+Marina [9:31 AM] 
+Подскажи, пожалуйста, нужно как то типа как по этой ссылке делать https://stackoverflow.com/questions/22349120/spring-profiles-on-method-level/43645463#43645463 ? Или я зря так пытаюсь? Просто из рабочих вариантов переопределить у jdbc и jpaUtil и testValidation, но я так понимаю какое-то более красивое решение есть?
+Aleksandr N Potashev
+Ищи как его убрать только из jdbc
+Thread in #hw6Yesterday at 10:57 PM
+ stackoverflow.com
+Spring Profiles on method level?
+I'd like to introduce some methods that are only executed during development. I thought I might use Spring @Profile annotation here? But how can I apply this annotation on class level, so that this
+
+Katherine Buzatu [30 minutes ago] 
+Посмотри ссылки под этим пунктом ДЗ
+
+
+Marina [11 minutes ago] 
+Спасибо большое, как то я их не заметила. Как тесты пропустить теперь понятно, но что делать с jpaUtil для jdbc?

@@ -2596,3 +2596,52 @@ Postgre
 
 anpotashev [2:09 PM] 
 зоопарк. у них хоть хранилище разное :slightly_smiling_face:
+
+
+Антон Кляшторный [3:20 PM] 
+https://habiletechnologies.com/blog/reasons-to-choose-hibernate-over-jdbc/
+Habile
+Hibernate over JDBC
+15 reasons why we need to choose Hibernate over JDBC
+Apr 1st at 1:27 PM
+ 
+ 
+
+
+evgeny [7:35 PM] 
+Может кто подсказать, как реализовать следующий функционал? С клиента приходят запросы на добавление объектов. Нужно сделать, чтоб при получении объекта запускалась проверка, если в течение двух минут получены еще объекты с таким же айди, то добавлять объект в базу данных, иначе удалять этот объект
+
+
+Дима Жуков [7:40 PM] 
+Ну типо мапы писать объект и дата, проверять при поступлении объекта. Если разница более двух минут удалять. Какая нибудь временная фиговина может подойдёт?)
+
+
+evgeny [7:42 PM] 
+вот я и пытаюсь найти такую, пока безуспешно. И еще выходит, что для каждого объекта должен свой поток с фиксированным временем создаваться
+
+
+grigory.kislin [7:42 PM] 
+@evgen посмотри на https://github.com/google/guava/wiki/CachesExplained
+GitHub
+google/guava
+guava - Google Core Libraries for Java
+ 
+
+
+evgeny [7:46 PM] 
+@grigory.kislin То, что надо, спасибо)
+
+
+grigory.kislin [7:51 PM] 
+guava используем на masterjava, хорошая библиотека
+https://drive.google.com/open?id=0B9Ye2auQ_NsFeFB5a29JQ2tRNHM (edited)
+
+
+grigory.kislin [7:51 PM] 
+shared this file
+5_guava.mp4
+22 MB
+MPEG 4 Video from Google Drive
+ Click to open in Google Drive
+ https://drive.google.com/open?id=0B9Ye2auQ_NsFeFB5a29JQ2tRNHM
+
