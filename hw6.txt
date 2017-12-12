@@ -694,9 +694,91 @@ Thread in #hw6Yesterday at 10:57 PM
 Spring Profiles on method level?
 I'd like to introduce some methods that are only executed during development. I thought I might use Spring @Profile annotation here? But how can I apply this annotation on class level, so that this
 
-Katherine Buzatu [30 minutes ago] 
+Katherine Buzatu [8 hours ago] 
 Посмотри ссылки под этим пунктом ДЗ
 
 
-Marina [11 minutes ago] 
+Marina [8 hours ago] 
 Спасибо большое, как то я их не заметила. Как тесты пропустить теперь понятно, но что делать с jpaUtil для jdbc?
+
+
+RNG [7 hours ago] 
+Попробуй вынести в промежуточный класс, о котором JDBC классы не будут знать, в отличии от DataJpa and Jpa. (edited)
+
+
+Marina [6 hours ago] 
+Что-то никак не могу понять как это сделать? Можно конечно сделать промежуточный класс с jpaUtil и все тесты кроме jdbc унаследовать от него, но так наверное не правильно. А если делать класс, который Autowired  в  AbstractTest, то как сделать чтобы о нем не знал jdbc и для него он не загружался?
+
+
+anpotashev [6 hours ago] 
+У aurowired есть дефолнтые параметры, которые можно переопределить
+
+
+Marina [6 hours ago] 
+Пробовала в реализации jdbc ставить @Autowired(required = false) на JpaUtil jpaUtil но была такая же ошибка загрузки jpaUtil
+
+
+anpotashev [6 hours ago] 
+Не в реализации, а в абстрактном классе
+
+Marina [6 hours ago] 
+точно, спасибо, уже сама так сделала и все пошло
+
+
+RNG [10:59 AM] 
+Кстати, по поводу игнора теста валидации в JDBC с помощью org.junit.Assume. Это нормально что он падает с сообщением `org.junit.AssumptionViolatedException: got: <false>, expected: is <true>` и в идее отображается с перечеркнутым желтым кружком?
+
+
+anpotashev [11:59 AM] 
+@RNG, имхо, нормально. В статье есть про это упоминание: "Стоит отметить, что несмотря на то, что по умолчанию класс, запускающий тесты (test runner), помечает тесты, бросающие исключение org.junit.AssumptionViolatedException (которое происходит при нарушении предположения), как пропущенные, такое поведения может быть переопределено (с помощью пользовательского класса для запуска тестов)."
+
+
+Marina [12:09 PM] 
+@RNG И  мавен при этом  считает тесты пройдеными без ошибок "Process finished with exit code 0", так что думаю так и должно быть
+
+
+vsimonov [1:17 PM] 
+uploaded and commented on this image: tomcat.jpg
+  1 Comment
+Ребят это что, специально задуманно?
+
+
+
+CRCx86 [2:08 PM] 
+добрый день, папка messages должны быть пустая после всех пачтей?
+
+
+anpotashev [2:08 PM] 
+нет
+
+
+vsimonov [2:41 PM] 
+Что, никто такую ошиюку не встречал при старте томката?
+
+
+Vladimir_X [3:03 PM] 
+А ты про которую??? Их у нас две :grinning:
+Та, которая в resourcec -- да.
+AleksandrZinov
+добрый день, папка messages должны быть пустая после всех пачтей?
+Posted in #hw6Today at 2:08 PM
+
+
+vsimonov [3:14 PM] 
+Если у кого такая ошибка будет, нужно в артифакты добавить все либы из Available (edited)
+
+
+grigory.kislin [4:34 PM] 
+@vsimonov ничего руками в зависимости добавлять нельзя. если добавил- удали .idea и iml и заново проект открой
+делал как в уроке написано?
+` mvn clean package -DskipTests=true org.codehaus.cargo:cargo-maven2-plugin:1.6.5:run`  ?
+у меня все запускается (edited)
+
+
+[4:35] 
+2. по поводу JpaUtil было верно сказано- просто ИСКЛЮЧИТЬ из jdbc (edited)
+
+
+grigory.kislin [4:41 PM] 
+3. на тему Assume - да, в idea так... если запускать чз maven будет 
+`Tests run: ..., Failures: 0, Errors: 0, Skipped: 1`
