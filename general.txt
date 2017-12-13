@@ -3979,3 +3979,57 @@ Katherine Buzatu [12:46 AM]
 
 grigory.kislin [11:43 AM] 
 @Katherine Buzatu думаю что не одна... про xml у меня 2е занятие мастерджава..
+
+
+Rostish [10:12 AM] 
+интересный вопрос на собеседовании задали про GC, если у нас есть линкед лист где все ноды ссылаются по кругу друг на друга. Будет ли такой линкед лист удален?
+
+
+[10:13] 
+как правильно нужно было ответить?)
+
+
+vch [10:14 AM] 
+@Rostish Если этот LinkedList "висит в воздухе" (т.е. на него нет ссылок ниоткуда), то удалится.
+Иначе бы Java состояла из сплошных утечек памяти
+
+
+
+Rostish [10:15 AM] 
+то есть неважно, что внутри ноды имеют ссылки друг на друга
+
+
+[10:15] 
+главное что на сам контейнер нет ссылок?
+
+
+vch [10:16 AM] 
+@Rostish да.
+
+
+Rostish [10:17 AM] 
+вообще логично
+
+
+[10:17] 
+есть какое-нибудь техническое объяснение, почему те ссылки не учитываются, а ссылки на сам контейнер учитываются?
+
+
+vch [10:20 AM] 
+@Rostish тут немного можно посмотреть: `Every object tree must have one or more root objects. As long as the application can reach those roots, the whole tree is reachable.`
+Объекты образуют по сути дерево, которое приходит в конце концов к корню.
+Если от объекта не удалось никуда прийти - значит он считается недостижимым и подлежит удалению.
+https://www.dynatrace.com/resources/ebooks/javabook/how-garbage-collection-works/ (edited)
+
+
+
+Rostish [10:20 AM] 
+Спасибо!
+
+
+grigory.kislin [3:52 PM] 
+еще по русски попроще ашел: http://ggenikus.github.io/blog/2014/05/04/gc
+ggenikus.github.io
+Понимаем основы Java garbage collection
+Статья - часть шпаргалки по мотивам книги “Java Performance”.
+(edited)
