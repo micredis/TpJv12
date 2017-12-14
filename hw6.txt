@@ -495,7 +495,11 @@ Grigory Kislin
 > нам тут профиль общий дают)
 1. у QA на порядок больше тестов. часто на уровне браузера (типа selenium). 
 2. иногда (на маленьких проектах)бывает что QA вообще нет Show more…
-Posted in #hw6Today at 5:27 PM
+Posted in #hw6Today at 5:27 PM@Katherine Buzatu в твоей картинке default encoding for property files ISO-8859-1
+поставь UTF-8. и проверь кодировку файлов локализации
+
+
+1 reply
 
 
 grigory.kislin [12:40 AM] 
@@ -1131,3 +1135,136 @@ Rostish [8:31 AM]
 
 [8:31] 
 у меня некоторые зависимости не подтягиваются, хотя на сайте мавена они находятся
+
+
+CRCx86 [9:23 AM] 
+@grigory.kislin получается у меня не правильно сделана настройка? как тогда правильно?
+
+
+Rostish [10:08 AM] 
+Cannot access central (https://repo.maven.apache.org/maven2) кто нибудь сталкивался с этой проблемой?
+
+
+[10:08] 
+у меня где с 7 патча пару связей в помнике не отрабатывает
+
+
+[10:08] 
+и билд пэкэдж не проходит
+
+[10:12] 
+нашел где отключить офлейн мод, в помнике подтянул зависимости, но в вкладке мавен, которая справа, эти зависимости всеравно подчеркнуты красной линией
+
+
+CRCx86 [11:08 AM] 
+@Rostish я решил переподключением горящих красным плагинов
+
+
+Rostish [11:12 AM] 
+удалял из помника и вставлял назад?)
+
+
+[11:14] 
+смех смехом а помогло
+
+
+[11:14] 
+осталась одна проблема
+
+
+[11:14] 
+No message found under code for locale
+
+
+[11:14] 
+Spring-mvc.xml уже как только не пытался переписать в части messageSource
+
+
+[11:14] 
+не работает и вс
+
+[11:15] 
+Сейчас бандл лежит в config/messages
+
+
+[11:15] 
+и как заставить его видеть не могу понять
+
+[11:15] 
+я на маке работаю, такую конструкцию видимо не понимает file:///#{systemEnvironment[‘TOPJAVA_ROOT’]}/config/messages/app
+
+
+Rostish [12:04 PM] 
+Неужели никто не сталкивался, не могу начать делать задание, просто потому что не работает spring message
+
+
+Kaa [12:16 PM] 
+@Rostish пропиши путь без переменной. было подобное под линуксом, задал абсолютный путь - заработало. правда потом и через переменную сделал, я ее просто с ошибкой задавал. может у тебя тоже такое же.
+
+
+Rostish [12:18 PM] 
+@Kaa     <bean id=“messageSource” class=“org.springframework.context.support.ReloadableResourceBundleMessageSource”
+         p:defaultEncoding=“UTF-8”>
+       <property name=“basenames” value=“/Users/alex/Documents/GitHub/topjava/config/messages”/>
+       <property name=“fallbackToSystemLocale” value=“false”/>
+   </bean>
+так?
+
+
+Rostish [12:32 PM] 
+ну это адд какой-то
+
+
+[12:32] 
+я просто перенес в WEB-INF
+
+[12:32] 
+поменял на     <bean id=“messageSource” class=“org.springframework.context.support.ReloadableResourceBundleMessageSource”
+         p:defaultEncoding=“UTF-8”>
+       <property name=“basenames” value=“WEB-INF/messages/app”/>
+       <property name=“fallbackToSystemLocale” value=“false”/>
+   </bean>
+
+
+[12:32] 
+и заработало
+
+
+Kaa [12:34 PM] 
+@Rostish <property name=“basenames” value=“file:///Users/alex/Documents/GitHub/topjava/config/messages”/> так попробуй - у меня так работало.
+
+
+RNG [1:20 PM] 
+Блин, эти релятивные пути просто новый круг ада. Сначало контроллеры не хотели работать нормально пока не воспользовался подсказками после урока, но после этого jsp-фрагменты поотваливались. Казалось бы починил фрагменты и все, но нет! Перестали подключаться стили в форме и после применения фильтра. Пришлось их включать  в нужные страницы напрямую. Соре за оффтоп, пригорел немного. (edited)
+
+
+Marina [3:33 PM] 
+Ребята, у кого тоже  неверная кодировка UTF-8 с Spring была, куда вставлять этот  filter из подсказки, что-то у меня везде пишет is not allowed here?
+
+
+Few [3:34 PM] 
+https://stackoverflow.com/questions/5141403/utf-8-encoding-in-spring-mvc-problem-with-forms
+stackoverflow.com
+UTF-8 encoding in Spring MVC, problem with FORMs
+I have this in web.xml <filter> <filter-name>encoding-filter</filter-name> <filter-class> org.springframework.web.filter.CharacterEncodingFil...
+ 
+
+
+Anton K. [5:30 PM] 
+Ребят, подскажите по Optional, я для того чтобы у меня из резалтСета User с ролями выходил в sql запросе использую LEFT OUTER JOIN и чтобы роли нормально мапились пытаюсь использовать SimpleFlatMapper, но нифига не получается, подскажите какие еще варианты есть или куда посмотреть))
+
+
+anpotashev [5:48 PM] 
+делал свой маппер. Подходящего готового не нашел.
+
+
+Anton K. [8:33 PM] 
+Объясните пожалуйста, почему ни MapSqlParameterSource, ни BeanPropertySqlParameterSource не мапят roles для сохранения
+
+
+dyakoven [9:21 PM] 
+тесты в JdbcUserServiceTest нужно пропускать вне зависимости от выбранного профиля jpa/datajpa/jdbc?
+
+
+kadmser [9:29 PM] 
+@dyakoven тесты же все запускаются, независимо от выбранного профиля
