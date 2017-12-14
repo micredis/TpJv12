@@ -3423,3 +3423,16 @@ Viktor [4:39 PM]
 grigory.kislin [4:46 PM] 
 @LORREON hsqldb мы используем InMemory (jdbc:hsqldb:mem:topjava). но можно раскоментарить строчку выше (будет в локальном файле)
 тогда будет смысл сделать к ней DataSource и выбрать embedded
+
+
+Shalukhau Dzmitry [6:16 PM] 
+Лучше поздно чем никогда :slightly_smiling_face: Я на четвертом уровне. Нужно поднажать, дабы попасть на оплачиваемую стажировку :)))
+
+
+
+Shalukhau Dzmitry [8:09 PM] 
+Кстати, QA-plugin в последней Idea не крэшится
+
+
+grigory.kislin [9:04 PM] 
+о!

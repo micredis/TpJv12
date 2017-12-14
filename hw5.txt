@@ -2953,3 +2953,81 @@ Few
 
 dyakoven [5:52 PM] 
 Да, уже понял. Спасибо
+
+
+LORREON [11:50 PM] 
+added this Java snippet: Зачем нужна локальная аннотация @Transactional, если над классом уже есть аннотация?  она что переводит свойство readOnly в false по дефолту?
+@Repository
+@Transactional(readOnly = true)
+public class JpaMealRepositoryImpl implements MealRepository {
+​
+  @PersistenceContext
+  private EntityManager em;
+​
+  @Override
+  @Transactional
+  public Meal save(Meal meal, int userId) {}
+    
+  @Override
+  @Transactional
+  public boolean delete(int id, int userId) {}
+​
+  @Override
+  public Meal get(int id, int userId) {}
+​
+  @Override
+  public List<Meal> getAll(int userId) {}
+​
+  @Override
+  public List<Meal> getBetween(LocalDateTime startDate ...) {}
+}
+Add Comment Collapse
+
+
+
+LORREON [11:56 PM] 
+и почему тогда уже не поставить @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)?
+
+
+Viktor [11:56 PM] 
+1 - да
+
+
+[11:57] 
+2 - посмотри 2ую ссылку под видео под транзакциями
+
+
+LORREON [12:01 AM] 
+спс, смотрел уже, В єтой статье https://www.ibm.com/developerworks/ru/library/j-ts1/index.html  написано что @Transactional(readOnly = true) при изменениях в БД все равно пройдет, если транзакция от ORM? а тесты не проходят?
+ibm.com
+Распространенные ошибки
+В этой статье Марк Ричардс описывает распространенные подводные камни, которые могут привести к потере согласованности. Они объясняются на примерах, взятых из инфраструктуры Spring Framework и спецификации EJB (Enterprise JavaBeans) 3.0.
+ 
+
+
+Viktor [12:09 AM] 
+не понял вопроса
+
+
+LORREON [12:13 AM] 
+В статье -> Листинг 7. Пример использования флага "только чтение" и режима распространения REQUIRED в JPA ответ - B, почему если убрать аннотацию @Transactional над методами save, delete тест не проходит?
+
+
+Viktor [12:25 AM] 
+там как раз описано, что может быть так, что ничего не произойдет. Мы используем hibernate и скорее всего он корректно отрабатывает условия транзакции
+
+
+LORREON [12:25 AM] 
+спс
+
+
+Viktor [12:28 AM] 
+ну и замечу один момент, статья описывает spring 2,5 а у нас уже 5 версия, как и хибернейт 5 версии. В статье обсуждается абстракция (JPA) того времени (хз какая версия).
+
+
+[12:32] 
+Spring 2.5 выпустили в 2007 году, в продакшен он попал где-то через годик.
+"Первая версия JPA была выпущена 11 мая 2006 года. JPA 2.0 был описан экспертной группой в JSR 317[3], спецификация была выпущена 10 декабря 2009 года"
+т.е. в статье скорее всего обсуждается промышленный уровень приложений, так что скорее всего речь идет о первой версии JPA, но может быть и о второй.
+"В выпуске от 16 октября 2006 появились Hibernate Core, Annotations, Entity Manager (версия 3.2.0.GA с поддержкой JPA). "
+Хибернейт скорее всего 3.2.0.GA версия (та что с аннотациями)
