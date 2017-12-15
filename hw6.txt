@@ -1268,3 +1268,178 @@ dyakoven [9:21 PM]
 
 kadmser [9:29 PM] 
 @dyakoven тесты же все запускаются, независимо от выбранного профиля
+
+
+Andrew [10:13 PM] 
+2.1 Добавить транзакционность (DataSourceTransactionManager) в Jdbc реализации: киньте, пожалуйста, в меня полезной ссылкой? :disappointed:
+  7 replies Last reply today at 12:36 PM View thread
+
+
+----- Today December 15th, 2017 -----
+grigory.kislin [12:13 AM] 
+@CRCx86 так правильно: https://github.com/JavaOPs/topjava/wiki/IDEA#%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D1%8C%D1%82%D0%B5---%D0%BD%D0%B5%D1%82-%D0%BB%D0%B8-%D0%BB%D0%B8%D1%88%D0%BD%D0%B8%D1%85-%D0%B1%D0%B8%D0%BD%D0%BE%D0%B2-%D0%B8%D0%BB%D0%B8-%D0%BD%D0%B0%D0%BE%D0%B1%D0%BE%D1%80%D0%BE%D1%82-%D0%B8%D1%85-%D0%BD%D0%B5-%D1%85%D0%B2%D0%B0%D1%82%D0%B0%D0%B5%D1%82-%D0%B2-project-structure-modules-spring-%D0%B5%D1%81%D0%BB%D0%B8-%D0%BD%D0%B5-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82-%D1%80%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5--%D1%83%D0%B4%D0%B0%D0%BB%D0%B8%D1%82%D1%8C-%D0%B8-%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%B7%D0%B0%D0%BD%D0%BE%D0%B2%D0%BE
+а в видео этого нет?
+GitHub
+JavaOPs/topjava
+topjava - Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery
+ 
+(edited)
+
+
+Marina [8:43 AM] 
+Ребята, не могу понять, поясните, кто понял пункт "9: Проверьте, что config\messages\app_ru.properties у вас в кодировке UTF-8 (в любом редакторе/вьюере или при отключенном Transparent native-to-ascii conversion в IDEA). ASCII коды нужны были только для JSP." Что это значит, у меня все нормально работает, но в файле app_ru.properties ASCII код, это нужно как то исправить? Или оно само должно исправиться после вставки фильтра, у меня ничего не изменилось.
+
+
+Marina [8:55 AM] 
+Вопрос снимается, переписала все русскими буквами, ничего в работе не поменялось, но требованию соответствует.
+
+
+
+Rostish [12:09 PM] 
+Добрые люди, помогите советом
+
+
+[12:09] 
+сделал такую штуку
+
+[12:09] 
+@GetMapping(“/meals/update”)
+   public String update(@RequestParam(“id”) int id, HttpServletRequest request) {
+       int userId = AuthorizedUser.id();
+       Meal meal = mService.get(id, userId);
+       request.setAttribute(“meal”, meal);
+       return “mealForm”;
+   }
+
+   @PostMapping(“/meals/change”)
+   public String change(HttpServletRequest request) {
+       int userId = AuthorizedUser.id();
+       Meal meal = new Meal(LocalDateTime.parse(request.getParameter(“dateTime”))
+               , request.getParameter(“description”), Integer.parseInt(request.getParameter(“calories”)));
+       if (request.getParameter(“id”).isEmpty()) {
+           mService.create(meal, userId);
+       } else {
+           mService.update(meal, userId);
+       }
+       return “redirect:/meals”;
+   }
+
+
+[12:09] 
+все работает
+
+
+[12:09] 
+но
+
+
+[12:09] 
+org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint “meals_unique_user_datetime_idx”
+ Подробности: Key (user_id, date_time)=(100000, 2015-05-31 20:00:00) already exists.
+
+
+Rostish [12:10 PM] 
+я ведь вызываю метод апдейт, там по цепочки доходит до репозитория и там либо sql либо еще с синтаксисом UPDATE
+
+Katherine Buzatu [4 hours ago] 
+А в дебаггере проверял, что на самом деле вызывается?
+
+
+
+grigory.kislin [2 hours ago] 
+1. в методе update у тебя почемуто реализация get
+2. ты добавляешь еду, с той же датой. а у нас в базе констрайнтс- нельзя у юзера иметь 2 еды с одной датой-временем
+
+
+Atrieron [1 hour ago] 
+В методе update он получает еду по переданному айдишнику и перекидывает в форму редактирования. Этот метод обрабатывает запрос от клиента, а не заносит изменения в базу.
+Вот только в GetMapping у него почему-то нет параметра id, я так подозреваю, у него id всегда 0.
+
+
+Viktor [1 hour ago] 
+@Atrieron потому, что id пользователя мы берем из AuthorizedUser.id(). Если брать из запроса, то это огромная дыра в безопасности.
+
+
+Atrieron [1 hour ago] 
+Я про id еды
+
+
+Viktor [1 hour ago] 
+@RequestParam(“id”) int id - она здесь передается как параметр запроса
+
+
+Atrieron [1 hour ago] 
+Оно еще должно быть указано в GetMapping. @GetMapping("/meals/update/{id}") примерно так.
+
+
+Atrieron [1 hour ago] 
+Но еда у него, похоже, все-таки как-то находится, судя по выходящей ошибке
+
+
+Viktor [1 hour ago] 
+я тоже немного запутался, но он использует не PathVariable, чтобы брать переменную из пути запроса, а RequestParam - чтобы брать из параметров.
+
+
+Viktor [1 hour ago] 
+В гет запросе параметры идут после знака вопроса. Если в jsp у него указан пусть meals/update?id=.... то все нормально :smiley:
+
+
+Rostish [12:10 PM] 
+почему пытается новую вставку сделать?
+
+
+Marina [12:21 PM] 
+А как ты роли добавлял? У меня при попытке создать свой маппер, в итоге создается два админа с одинаковым id, у одного роль USER, у другого ADMIN, а как их обе в одного userа запихнуть что-то никак не пойму?
+Aleksandr N Potashev
+делал свой маппер. Подходящего готового не нашел.
+Thread in #hw6Yesterday at 5:48 PM
+
+Anton K. [4 hours ago] 
+Попробуй через resultsetextractor
+
+
+anpotashev [4 hours ago] 
+Пост-обработка результата
+
+
+Marina [4 hours ago] 
+В маппере?
+
+
+anpotashev [4 hours ago] 
+Я пост-обработку сделал в репе
+
+
+Marina [4 hours ago] 
+что-то не представляю как в моем случае такую пост-обработку сделать, в каждом методе собирать таких юзеров в одиноковым id, как то совсем сложно получается :disappointed:
+
+
+anpotashev [4 hours ago] 
+Учти, что у нас юзеры выходят отсортированными - это упрощает дело
+
+Marina [3 hours ago] 
+Т.е. ты так и делал в каждом методе?
+
+
+Marina [3 hours ago] 
+@Anton K. Спасибо через него и сделала, и без постобработки получилось:+1:
+
+
+Anton K. [3 hours ago] 
+@Marina Не забудь только отсортировать возвращаемый список, а то ORDER BY не сортирует почему то и я долго промучился
+
+
+Marina [3 hours ago] 
+я тоже, заметила что не сортирует на save, по getall без ошибки возвращало
+
+
+Marina [3 hours ago] 
+только наверное не совсем правильно, что по любому запросу сортировать будет
+
+
+Marina [3 hours ago] 
+@Anton K. А "2.4.1 В реализации getAll НЕ делать запрос ролей для каждого юзера (N+1 select)" сделать получилось? У меня во всех запросах LEFT JOIN user_roles, чтобы роли можно было сравнить.
+
+
+Viktor [3:25 PM] 
+@Rostish никто не пытается сделать новую вставку, вы пытаетесь обновить еду и видимо еда от пользователя 100000 на дату 2015-05-31 20:00:00 уже существует. У нас эти значения должны быть уникальными. При обновлении это правило так же можно нарушить, что вы и пытаетесь сделать.
