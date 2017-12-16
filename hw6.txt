@@ -1443,3 +1443,137 @@ Marina [3 hours ago]
 
 Viktor [3:25 PM] 
 @Rostish никто не пытается сделать новую вставку, вы пытаетесь обновить еду и видимо еда от пользователя 100000 на дату 2015-05-31 20:00:00 уже существует. У нас эти значения должны быть уникальными. При обновлении это правило так же можно нарушить, что вы и пытаетесь сделать.
+
+
+Nick [6:18 PM] 
+Всем привет! После накатки 6.08 на всех тестах,кроме JDBC, вылетает  java.lang.IllegalStateException: Failed to load ApplicationContext, Error creating bean with name 'entityManagerFactory'. Как я понял, нужно добавить в Abstract тесты в вызов конструктора new Date(); Сделал, но не помогло. В чем может быть проблема?
+
+Katherine Buzatu [1 day ago] 
+В выбранном профиле Maven (edited)
+
+
+philip.goldm [6:21 PM] 
+@grigory.kislin
+>https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson06.md#apply-14_spring_i18npatch
+>Apply 14_spring_i18n.patch
+думаю необходимо поправить Apply 6_15_spring_i18n.patch
+
+
+
+Nick [7:44 PM] 
+Ребята, Spring не может найти CacheManager, хотя бин описан в spring-tools.xml.   XML добавлен в Spring Context. Что делать?
+
+
+Nick [7:48 PM] 
+added this XML snippet
+<bean id="cacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
+    <property name="cacheManager">
+      <bean class="org.springframework.cache.jcache.JCacheManagerFactoryBean"
+         p:cacheManagerUri="classpath:cache/ehcache.xml"/>
+    </property>
+  </bean>
+Add Comment Collapse
+
+
+
+shaakem [8:04 PM] 
+Всем привет! Подскажите пожалуйста, в MealRestController нужно делать только REST методы? Т.е. никаких return String там не должно быть? Как тогда вызывать mealForm.jsp?
+
+
+Katherine Buzatu [10:41 PM] 
+Товарищи, направьте, что с РестКонтроллером делать? Куда его маппить? Как его будет приложение отличать от обычного контроллера? И что он должен отдавать? (edited)
+
+
+anpotashev [11:01 PM] 
+Полагаю, обрабатывать REST запросы. А аннотация будет, наверно, другая. У нас рест - на следующем занятии.
+
+
+Katherine Buzatu [11:33 PM] 
+А в этом ДЗ MealsRestController делать не надо?
+
+
+
+----- Yesterday December 16th, 2017 -----
+Ruslan [12:20 AM] 
+@Rostish else {  meal.setId(id);
+         mService.update(meal, userId);
+     }
+
+
+Viktor [1:47 AM] 
+@Katherine Buzatu могу ошибаться, но вижу так:
+Мапится не контроллер, а методы помеченные аннотацией @...Request, которые потом превращаются в методы сервлетов и мапятся на нужные адреса. А дальше диспетчер сервлетов вызывает нужный сервлет по запросу.
+
+
+CRCx86 [8:55 AM] 
+@Viktor научите меня тоже на эльфийском разговаривать)
+
+
+
+CRCx86 [11:39 AM] 
+Подскажите пожалуйста вот что: в 
+InMemoryAdminRestControllerSpringTest:
+@Autowired
+   private AdminRestController controller; - подчеркивается красным
+
+в AbstractUserController:
+@Autowired
+   private UserService service; - подчеркивается красным
+
+куда копать? это и есть домашнее задание?
+
+
+[11:40] 
+could not awtowired пишет
+
+CRCx86 [12:06 PM] 
+uploaded and commented on this image: image.png
+1 Comment
+
+тут должно быть пусто?
+
+
+
+CRCx86 [12:16 PM] 
+что нужно поправить в mock.xml? там теги и скан мок-репозитория)
+
+
+CRCx86 [12:41 PM] 
+куда хоть думать-то?
+
+
+Few [1:04 PM] 
+нам для запуска тестов нужен бин контроллера, он находится в пакете web, сканирование которого раньше было в spring-app.xml, а теперь нет
+
+
+[1:05] 
+вот это и надо как-то исправить
+
+CRCx86 [6:47 PM] 
+@Few спасибо за наводку! буду думать
+
+
+grigory.kislin [6:59 PM] 
+@shaakem @Katherine Buzatu не надо rest. он будет позже
+подправил ДЗ: 
+- 1.3 Удалить сервлеты и перенести функциональность `MealServlet` в `JspMealController` контроллер (по аналогии с `RootController`).
+`MealRestController` у нас останется, с ним будем работать позже. (edited)
+
+
+CRCx86 [7:52 PM] 
+@grigory.kislin должен ли быть заполен jpa на скрине выше?
+
+
+grigory.kislin [8:06 PM] 
+@CRCx86 все верно. справа должна появится вкладка Persistanceи там можно назначить DataSource
+ну и понятно, что это все никак на исполнение не влияет, только IDEA интеграция
+
+
+
+----- Today December 17th, 2017 -----
+Viktor [12:08 AM] 
+@Katherine Buzatu я только сейчас понял о чем ты спрашивала... отстал немного :smiley: Но сейчас у меня появился вопрос, если у нас есть рест контроллер в котором уже все реализованно, почему бы не autowired его и испрользовать его методы? или мы их потом поменяем?
+
+
+Viktor [12:49 AM] 
+либо "1.3.2 в одном контроллере нельзя использовать другой. Чтобы не дублировать код можно сделать наследование." на это и намекает.

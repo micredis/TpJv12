@@ -2645,3 +2645,23 @@ MPEG 4 Video from Google Drive
  Click to open in Google Drive
  https://drive.google.com/open?id=0B9Ye2auQ_NsFeFB5a29JQ2tRNHM
 
+
+
+Sergey [2:05 PM] 
+Всем привет! Может кто-нибудь подсказать, почему у меня на одном из компов возникает ошибка в бине org.springframework.cache.jcache.JCacheCacheManager - выдает ошибку Caused by: java.io.FileNotFoundException: C:\Users\%d0%a1%d0%b5%d1%80%d0%b3%d0%b5%d0%b9\YandexDisk\Java\topjava\target\classes\cache\ehcache.xml (Системе не удается найти указанный путь). Такое ощущение, что он не понимает русских букв, потому что когда я копирую проект на диск C:\ все нормально работает.
+
+
+[2:06] 
+И что с этим делать
+
+
+[2:06] 
+?
+
+
+dyakoven [2:09 PM] 
+да, в пути не должно быть кириллицы и пробелов
+
+
+Sergey [2:10 PM] 
+Спасибо!

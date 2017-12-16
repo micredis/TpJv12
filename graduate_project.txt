@@ -475,3 +475,22 @@ grigory.kislin [12:02 AM]
 @alphadoub 1. можно доплатить только за ревью
 > будет код с которым можно будет сравнить своё решение
 после окончания стажировке  и в личке
+
+
+Антон Кляшторный [8:11 PM] 
+подскажите эти курлы "couple curl commands to test it" мы будем проходить или это самостоятельно освоить нужно?
+
+
+Valery [11:59 PM] 
+альтернатива курлу - постман
+
+
+
+----- Today December 17th, 2017 -----
+grigory.kislin [12:07 AM] 
+будем использовать curl (и ссылка на postman) когда к rest подойдем
+в виде ссылок на гайд- что его проходить:)?
+еще интересный инструмент https://httpie.org/
+HTTPie
+HTTPie – command line HTTP client
+CLI HTTP that will make you smile. JSON support, syntax highlighting, wget-like downloads, extensions, and more. (184 kB)
