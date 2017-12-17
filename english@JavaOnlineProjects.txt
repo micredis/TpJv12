@@ -842,3 +842,7 @@ And yes, even if you're a holy divine 'IT guy' you can't become a citizen of the
 
 micredis [11:25 AM] 
 @javadev In a nutshell, there's not much sense to take any of these tests 'just in case'. It's not only a waste of time and money, but also is a matter of their limited time of validity (usually, they expire in about 2-3 years, which may depend on a number of circumstances). So, when you need one, you'll find out about it just automatically; otherwise, just sit back an relax :slightly_smiling_face:
+
+
+javadev [2:17 PM] 
+Thanks for such full answers guys
