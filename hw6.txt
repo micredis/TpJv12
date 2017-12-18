@@ -1594,3 +1594,341 @@ Few
 
 [12:16] 
 Точнее не сказать без полного текста эксепшена
+
+
+
+Eugeniy [1:20 PM] 
+вот строка с исключением: Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpautil': Injection of persistence dependencies failed; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'javax.persistence.EntityManagerFactory' available
+
+
+Viktor [1:22 PM] 
+@Eugeniy "Error creating bean with name 'jpautil': " ошибка создания jpaUtil
+
+
+
+Eugeniy [1:22 PM] 
+я так подозреваю что Spring  не может инициализировать поле EntityManager em
+
+
+grigory.kislin [1:26 PM] 
+Все ошибки на отсутствия бина в контексте или его нескольких реализациях относятся к пониманию основ: Spring application context
+Если нет понимания этих основ, двигаться дальше нельзя, нужно вернуться к видео Спринг, где объясняется что это такое
+Также посмотрите видео 
+https://drive.google.com/file/d/1SPMkWMYPvpk9i0TA7ioa-9Sn1EGBtClD
+Начиная с 11.30 как раз разбираются подобные ошибки
+
+
+grigory.kislin [1:26 PM] 
+shared this file
+3_09_test_UserServiceN.mp4
+55 MB
+MPEG 4 Video from Google Drive
+ Click to open in Google Drive
+
+Add Comment
+
+
+
+grigory.kislin [1:28 PM] 
+Error creating bean with name 'jpautil' - смотрим как всегда верх последнего эксепшена
+
+
+vsimonov [1:43 PM] 
+Посоны, прописываю так в mock.xml <context:component-scan base-package="ru.javawebinar.**.web"/> тесты по прежнему не проходят, что за чума?
+
+
+Few
+[1:44 PM] 
+информации не достаточно
+нужен лог
+
+
+vsimonov [1:48 PM] 
+@Few org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'ru.javawebinar.topjava.service.jdbc.JdbcUserServiceTest': Unsatisfied dependency expressed through field 'jpaUtil'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'ru.javawebinar.topjava.repository.JpaUtil' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+
+
+Few
+[1:51 PM] 
+No qualifying bean of type 'ru.javawebinar.topjava.repository.JpaUtil' available: expected at least 1 bean which qualifies as autowire candidate.
+
+
+[1:51] 
+нет бина в контексте
+
+vsimonov [1:51 PM] 
+я и указываю где искаит
+
+
+grigory.kislin [1:55 PM] 
+@vsimonov
+у тебя есть ВСЯ информация- в контексте отсутствует `JpaUtil`
+если самостоятельно не решить этого, какой смысл в обучении?
+
+
+Few
+[1:56 PM] 
+в каком профиле у тебя этот бин посмотри
+
+
+vsimonov [1:57 PM] 
+@grigory.kislin верно, плёткой меня плёткой
+
+
+Few
+[1:58 PM] 
+ну и назначение его тоже важно для правильного решения поблемы (edited)
+
+
+grigory.kislin [2:00 PM] 
+название у него по умолчанию. совсем неважно
+
+
+Few
+[2:05 PM] 
+@grigory.kislin я про назначение
+
+
+
+grigory.kislin [2:40 PM] 
+да, сорри:)
+назначение- очистка кэша хибернайт для JPA-based реализаций
+дописал в подсказки п. 2 про ошибки на отсутствия бина в контексте или его нескольких реализациях
+
+
+vsimonov [2:58 PM] 
+Валидацию в тестах нужно исключать по какому принципу?
+
+
+grigory.kislin [2:59 PM] 
+@vsimonov верный ход мыслей:) попробуй еще точнее вопрос задать (edited)
+
+
+vsimonov [3:08 PM] 
+@grigory.kislin я проверку на null везде сделал , теперь работают все тесты.
+
+grigory.kislin [3:10 PM] 
+нуок.. один из вариантов... а попробуй на свой вопрос теперь ответить
+> Валидацию в тестах нужно исключать по какому принципу?
+
+
+vsimonov [3:11 PM] 
+Выбран ли профиль jdbc или как у меня jpaUtil null
+
+
+grigory.kislin [3:12 PM] 
+ну, это не думаю что принцип.. это его реализация
+
+
+Valery [4:18 PM] 
+при сабмите все элементы <form> записываются в атрибуты request и позже вынимаются через request.getParameter
+как собрать эти элементы в один объект, с которым сможет работать метод-обработчик, принимающий заданный объект в параметрах вместо HttpServletRequest?
+
+
+Few
+[4:19 PM] 
+а зачем вместо?
+
+
+Valery [4:20 PM] 
+чтобы потом не собирать объект заново из request.getParameter
+
+
+Few
+[4:23 PM] 
+видимо я не совсем понял вопрос
+
+
+Eugeniy [4:24 PM] 
+@grigory.kislin Григорий, спасибо. С контекстом вопрос отпал: всему виной невнимательность, использовал профиль в котором нет нужного бина.
+
+
+Few
+[4:24 PM] 
+приходят значения полей объекта в запросе, достаем и собираем объект, сохраняем его
+
+
+Valery [4:30 PM] 
+да. но если полей много?
+сейчас мы собираем еду в три обращения к request
+Meal meal = new Meal(
+                   LocalDateTime.parse(request.getParameter("dateTime")),
+                   request.getParameter("description"),
+                   Integer.parseInt(request.getParameter("calories")));
+
+
+[4:30] 
+А хотелось бы сразу получать собранный объект.
+
+Few [4:31 PM] 
+ну дальше в REST будем в виде JSON отправлять
+
+
+
+[4:33] 
+хотя пусть специалисты ответят :slightly_smiling_face:
+
+
+vch [4:33 PM] 
+@Valery а кто мешает получать собранный объект? Спринг ведь умеет.
+
+
+Valery [4:33 PM] 
+вот и спрашиваю - как ? пока не нашел.
+
+
+Few [4:33 PM] 
+вот Valery и спрашивает, как?
+
+
+grigory.kislin [4:36 PM] 
+@Valery будет в след. уроке (edited)
+
+
+Valery [4:36 PM] 
+@grigory.kislin в лекции или в дз?
+
+
+Viktor [4:38 PM] 
+@Valery гугли "spring form bean binding", сюда ответ кидать не буду, пообсуждать можно будет в лс
+
+
+
+Valery [4:40 PM] 
+встретил @modelattribute, но пока у меня он не заработал...
+
+
+[4:41] 
+и если в форме будут поля разных объектов, как они соберутся?...
+
+
+Few [5:00 PM] 
+@ModelAttribute интересно, но придется с форматом даты колдовать
+
+
+vch [5:08 PM] 
+@Few форматтеры и конверторы никто не отменял.
+
+
+Few [5:10 PM] 
+Ну раз уж спринг берет на себя львиную долю работы, хотелось бы чтобы он и об этом позаботился
+
+
+[5:10] 
+:slightly_smiling_face:
+
+
+vch [5:13 PM] 
+@Few не, ну формат даты сообщить же ему надо. Все разный формат используют, Spring ещё мысли читать не умеет (что, на мой взгляд, очень хорошо... )
+
+
+Few
+[5:19 PM] 
+@vch да уж, магии в спринге и так достаточно
+
+
+
+----- Today December 18th, 2017 -----
+dyakoven [12:08 AM] 
+когда мы фильтруем еду и создаем/редактируем еду - выполняется POST запрос и падает на /meals. Подскажите, как правильно разделить функционал в MealController так как мы делали в MealServlet при помощи значения параметра action
+
+
+grigory.kislin [12:50 AM] 
+@dyakoven через разные url
+
+
+Marina [12:33 PM] 
+Ребята, кто сделал, подскажите по пункту "2.4.1 В реализации getAll НЕ делать запрос ролей для каждого юзера (N+1 select)" куда можно посмотреть? У меня во всех запросах  get в JdbcUserRepisitory в итоге есть LEFT JOIN, чтобы можно было получить и сравнить роли, а как то можно без него?
+
+anpotashev [4 hours ago] 
+Можно и без него. Получаешь юзеров без джойнов, затем циклом по результату и по каждому выбираешь роли. И будет ровно n+1 (edited)
+
+
+Katherine Buzatu [4 hours ago] 
+А это как раз не n+1 выходит?
+
+
+Marina [4 hours ago] 
+Спасибо, а то я не совсем поняла, думала, что как раз так и будет N+1
+
+
+Few 
+[4 hours ago] 
+ну по-моему это и будет n+1
+
+
+grigory.kislin [12:43 PM] 
+@Marina можно через LEFT JOIN, можно двумя запросами-  юзеры и роли
+
+
+vsimonov [12:45 PM] 
+у нас метод есть getFilteredWithExceeded он дату  не принимает, только список и время. Получается мы фильтруем только по времени?
+
+Katherine Buzatu [4 hours ago] 
+В него список приходит уже отфильтрованный по дате (edited)
+
+
+Few [12:47 PM] 
+мы сначала берем все записи для даты, чтобы правильно вычислить exceeded
+
+
+[12:47] 
+а потом фильтруем по времени
+
+
+[12:47] 
+кажется так
+
+
+Katherine Buzatu [12:50 PM] 
+@grigory.kislin насколько глубоко копать `JdbcUserRepositoryImpl` по поводу ролей? Там же вскрывается и проблема вставки, и изменения...
+
+
+Marina [12:52 PM] 
+Я во вставку добавила роли, а изменение не стала трогать, вроде как у нас у юзера один раз роли выставляются, может конечно я не правильно поняла.
+Katherine Buzatu
+@grigory.kislin насколько глубоко копать `JdbcUserRepositoryImpl` по поводу ролей? Там же вскрывается и проблема вставки, и изменения...
+Posted in #hw6Today at 12:50 PM
+
+
+grigory.kislin [12:52 PM] 
+@Katherine Buzatu у меня в решении такой коммент:
+```            // Simplest roles implementation (delete all/ insert all)
+            // More complicated : get user roles from DB and compare them with user.roles (assume that roles are changed rarely).
+            // If roles are changed, calculate difference in java and delete/insert them.
+```
+
+
+Katherine Buzatu [12:53 PM] 
+То есть нет предела совершенству, но и так нормально :slightly_smiling_face:
+
+
+grigory.kislin [12:54 PM] 
+нуда. всегда так, не только у меня:)
+
+
+[12:55] 
+и всегда выбирать приходится
+
+Дима Жуков
+[12:56 PM] 
+Товарищи, а какая аннотация на контроллер url-pattern  навесить как в web.xml?
+
+
+[12:58] 
+Спасибо, нашел.
+
+
+vsimonov [1:37 PM] 
+при реализации getbeetween в результирующий список должны попадать фильтрующие даты. Если я выбрал 29 и 30 ичсло одного месяца что в результате должно получиться?
+
+
+Дима Жуков [1:59 PM] 
+Ребят, такое было у кого-нибудь? Редирект сначала сделал через response по-старинке редиректит на  meals/meals.. нагуглил redirect:meals и тоже самое... (edited)
+
+
+vch [2:00 PM] 
+@Дима Жуков а если так? ` redirect:/meals`
+
+
+Дима Жуков [2:00 PM] 
+Хм...)) И правда надо попробовать
