@@ -4479,3 +4479,108 @@ grigory.kislin [4:49 PM]
 
 [4:52] 
 по поводу 9го занятие я понял настроения:) сообщу дату ближе к сроку
+
+
+evgeny [10:31 PM] 
+Кто может помочь с тестированием в спринг буте?
+
+
+[10:32] 
+есть класс ShopTest, помеченный аннотациями
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@SpringBootTest
+
+
+[10:32] 
+и в нем дао
+@Autowired
+   private ShopDAO shopDAO;
+
+
+[10:33] 
+но при попытке запустить выдает исключение
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.app.app.ShopTest': Unsatisfied dependency expressed through field 'shopDAO'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.app.app.dao.ShopDAO' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+
+
+Viktor [10:34 PM] 
+@evgeny лучше выкладывать всю информацию относящуюся к вопросу. В данном случае покажите бин ShopDao
+
+
+
+----- Today December 19th, 2017 -----
+evgeny [11:35 AM] 
+@Viktor если убрать datajpatest, работает нормально с основной бд. Тут какие то проблемы со встроенной базой. H2database в мавене подключено
+
+
+Few [11:37 AM] 
+профили есть какие-то?
+
+
+[11:37] 
+спринг не может найти бин в контексте
+
+
+evgeny [11:52 AM] 
+Профилей нет
+
+Few 
+[11:53 AM] 
+бин в xml прописан или java конфигом?
+
+[11:55] 
+надо искать почему бин в контекст не загружен
+
+
+[11:56] 
+com.app.app.dao.ShopDAO
+
+[11:57] 
+пакет верный? app так и задвоено в действительности?
+
+
+evgeny [12:02 PM] 
+Да
+
+
+[12:02] 
+Я через спринг бут
+
+Few 
+[12:05 PM] 
+https://stackoverflow.com/questions/43705720/how-do-i-import-configuration-classes-in-a-datajpatest-in-a-springboottest
+stackoverflow.com
+How do I import configuration classes in a @DataJpaTest in a SpringBootTest?
+I have a SpringBoot Application and I a config package with @Configuration @EnableJpaAuditing public class PersistenceConfig { } But the PersistenceConfig does not get picked up in a
+ 
+
+
+[12:06] 
+может я ошибаюсь, но похоже на твою проблему
+
+
+marmaly [12:20 PM] 
+uploaded and commented on this image: Screenshot from 2017-12-19 15-19-47.png
+1 Comment
+Всем Здравствуйте! Может посмотрите, тесты то проходит, но выдает такую ошибку (см. скрин), как я поняла, где то двойной ключ? (если поможет, это тема SpringDataJpa 5урок, пач 5-7)
+
+
+
+Few [12:24 PM] 
+начало имени последнего теста наводит на мысль, что это нормально
+
+
+[12:24] 
+:slightly_smiling_face:
+
+evgeny [12:25 PM] 
+@Few вроде эта ошибка моя https://github.com/spring-projects/spring-boot/issues/8501
+GitHub
+Unable to test custom repositories using Spring Boot Test · Issue #8501 · spring-projects/spring-boot
+I am using Spring Boot 1.4.4. Followed the Spring Boot Test article for unit tests. When I have custom repositories, test is not working and fails with error UnsatisfiedDependencyException: Error c...
+ 
+
+
+Few 
+[12:27 PM] 
+@evgeny возможно, про Spring Boot почти ничего не знаю, кроме того, что это еще большая магия :slightly_smiling_face:
