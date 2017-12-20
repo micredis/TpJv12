@@ -744,3 +744,38 @@ Shalukhau Dzmitry [5:32 PM]
 
 [5:33] 
 По ходу я оффтопик завел :slightly_smiling_face: Заканчиваем и продолжаем грызть гранит науки...
+
+
+
+Andrey [7:27 PM] 
+-Какие ваши сильные стороны? -Самоуверенность. -Мы Вам перезвоним завтра - Не звоните: завтра я буду уже на новой работе.
+Жуков Дмитрий
+прям как в баяне -Какие ваши сильные стороны? -Настойчивость. -Мы Вам перезвоним. - Я подожду здесь.
+Posted in #graduate_projectYesterday at 5:16 PM
+
+
+
+----- Today December 20th, 2017 -----
+Kaa [10:58 AM] 
+Появился внезапно вопрос по проекту. Мы используем @SequenceGenerator для генерации id. Попалось на глаза информация, что это deprecated метод работы с последовательностями. Нужно использовать @GenericGenerator со стратегией org.hibernate.id.enhanced.SequenceStyleGenerator. Не получается это чудо прикрутить к проекту, оно почему-то по новой все id генерирует, хотя в базе уже есть такие-же сгенерированные sql скриптом. Никто с подобным не сталкивался?
+
+
+anpotashev [11:19 AM] 
+@Kaa не понял, у тебя вопрос про автогенерациею таблиц?
+
+
+Few 
+[11:23 AM] 
+про это:
+
+
+[11:23] 
+https://stackoverflow.com/questions/39861098/replace-sequencegenerator-since-its-deprecated
+stackoverflow.com
+Replace @SequenceGenerator since its deprecated
+I have a problem with @SequenceGenerator: @SequenceGenerator(name="pk_user_id", sequenceName="seq_user_id", allocationSize=1) @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pk_user_i...
+ 
+
+
+Kaa [11:31 AM] 
+вопрос снимается. там наименование параметров задаются просто как строки, подсказок нет, и получилась ошибка в имени параметра. seqeunce_name написал вместо sequence_name, вот он и не видел табличную. Но гад не предупреждает, просто генерит заново.
