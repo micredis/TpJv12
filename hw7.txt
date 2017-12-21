@@ -1,0 +1,67 @@
+grigory.kislin [1:06 PM] 
+set the channel topic: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson07.md
+
+
+grigory.kislin [1:07 PM] 
+Друзья, выложил https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson07.md
+там не хватает окончания урока, сегодня я доделаю и отпишусь
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+[1:08] 
+на следующем уроке начинаем javascript
+
+
+Oleg
+[1:10 PM] 
+joined #hw7 along with 13 others.
+
+
+RNG [2:48 PM] 
+У меня идея подчеркивает как дубликат  тест `testValidation()`. В первом патче он добавляется в `AbstractJpaUserServiceTest`, но при этом остается и в `AbstractUserServiceTest`. Это у меня что-то криво встало или косяк в патче? (edited)
+
+
+Katherine Buzatu [2:58 PM] 
+А это так и надо, что материалы из TopJava11?
+
+fbochkarev [3 hours ago] 
+"не хватает окончания занятия, сегодня обновлю и отпишусь
+извиняюсь за задержку", наверное попозже поправит.
+
+
+Sergey [3:54 PM] 
+Подскажите, это только у меня после наката патча 7 02 HW6 meals  при нажатии двух раз кнопки "Отфильтровать" получается адрес: http://localhost:8080/meals/meals/filter и естественно ничего не тображается?
+
+philip.goldm [2 hours ago] 
+Григорий писал что фильтры пока не трогать. Будем править позже.
+
+
+philip.goldm [2 hours ago] 
+попробуй поправить на  return "redirect:/meals"; в getBetween. Я так правил
+
+
+Sergey [2 hours ago] 
+Спасибо! Не увидел, что Григорий про это писал. А с "redirect:/meals" все равно фильтр не будет работать
+
+
+philip.goldm [1 hour ago] 
+да, фильтр не будет работать. потому что необходимо добавить параметры в атрибуты
+
+
+grigory.kislin [5:34 PM] 
+@RNG в патче 7_01_HW6_fix_tests метод `AbstractUserServiceTest.testValidation()`  удаляется
+@Katherine Buzatu спасибо, перенес в topjava12
+@Sergey см. патч 7_03
+для проверки патчи счас вчекиню
+
+
+[5:35] 
+Урок 7 доделал, патчи и видео дополнил
+
+
+
+Few [5:35 PM] 
+спасибо
