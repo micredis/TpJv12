@@ -4584,3 +4584,15 @@ I am using Spring Boot 1.4.4. Followed the Spring Boot Test article for unit tes
 Few 
 [12:27 PM] 
 @evgeny возможно, про Spring Boot почти ничего не знаю, кроме того, что это еще большая магия :slightly_smiling_face:
+
+
+
+Ivanushka [7:34 AM] 
+Доброго дня всем, похоже я что-то пропустил. Нового ДЗ не будет сегодня?
+
+fbochkarev [1 hour ago] 
+Должно, может по позже.
+
+
+Belstrel [10:49 AM] 
+опс..я вместо поиска hw7 нажал create видимо

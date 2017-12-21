@@ -1988,3 +1988,162 @@ Viktor [3:47 PM]
 grigory.kislin [4:34 PM] 
 @dyakoven у контроллера по классике не должно быть логики- только аннотации по приему запросов
 мы же сервлеты один в другой не вставляем
+
+
+
+shaakem [6:00 PM] 
+Всем привет! Подскажите пожалуйста. Я в методе getBetween(HttpServletRequest request) создаю ссылки на объекты LocalDate и LocalTime и в них парсю значения с помощью DateTimeUtil. Вопрос: не будет ли конфликтов при выполнении этого метода для 2х и более пользователей одновременно? Другими словами, спринг синхронизирует методы в контроллере? Возможно что я упустил это в лекциях. Спасибо!
+
+
+vch [6:04 PM] 
+@shaakem
+>  спринг синхронизирует методы в контроллере?
+Ответ - нет. Объект контроллера 1. Методы этого объекта вызываются одновременно из разных потоков.
+
+
+
+Andrew [7:46 PM] 
+Почему-то в jdbc профиле Repository видит не только jdbc, но и datajpa. Компнент-скан ему показывает jdbc. Не пойму, почему так? И почему 2 из 3 реализаций видит
+
+
+[7:47] 
+И поэтому просит квалифаер для бина
+
+
+Andrew [8:08 PM] 
+uploaded this image: Pasted image at 2017-12-20, 7:08 PM
+Add Comment
+
+
+
+Andrew [8:08 PM] 
+Подёргал профили, заработало, но всё равно ругается
+
+
+Viktor [8:20 PM] 
+забей, это интеграция ругается :smiley:
+
+Andrew [8:23 PM] 
+:disappointed:
+
+
+Andrew [8:35 PM] 
+Не могу найти, в каком видео Григорий показывал, как делать запрос без того, чтобы для каждого юзера не запрашивать отдельно роли...
+
+
+Andrew [9:11 PM] 
+Может кто-то дать ссылку по заданию Починить JDBC и роли?.. Куда копать?
+
+Few
+[9:20 PM] 
+ну по сути тебе надо при запросе пользователей приджоинить роли, а потом правильно построить объекты из ResultSet'а
+
+Andrew [13 hours ago] 
+То есть, мне сначала провести query и сохранить в List, потом квери по ролям - и распихать в соответствии с userId?
+
+
+Dmitry Makarov [13 hours ago] 
+ResultSetExtractor
+
+
+Few [13 hours ago] 
+@Andrew как ты описал (если я правильно тебя понял), это слишком много запросов в базу (N+1). Используй JOIN (edited)
+
+
+grigory.kislin [13 hours ago] 
+варианта 2:
+1. один с JOIN
+2. 2 запроса- юзер и роли
+и везде соединять в java коде
+
+
+Andrew [13 hours ago] 
+Спасибо, мне второй ближе. В первом надо имплементировать ResultSetExtractor..
+
+
+Few [9:20 PM] 
+перелопатить JDBC репозиторий
+
+
+grigory.kislin [9:50 PM] 
+по Optional 2.4 дописал в ДЗ:
+Доставать можно двумя способами: одним запросом с JOIN либо двумя запросами: отдельно `users` и отдельно `roles`.
+
+
+dyakoven [10:14 PM] 
+кто сталкивался? тест getAll() фейлится. потому что при `new ArrayList<>(map.values())` создается список списков. где я не так что делаю?
+
+
+anpotashev [10:17 PM] 
+А в мапе у тебя что?
+
+dyakoven [13 hours ago] 
+`Map<Integer, User> users = new HashMap<>();`
+
+
+Dmitry Makarov [13 hours ago] 
+dyakoven, а ты глянь что тест пишет
+
+
+dyakoven [13 hours ago] 
+он пишет assertionError, и я вижу, что структура actual и expected списков - отличается
+
+
+Dmitry Makarov [13 hours ago] 
+порядок отличается
+
+
+Dmitry Makarov [13 hours ago] 
+попробуй LinkedHashMap вместо HashMap
+
+
+anpotashev [13 hours ago] 
+Что у тебя за структура такая получаетя?
+
+
+dyakoven [12 hours ago] 
+не, порядок нормально. вот эксепшн
+```java.lang.AssertionError: 
+Expecting:
+ <[[User{id=100001, email=admin@gmail.com, name=Admin, enabled=true, roles=[ROLE_USER, ROLE_ADMIN], caloriesPerDay=2000},
+    User{id=100000, email=user@yandex.ru, name=User, enabled=true, roles=[ROLE_USER], caloriesPerDay=2000}]]>
+to be equal to:
+ <[User{id=100001, email=admin@gmail.com, name=Admin, enabled=true, roles=[ROLE_USER, ROLE_ADMIN], caloriesPerDay=2000},
+    User{id=100000, email=user@yandex.ru, name=User, enabled=true, roles=[ROLE_USER], caloriesPerDay=2000}]>
+when comparing elements using 'field/property by field/property comparator on all fields/properties except ["registered", "meals"]' but was not.
+```
+
+
+dyakoven [12 hours ago] 
+нет, они исключаются
+
+
+Dmitry Makarov [12 hours ago] 
+роли как что сохраняешь?
+
+Dmitry Makarov [12 hours ago] 
+EnumSet<Role> ?
+
+
+anpotashev [12 hours ago] 
+Да, походу у тебя лист листов на каком-то этапе возникает
+
+
+dyakoven [12 hours ago] 
+да. я роли в ArrayList записывал. сейчас поменяю. спасибо, ребята
+
+
+dyakoven [12 hours ago] 
+проблема была не в этом. неправильно был написан сам ResultSetExtractor
+
+
+Dmitry Makarov [11 hours ago] 
+дженерик не так указал?
+
+
+dyakoven [11 hours ago] 
+Ага
+
+
+Dmitry Makarov [11 hours ago] 
+а я еще смотрю что за скобки лишние в тесте
