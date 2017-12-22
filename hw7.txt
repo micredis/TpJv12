@@ -134,3 +134,72 @@ Ivanushka
 
 [10:19] 
 С java 9 не работает, кто думал переходить - пока не стоит.
+
+
+Андрей [12:24 PM] 
+Кто нибудь сталкивался с таким:
+
+
+[12:24] 
+Caused by: org.apache.jasper.JasperException: javax.servlet.ServletException: javax.servlet.jsp.JspTagException: No message found under code 'app.title' for locale 'ru_RU'
+
+
+vch [12:29 PM] 
+@Андрей в 90% случаев, что я видел - это значит не выставлена переменная окружения для проекта
+
+
+Андрей [12:29 PM] 
+какая?
+
+
+vch [12:31 PM] 
+в 1 занятии расписано.
+```Установите переменную окружения на TOPJAVA_ROOT на корень проекта и перезапустите IDEA. Слеши в пути должны быть в стиле unix (/)```
+
+
+Андрей [1:20 PM] 
+Спасибо,про нее то я и забыл...
+
+
+[1:20] 
+Теперь такая ошибка:
+
+
+[1:20] 
+The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.
+
+
+[1:22] 
+на странице http://localhost:8080/meals
+
+
+vch [1:24 PM] 
+@Андрей а если такую страницу: `http://localhost:8080/topjava/meals`
+
+
+Андрей [1:29 PM] 
+То же.
+
+
+[1:30] 
+А там где мы выбираем контекст - надо выбирать Spring-tools?
+
+
+Андрей [1:37 PM] 
+После примененния патчей 6-го урока в rootcontroller должна быть часть с meals? Или самим надо делать?
+
+
+MetalBro [1:41 PM] 
+Какая часть с meals?
+
+
+Андрей [1:43 PM] 
+Добавил, теперь ОК.
+
+
+MetalBro [1:43 PM] 
+ты про патчи HW6?
+
+
+[1:44] 
+самому ничего там не надо было править по идее
