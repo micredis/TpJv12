@@ -2147,3 +2147,11 @@ dyakoven [11 hours ago]
 
 Dmitry Makarov [11 hours ago] 
 а я еще смотрю что за скобки лишние в тесте
+
+
+Антон Кляшторный [7:31 PM] 
+Это полный JDBC!!! insertRoles -> setRoles -> deleteRoles да всунь ты в user эту роль!
+DataJpa:
+   @Override
+   @Transactional
+   User save(User user);

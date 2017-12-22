@@ -65,3 +65,72 @@ grigory.kislin [5:34 PM]
 
 Few [5:35 PM] 
 спасибо
+
+
+Rostish [6:29 AM] 
+Рик
+
+
+[6:29] 
+Ни у кого не было ошибки
+
+
+[6:29] 
+Access to DialectResolutionInfo cannot be null when ‘hibernate.dialect’?
+
+
+[6:30] 
+появилась после патча 706
+
+
+Rostish [6:54 AM] 
+пропатчил до самого конца
+
+
+[6:54] 
+все равно
+
+
+[6:54] 
+Access to DialectResolutionInfo cannot be null when ‘hibernate.dialect’ not set
+
+
+[6:54] 
+я так понимаю это в конфигурационном файле где то проблема
+
+
+[6:54] 
+но пока не нашел
+
+
+Rostish [7:12 AM] 
+проблема была в том, что почему то не поднимался постгрес, а не поднимался он потому что слишком много прав на бд, пока не сделал доступной только владельцу не заработал
+
+
+Rostish [7:29 AM] 
+вдруг кому поможет
+
+
+[7:29] 
+http://www.sql.ru/forum/765555/permissions-should-be-u-rwx-0700
+sql.ru
+Permissions should be u=rwx (0700 / PostgreSQL / Sql.ru
+Permissions should be u=rwx (0700 / PostgreSQL / Чето не стартует у меня на одной машине Postgresql - замучал уже возможно потому что это единственная машина под SUSE 11.2 (остальные под 11.1) - а может в другом чем-то делов ответ на обычный старт pg_ctl start - D /home/admin/Posgresql_DBругается так:se...
+ 
+
+
+Ivanushka 
+[8:03 AM] 
+Не накатился патч 7_02 для файла app_ru. properties. Поправил руками. ... Это, так, для статистики.
+
+
+Андрей [10:17 AM] 
+Про Access to DialectResolutionInfo cannot be null when ‘hibernate.dialect’
+
+
+[10:18] 
+это проблема коннекта к базе - юзер\пароль не тот, прав не хватает, не поднялась - надо смотреть, проверять.
+
+
+[10:19] 
+С java 9 не работает, кто думал переходить - пока не стоит.

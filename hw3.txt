@@ -4668,3 +4668,56 @@ grigory.kislin [5:04 PM]
 
 Shalukhau Dzmitry [5:21 PM] 
 Ух ты. Не я 1 торможу :slightly_smiling_face:
+
+
+danissimo [3:10 AM] 
+@everyone:
+Хочу протестировать сласс User:
+```abstract class IdentifiedEntity<E extends IdentifiedEntity> implements Cloneable {
+  ...
+  public void updateWith(E that) {
+    if (this != that) {
+      if (that.isNew()) {
+        throw new IllegalArgumentException("Cannot update with a new entity");
+      }
+      if (this.isNew()) {
+        throw new IllegalStateException("Cannot update a new entity");
+      }
+      if (this.getId() != that.getId()) {
+        throw new IllegalArgumentException("IDs do not match");
+      }
+      doUpdateWith(that);
+    }
+  }
+
+  abstract void doUpdateWith(E that);
+  ...
+}
+
+public final class User extends IdentifiedEntity<User> {
+  ...
+  @Override
+  void doUpdateWith(User that) {
+    assert that != null;
+    this.name = that.name;
+    this.email = that.email;
+    System.arraycopy(that.password, 0, password, 0, password.length);
+    this.enabled = that.enabled;
+    this.caloriesPerDayLimit = that.caloriesPerDayLimit;
+  }
+  ...
+}
+```
+Как, используя JUnit 4, убедиться, что вызывая `update(...)`, будет вызван `doUpdate(...)`?
+
+
+Dmitry Makarov [3:41 AM] 
+тебе прям тест нужен который проверит тот ли метод запустился?
+
+
+[3:41] 
+брейкпоинт не подойдет?
+
+
+Viktor [10:00 AM] 
+update у тебя бросает исключения, значит если исключение не выбрашено и this.equals(that)  значит вызов был

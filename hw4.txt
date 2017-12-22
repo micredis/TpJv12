@@ -3436,3 +3436,75 @@ Shalukhau Dzmitry [8:09 PM]
 
 grigory.kislin [9:04 PM] 
 о!
+
+
+Anzey [8:46 PM] 
+У меня почему-то падает тест duplicateMailCreate с ошибкой Unexpected exception, expected<org.springframework.dao.DataAccessException> but was<javax.persistence.PersistenceException>
+
+Katherine Buzatu [14 hours ago] 
+Дебаг?..
+
+
+Viktor [14 hours ago] 
+покажи код тестируемого метода, ожидается что он кинет DataAccessException, а кидает PersistenceException
+
+
+Anzey [14 hours ago] 
+Код для всех тестов, но при реализации JPAUserRepoIml бросает не тот Exception. В дебаге не могу разобраться((.
+
+   @Test(expected = DataAccessException.class)
+   public void duplicateMailCreate() throws Exception {
+       service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
+   }
+
+
+Anzey [14 hours ago] 
+@Override
+   @Transactional
+   public User save(User user) {
+           if (user.isNew()) {
+               em.persist(user);
+               return user;
+           } else {
+               return em.merge(user);
+           }
+   }
+
+
+Katherine Buzatu [13 hours ago] 
+Покажи импорты и аннотации класса.
+
+
+Anzey [13 hours ago] 
+етот клас
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.repository.UserRepository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+
+@Repository
+@Transactional(readOnly = true)
+public class JpaUserRepositoryImpl implements UserRepository {
+
+
+Viktor [12 hours ago] 
+покажи ещё сервис, т.е. эксепшен вроде он кидать должен
+
+
+Katherine Buzatu [12 hours ago] 
+Сдается мне, ситуация связана с этим пунктом: ` При настройке JPA в IDEA НЕ скачивайте библиотеку javaee.jar (и любую другую).
+Все зависимости в проект попадают только через Maven`
+
+
+Katherine Buzatu [12 hours ago] 
+Java 9?
+
+
+Anzey [1 hour ago] 
+Проблема не в сервисе, так как иксепшин бросает метод  em.persist(user); 
+При настройке JPA вроде ничего лишнего не скачивал. Различие от pom   проекта только в том что я использую вместо postgres - mysql-connector-java
