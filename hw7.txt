@@ -203,3 +203,46 @@ MetalBro [1:43 PM]
 
 [1:44] 
 самому ничего там не надо было править по идее
+
+
+grigory.kislin [4:52 PM] 
+@Ivanushka проверил- у меня все работает. сверься по GitHub
+
+
+Ivanushka [5:07 PM] 
+@grigory.kislin Хорошо, посмотрю.
+
+
+Anton K. [9:43 PM] 
+ребят, подскажите, а зачем сделали конструктор приватный JackObjectMapper
+
+
+anpotashev [10:50 PM] 
+Это реализация при которой создается только один статический экземпляр этого класса - MAPPER и затем выдается геттером. Алгоритм как у одной из реализаций сигнлтона. (edited)
+
+
+
+
+----- Today December 23rd, 2017 -----
+Pinned
+CRCx86 [8:59 AM] 
+uploaded and commented on this image: image.png
+1 Comment
+Друзья, накатка первого патча. Почему?
+
+
+
+Dmitry Makarov [9:02 AM] 
+это норма
+
+
+dart_rabbit [11:15 AM] 
+Ни у кого такого не было: По какой-то причине когда запускаешь tomcat после clean, и идея билдит проект, то jackson зависимости не подтягиваются в класпас, соответственно вываливается classDefNotFound для ObjectMapper, даже если выставить scope, а если собираешь через maven package - все ок. Глюк идеи?
+
+Anton K. [3 hours ago] 
+Сделай инвалидацию кэша в idea - files - и там где то дальше
+
+
+Pinned
+RNG [12:39 PM] 
+@CRCx86 у меня такое же было. Это `testValidation()` который должен переноситься в класс AbstractJpaUserServiceTest, соотвсно в этом классе его не должно быть. Григорий писал что в патче 7_01_HW6_fix_tests метод `AbstractUserServiceTest.testValidation()`  удаляется, хотя у меня было иначе и этот тест был в обоих классах, так что я руками его удалил в `AbstractUserServiceTest`. (edited)
