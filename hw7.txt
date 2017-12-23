@@ -246,3 +246,19 @@ Anton K. [3 hours ago]
 Pinned
 RNG [12:39 PM] 
 @CRCx86 у меня такое же было. Это `testValidation()` который должен переноситься в класс AbstractJpaUserServiceTest, соотвсно в этом классе его не должно быть. Григорий писал что в патче 7_01_HW6_fix_tests метод `AbstractUserServiceTest.testValidation()`  удаляется, хотя у меня было иначе и этот тест был в обоих классах, так что я руками его удалил в `AbstractUserServiceTest`. (edited)
+
+
+Anton K. [4:08 PM] 
+Господа знатоки, подскажите куда смотреть, уже долго бьюсь, со своим собственным форматтером,
+Все делаю согласно документации, посмотрел уже кучю примеров, пробовал регистрировать и customEditors и PropertyEditorRegistrar, но в тестах все равно вылазит ошибка 400, т.е., что данные переводятся некорректно, при этом @DateTimeFormat отлично работает и данные правильно переводится из string в объект
+Может есть какие то особенности не прописанные в документации
+
+dart_rabbit [3 hours ago] 
+Покажи параметры, которые передаешь и сигнатуру метода getBetween с аннотациями
+
+
+Ruslan Pivovarov [1 hour ago] 
+https://stackoverflow.com/questions/13778099/register-converters-and-converterfactories-with-annotations-in-spring-3  делал по аналогии с ответом Timothy Anyona
+stackoverflow.com
+Register converters and converterFactories with annotations in Spring 3
+First of all ... Im relatively new in Spring, I use spring 3.x and I DONT LIKE SPRING'S XML CONFIGURATION FILES ... I dont want for every refactoring I do, to run into XML file for updates ... I'm
