@@ -262,3 +262,13 @@ https://stackoverflow.com/questions/13778099/register-converters-and-converterfa
 stackoverflow.com
 Register converters and converterFactories with annotations in Spring 3
 First of all ... Im relatively new in Spring, I use spring 3.x and I DONT LIKE SPRING'S XML CONFIGURATION FILES ... I dont want for every refactoring I do, to run into XML file for updates ... I'm
+
+
+Dmitry Makarov [10:49 PM] 
+>2.2 в параметрах getBetween принимать LocalDateTime
+в запросе посылать нужно не больше 2 параметров? (startDateTime, endDateTime) (edited)
+
+
+Pinned
+dart_rabbit [11:03 PM] 
+В сигнатуре метода сервиса getBetween 4 параметра, просто ты их передаешь в контроллер виде ISO_LOCAL_DATE_TIME (например '2011-12-03T10:15:30').  и из каждого берешь нужную часть через toLocalDate() / toLocalTime()
