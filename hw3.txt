@@ -4721,3 +4721,13 @@ Dmitry Makarov [3:41 AM]
 
 Viktor [10:00 AM] 
 update у тебя бросает исключения, значит если исключение не выбрашено и this.equals(that)  значит вызов был
+
+
+danissimo [6:17 PM] 
+```    @Test
+    public void updateWith() {
+        User user = this.user.clone().setId(100);
+        User mock = Mockito.spy(user);
+        mock.updateWith(user);
+        Mockito.verify(mock).doUpdateWith(user);
+    }```

@@ -263,6 +263,23 @@ stackoverflow.com
 Register converters and converterFactories with annotations in Spring 3
 First of all ... Im relatively new in Spring, I use spring 3.x and I DONT LIKE SPRING'S XML CONFIGURATION FILES ... I dont want for every refactoring I do, to run into XML file for updates ... I'm
 
+Few [17 hours ago] 
+мне это помогло
+https://stackoverflow.com/questions/25861430/how-to-register-formatters-in-spring-mvc-web-application
+stackoverflow.com
+How to register formatters in Spring MVC web application?
+I am facing the problem while binding nested object in Model Attribute. I have one class Book, in which I have nested class Subject as below : @Entity @Table(name = "book") public class Book { ...
+ 
+
+
+Dmitry Makarov [9 hours ago] 
+springarticles.wordpress.com/2012/08/05/%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-conversionservice-%D0%B2-spring-mvc/
+springarticles
+Использование ConversionService в Spring MVC
+Добрый день всем !
+Данная статья посвящена концепции ConversionService, которая была успешно применена Show more…
+(edited)
+
 
 Dmitry Makarov [10:49 PM] 
 >2.2 в параметрах getBetween принимать LocalDateTime
@@ -272,3 +289,71 @@ Dmitry Makarov [10:49 PM]
 Pinned
 dart_rabbit [11:03 PM] 
 В сигнатуре метода сервиса getBetween 4 параметра, просто ты их передаешь в контроллер виде ISO_LOCAL_DATE_TIME (например '2011-12-03T10:15:30').  и из каждого берешь нужную часть через toLocalDate() / toLocalTime()
+
+
+anpotashev [12:46 PM] 
+Друзья, кто знает, как в @RequestParam в качестве defaultValue вставить дату? Чтоб без ругани "Attribute value must be constant"
+
+
+kadmser [12:52 PM] 
+Друзья, в testMeals() сравнивали по id Только или юзеру еще?
+
+
+grigory.kislin [1:44 PM] 
+@kadmser вопрос не понял. сранивать по еде
+
+
+anpotashev [5:34 PM] 
+Есть кто уже сделал "Заменить @DateTimeFormat на свои LocalDate/LocalTime конверторы или форматтеры." со своими аннотациями?
+
+
+anpotashev [5:40 PM] 
+Не могу разобраться. Аннотация на параметр работает нормально - метод parse вызывается. А вот когда ставлю такую же над полем класса, как можно вызывать метод print() чтобы дата (время) отформатировались при преобразовании в стринг. (edited)
+
+
+anpotashev [8:35 PM] 
+Может что-то пропустил, но почему JsonUnit в основном коде, а не в тестах?
+
+
+grigory.kislin [9:35 PM] 
+@anpotashev мы его можем использовате не только в тестах, но и в приложении..потребность бывает часто
+
+
+
+----- Today December 25th, 2017 -----
+Дима Жуков 
+[8:04 AM] 
+Никому не показалось что этот урок самый тяжёлый? Тяжело даётся просто жуть) или уже усталость накопилась))) (edited)
+
+
+Dmitry Makarov [8:17 AM] 
+для меня самый тяжелый был HW2
+
+astronarh 
+[8:30 AM] 
+Вроде норм, постоянно вымораживает разве что поведние Springа, заморочка на заморочке, ну это уже моя невнимательность. (edited)
+
+Pinned
+vsimonov [10:56 AM] 
+Народ а ошибка класса AbstractUserServiceTest в конструкторе new User, которая ещё с предыдущего ДЗ идёт это специально? там Date нету (edited)
+
+
+Pinned
+Dmitry Makarov [10:58 AM] 
+этот метод удалить можешь. Он есть AbstractJpaUserServiceTest (edited)
+
+
+anpotashev [11:00 AM] 
+Тут https://github.com/JavaWebinar/topjava/blob/master/src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java его нет
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+[11:01] 
+У меня он, кстати, тоже остался. Видимо из-за этой же даты
+
+
+vsimonov [11:03 AM] 
+окай, тоесть можно игнорить или удалить.Спасибо!
