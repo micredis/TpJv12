@@ -357,3 +357,60 @@ Contribute to topjava development by creating an account on GitHub.
 
 vsimonov [11:03 AM] 
 окай, тоесть можно игнорить или удалить.Спасибо!
+
+
+vsimonov [2:34 PM] 
+added and commented on this Plain Text snippet
+15:30:16.667 ERROR org.springframework.web.servlet.FrameworkServlet.initServletBean:507 - Context initialization failed
+org.springframework.beans.factory.CannotLoadBeanClassException: Error loading class [ru.javawebinar.topjava.web.json.JacksonObjectMapper] for bean with name 'objectMapper' defined in class path resource [spring/spring-mvc.xml]: problem with class file or dependent class; nested exception is java.lang.NoClassDefFoundError: com/fasterxml/jackson/databind/ObjectMapper
+  at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1383)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getTypeForFactoryMethod(AbstractAutowireCapableBeanFactory.java:714)
+  at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:669)
+1 Comment Collapse
+Кто с таким сталкивался при запуске tomcat?
+
+
+
+Андрей [3:09 PM] 
+ТОчно во всех модулях выставлены одинаковые и нужные зависимости и профили?
+
+
+[3:10] 
+И переменные среды томката и проекта выставлены?
+
+
+grigory.kislin [3:32 PM] 
+@Dmitry Makarov а с чем сложности?
+
+
+Few [5:51 PM] 
+Вопрос наверное к @Дима Жуков?
+
+
+grigory.kislin [7:29 PM] 
+:slightly_smiling_face: спасибо за правку
+
+
+Дима Жуков 
+[7:39 PM] 
+@grigory.kislin Спасибо. :slightly_smiling_face: Я это написал сразу после просмотра кастомизация Jackson Object Mapper. И мне показалась тема сложной) я ничего не запомнил из видео))) до этого момента за все hw videos такого не было. Тут как нельзя лучше - один раз попробовать самому, чем сто раз увидеть.. наверное
+
+
+philip.goldm [8:20 PM] 
+@grigory.kislin , подскажи в каком направлении копать. Делаю Optional 3. Реализовал через форматтеры для LocalDate/LocalTime. MealRestController.getBetween работает и тест testGetBetween тоже. Но стали падать два др. теста testGet и testCreate. Ошибка одна:
+
+```org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Infinite recursion (StackOverflowError); nested exception is com.fasterxml.jackson.databind.JsonMappingException: Infinite recursion (StackOverflowError) (through reference chain: ru.javawebinar.topjava.model.User_$$_jvstc38_0["meals"]->org.hibernate.collection.internal.PersistentBag[0]->...```
+https://cl.ly/2L0x091f2d3Z
+Эта ошибка исчезает если закомментировать `mvc:annotation-driven conversion-service` в spring-mvc.xml. 
+Добавил conversion-service вот так https://cl.ly/3D3C3M0s3S3a
+
+Не могу понять связь моих форматтеров LocalDate\LocalTime с сериализацие модели User. (edited)
+
+
+Few
+[8:38 PM] 
+@philip.goldm `mvc:annotation-driven conversion-service` в spring-mvc.xml ты полностью комментируешь?
+
+
+[8:40] 
+по этому комментарию можно предположить что у тебя две строки mvc:annotation-driven

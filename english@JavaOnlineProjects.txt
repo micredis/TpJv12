@@ -846,3 +846,17 @@ micredis [11:25 AM]
 
 javadev [2:17 PM] 
 Thanks for such full answers guys
+
+
+levrun [5:01 PM] 
+https://www.ted.com/talks/joseph_redmon_how_a_computer_learns_to_recognize_objects_instantly/discussion
+TED Joseph Redmon
+Joseph Redmon: How computers learn to recognize objects instantly
+Ten years ago, researchers thought that getting a computer to tell the difference between a cat and a dog would be almost impossible. Today, computer vision systems do it with greater than 99 percent accuracy. How? Joseph Redmon works on the YOLO (You Only Look Once) system, an open-source method of object detection that can identify objects in images and video -- from zebras to stop signs -- with lightning-quick speed. In a remarkable live demo, Redmon shows off this important step forward for applications Show more…
+ 
+
+micredis [2:09 PM] 
+Hey, dudes! Have a look at a bunch of unconventional techniques to study grammar. I know it might be interesting for some of you: https://github.com/Vedenin/code-for-learning-languages
+GitHub
+Vedenin/code-for-learning-languages
+code-for-learning-languages - Java English Learn
