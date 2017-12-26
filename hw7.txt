@@ -414,3 +414,239 @@ Few
 
 [8:40] 
 по этому комментарию можно предположить что у тебя две строки mvc:annotation-driven
+
+philip.goldm [19 hours ago] 
+понял. сейчас попробую
+
+
+philip.goldm [18 hours ago] 
+у меня есть mvc:annotation-driven выше. Но с дочерним нодом <mvc:message-converters>. У меня Идея ругарется когда пытаюсь добавить еще дочерный нод с conversion-service. https://cl.ly/3K3U1Y1k400e
+
+А в [mvc:...] нет опции conversion-service
+https://cl.ly/162P2J0m0a2X
+
+Есть идеи?
+Created with CloudApp, The Video and Image Sharing Platform - Sign Up for Free
+Image 2017-12-25 at 8.52.05 PM.png (47 kB)
+ Created with CloudApp, The Video and Image Sharing Platform - Sign Up for Free
+Image 2017-12-25 at 8.53.19 PM.png (41 kB)
+
+
+philip.goldm [18 hours ago] 
+я проверил, вроде есть все нужные xsd  xsi:schemaLocation
+
+
+Few [18 hours ago] 
+conversion-service надо прописать в уже имеющемся mvc:annotation-driven теге
+
+Few 
+[18 hours ago] 
+<mvc:annotation-driven conversion-service="conversionService">
+
+
+philip.goldm [18 hours ago] 
+блин! Вот я туплю. Спасибо тебе дружище! Работает!
+
+
+Few [18 hours ago] 
+Отлично :slightly_smiling_face:
+
+
+philip.goldm [18 hours ago] 
+5 подсказка даже есть
+
+
+philip.goldm [18 hours ago] 
+ты крут
+
+
+Few [9:06 PM] 
+@grigory.kislin а что происходит, если мы прописываем дважды annotation-driven? Обрабатывается только один такой тег, а второй отбрасывается?
+
+
+[9:06] 
+пробовал погуглить и не нашел с ходу
+
+
+Eugeniy [10:08 PM] 
+Здравствуйте, коллеги. MealRestControllerTest мы пишем сами? Если да то какие тесты реализовывать?
+
+
+[10:08] 
+что-то не возьму в толк.
+
+
+Антон Кляшторный [10:13 PM] 
+Добрый вечер! на сегодня @Test
+   public void getBetween() throws Exception хватило :slightly_smiling_face:
+
+
+Eugeniy [10:37 PM] 
+@RNG ctrl + O где?
+
+
+RNG [10:40 PM] 
+@Eugeniy Сорян, не обратил внимание на тест в конце! Но в любом случае тесты нужно писать на все методы.
+
+
+Eugeniy [10:42 PM] 
+спасибо
+
+
+RNG [10:47 PM] 
+А комбинация на создание тестов из класса Ctrl+Shift+T и там отметить  все методы. (edited)
+
+
+Katherine Buzatu [10:53 PM] 
+Товарищи, в классе `RootControllerTest` в `testUsers()` в конце проверка
+```.andExpect(model().attribute("users", hasItem(
+                        allOf(
+                                hasProperty("id", is(START_SEQ)),
+                                hasProperty("name", is(USER.getName()))
+                        )
+                )));```
+Напомните, пожалуйста, почему нам неинтересно точное сравнение имеющегося с ожидаемым?
+
+
+Few 
+[10:59 PM] 
+Мы это уже тестируем на уровне сервиса
+
+
+Katherine Buzatu [11:26 PM] 
+То есть мы и в Еде должны проверить, что будет "что-то вроде ожидаемого"?
+
+
+Dmitry Makarov [11:32 PM] 
+хотя бы грузится
+
+
+----- Today December 26th, 2017 -----
+grigory.kislin [2:15 AM] 
+@Katherine Buzatu мы тут делаем чз harmcrest (обычно так во всех примерах в инете)
+сравнить содержимое можно, но нужно перечислять все поля (edited)
+
+
+Katherine Buzatu [8:59 AM] 
+Можно один раз написать матчер, и `.andExpect(model().attribute("meals", mealsMatches(MEALS)));` Мне кажется, что содержимое важно, тем более что мы не проверяем в контроллере вызов сервиса.
+
+
+vsimonov [9:26 AM] 
+Я тоже сделал по содержанию.
+
+Few
+[9:35 AM] 
+а мне кажется проверки количества элементов и проверки одного из элементов в данном случае достаточно (edited)
+
+
+vsimonov [9:36 AM] 
+css кто как тестррует? может ссылки полезные есть с примерами?
+
+
+Dmitry Makarov [9:37 AM] 
+>проверить status и ContentType
+
+
+
+Vladimir_X [10:03 AM] 
+мне вот это помогло:
+https://stackoverflow.com/questions/32276750/how-to-unit-test-static-resources-served-by-spring-resourcehandlerregistry
+vadim simonov
+css кто как тестррует? может ссылки полезные есть с примерами?
+Posted in #hw7Today at 9:36 AM
+ stackoverflow.com
+How to Unit Test static resources served by Spring ResourceHandlerRegistry
+I'm trying to unit test a new Spring MVC project. I have a passing test for the home controller serving index.jsp. I'm trying to test serving static resources served by the ResourceHandlerRegistry ...
+ 
+ 
+
+
+grigory.kislin [1:57 PM] 
+@Katherine Buzatu Можно один раз написать матчер
+идея хорошая:+1:
+правд у нас тогда будет 3 вида матчеров... AssertJ, JSONAssert и harmcrest... сделайте, я тоже подумаю на эту тему (edited)
+
+
+Ivanushka [2:01 PM] 
+added and commented on this Java snippet: Обычно я вижу куда копать
+java.lang.AssertionError: Model attribute 'meals' 
+Expected :[MealWithExceed{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510, exceed=true}, MealWithExceed{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000, exceed=true}, MealWithExceed{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500, exceed=true}, MealWithExceed{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500, exceed=false}, MealWithExceed{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000, exceed=false}, MealWithExceed{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500, exceed=false}]
+Actual  :[MealWithExceed{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510, exceed=true}, MealWithExceed{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000, exceed=true}, MealWithExceed{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500, exceed=true}, MealWithExceed{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500, exceed=false}, MealWithExceed{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000, exceed=false}, MealWithExceed{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500, exceed=false}]
+ <Click to see difference>
+4 Comments Collapse
+Нажимаю на <Click to see difference>, пишет: "Contents are identical"
+
+
+
+Katherine Buzatu [2:02 PM] 
+Может, типы?
+
+
+
+Ivanushka 
+[2:04 PM] 
+public void testMeals() throws Exception {
+       List<MealWithExceed> mealWithExceeds = MealsUtil.getWithExceeded(MEALS, AuthorizedUser.getCaloriesPerDay());
+       mockMvc.perform(get("/meals"))
+               .andDo(print())
+               .andExpect(status().isOk())
+               .andExpect(view().name("meals"))
+               .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
+               .andExpect(model().attribute("meals", hasSize(6)))
+               .andExpect(model().attribute("meals", mealWithExceeds));
+   }
+
+
+
+Katherine Buzatu [2:08 PM] 
+Он Листы не по указателю сравнивает?
+
+
+
+Ivanushka 
+[2:11 PM] 
+Очень хороший вопрос, но тогда получается смысл сравнения пропадает, ведь в консоль выводится содержимое.
+
+
+Katherine Buzatu [2:12 PM] 
+В консоль ТуСтринг выводится.
+
+
+
+grigory.kislin [2:12 PM] 
+вопрос интересный. поинвестигируйте
+
+
+Ivanushka [2:12 PM] 
+А у остальных коллег как дела с первым пунктом ДЗ?
+
+
+[2:17] 
+@Дима Жуков Мы всё видели:joy:
+
+Дима Жуков [2:19 PM] 
+:pensive:
+
+
+Katherine Buzatu [2:27 PM] 
+@Ivanushka
+```public ResultMatcher attribute(final String name, final Object value) {
+        return result -> {
+            ModelAndView mav = getModelAndView(result);
+            assertEquals("Model attribute '" + name + "'", value, mav.getModel().get(name));
+        };
+    }```
+    
+Ivanushka [38 minutes ago] 
+getModelAndView() где-то есть или сами пишем? Спасибо.:grinning:
+
+
+Katherine Buzatu [37 minutes ago] 
+Это есть. Тут:
+```package org.springframework.test.web.servlet.result;
+...
+public class ModelResultMatchers {```
+
+
+Ivanushka [28 minutes ago] 
+Спасибо большое, нашёл.

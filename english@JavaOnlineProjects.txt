@@ -860,3 +860,11 @@ Hey, dudes! Have a look at a bunch of unconventional techniques to study grammar
 GitHub
 Vedenin/code-for-learning-languages
 code-for-learning-languages - Java English Learn
+
+
+javadev [11:05 AM] 
+Looks like pretty interesting approach for learning
+
+
+javadev [11:12 AM] 
+@levrun the video is great, specifically that part of it when the guy moves around and demonstrates instant object detection
