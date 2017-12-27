@@ -650,3 +650,43 @@ public class ModelResultMatchers {```
 
 Ivanushka [28 minutes ago] 
 Спасибо большое, нашёл.
+
+
+Ivanushka [3:26 PM] 
+@grigory.kislin Поинвестигировали!
+List<MealWithExceed> mealWithExceeds = MealsUtil.getWithExceeded(MEALS, AuthorizedUser.getCaloriesPerDay());
+...andExpect(model().attribute("meals", mealWithExceeds));
+теперь работает корректно, без самостоятельных Матчеров. Если возможно, готов поделиться решением.
+
+
+grigory.kislin [4:07 PM] 
+@Ivanushka отлично! пока не делись:) (edited)
+
+
+[4:08] 
+добавил 
+4.  *Запросы curl занести в отдельный md файл (либо README.md)*
+
+Замечания:
+*8: Попробуйте в RootControllerTest.testMeals сделать сравнение через model().attribute("meals", expectedValue). Учтите, что вывод результатов через toString к сравнению отношения не имеет*
+*9: Посмотрите, нет ли в MealTestData методов, которые можно сделать общими (через generic и TestUtil)* (edited)
+
+
+Viktor [7:12 PM] 
+поправьте меня если я не правильно понял, в методе MealRestController.getBetween мы теперь принимаем не 2 параметра LocaleDateTime (и не 4 Date и Time). А 1 кастомный объект в котором лежат 2 даты?
+
+
+[7:12] 
+Пару часов поделал с 2 датами в параметрах, и как-то не прокатывает, вот такая идея пришла по поводу кастомного объекта
+
+
+vch [7:17 PM] 
+@Viktor Где ты про такой кастомный объект нашёл в задании? Я обнаружил там только вариант с 2 LocalDateTime либо 2 LocalDate + 2 LocalTime
+
+
+Viktor [7:19 PM] 
+@vch не нашел, личная трактовка :smiley: можешь в личку кинуть в каком виде из теста уходит json в варианте 2 LocalDateTime? (edited)
+
+
+vch [7:24 PM] 
+@Viktor Я этот пункт ТЗ не делал в указанном виде, т.к. по нему у меня уже полгода как несовпадение во мнениях с Григорием. :slightly_smiling_face:
