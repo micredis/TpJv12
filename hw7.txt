@@ -690,3 +690,196 @@ Viktor [7:19 PM]
 
 vch [7:24 PM] 
 @Viktor Я этот пункт ТЗ не делал в указанном виде, т.к. по нему у меня уже полгода как несовпадение во мнениях с Григорием. :slightly_smiling_face:
+
+
+Marina [1:05 PM] 
+Подскажите кто сделал собственные форматтеры: как их теперь применить? Вроде все нашла , как их сделать, как в спринг добавить, а вот как теперь их применить вместо аннотации не могу найти, или просто принимать параметры в виде стринга и конвертировать уже в методе, тогда не понятен смысл форматтеров, что-то я запуталась. Подскажите где посмотреть?
+
+
+Marina [1:14 PM] 
+Уже сама разобралась, они оказывается автоматически применяются.
+
+
+Marina [1:20 PM] 
+Еще, ребята, подскажите, у меня в AdminRestController.testDelete() не проходит, потому что в AdminRestController нет правильной аннтотации над delete, это у всех так, или я что-то с патчами напутала?
+
+Katherine Buzatu [1 day ago] 
+AdminRestController в последней пачке патчей менялся только один раз - в 7_08_rest_controller.patch
+
+
+Marina [1 day ago] 
+Т.е. я его как то не так поставила? Если правильно все патчи, то в AdminRestController ошибки нет?
+
+
+Katherine Buzatu [1 day ago] 
+Нет ошибки. Но в этом патче добавлялись и другие аннотации. До него класс был почти пустой.
+
+
+Marina [1 day ago] 
+У меня все аннотации добавились кроме анотоции над delete
+
+
+Katherine Buzatu [1 day ago] 
+В LocalChanges посмотри, может, грохнула случайно?
+
+
+Marina [1 day ago] 
+странно, а как то можно добавить не все изменения в одном файле? Я что-то представить не могу как так произошло и как бы поправить, чтобы в дальнейшем ошибок не было
+
+
+Dmitry Makarov [1 day ago] 
+у многих в HW7 патчи криво встали
+
+
+Katherine Buzatu [1 day ago] 
+Добавь все - этот файл в ДЗ вроде не меняется.
+
+
+Katherine Buzatu [1 day ago] 
+Насчет кривизны вставания. Есть еще какая-то причина, кроме не всех выставленных галок в Apply patch в Идее?
+
+
+Marina [1 day ago] 
+А как то можно было этими галками убрать какое-то одно изменение в файле, чтобы остальные применились? Я думала только файлы целиком. Очень странно, надеюсь больше ничего так не встало,  а то я могла и не заметить что-то.
+
+
+Katherine Buzatu [1:44 PM] 
+Товарищи, в этом ДЗ нас еще не интересуют исключения (не тот id, чужая еда, дублирование времени и т. п.)?
+
+
+Katherine Buzatu [2:00 PM] 
+При тестировании через SoapUI проблема с кириллицей в Пост запросе. У кого было? Как лечили?
+
+Ivanushka [1 day ago] 
+Это проблема не SoapUI, полагаю вопрос в контроллере, т.к. IDEA RESTful web service выдаёт такую же ошибку при попытке ввода кириллицы.
+
+
+Katherine Buzatu [1 day ago] 
+А Postman скушал...
+
+
+Ivanushka [1 day ago] 
+Забавно, а я контроллер пытаю, а он не сдаётся)))
+
+
+Katherine Buzatu [1 day ago] 
+Думаю, там в запросе д. б. utf-8, а его нет.
+
+
+Ivanushka [1 day ago] 
+Победил. Работает.
+
+
+Katherine Buzatu [1 day ago] 
+И кто виноват в итоге?
+
+
+Ivanushka
+[1 day ago] 
+Отписал в личку, ты права, проблема в Soap
+
+
+astronarh [3:33 PM] 
+@Katherine Buzatu new String(.getBytes("ISO-8859-1"), "utf-8") но это походу неправильное решение ))) (edited)
+
+
+Katherine Buzatu [3:35 PM] 
+Оказалось, это проблема клиента. Думаю, мы не обязаны кушать все "неправильные" кодировки :slightly_smiling_face:
+
+
+Andrew [3:39 PM] 
+Когда в последней лекции пробую через SoapUI - то у меня с юзером приходит meals = null, а на видео это поле не приходит. Хотя в jacksonOnjectMapper - InlcudeNot_NULL.
+
+
+[3:40] 
+Только у меня так?
+
+
+Viktor [5:03 PM] 
+добрался до форматтеров и появились вопросы :smiley: Основной, зачем нам их делать (если только потренироваться), но по факту на null они не проверяют, т.к. если подать null то до них даже не дойдет, упадет с Bad request. Это у меня так, кому не лень посмотрите как у вас, если не подать любой параметр или подать null
+
+Ivanushka [23 hours ago] 
+Всё сделал, из формаТТеров только DateTimeFormatter. Может я тоже делаю не так, но MealRestControllerTest.getBetween работает через 4 отдельных параметра, любые из которых могут быть null.
+
+
+Viktor [23 hours ago] 
+@Ivanushka т.е. если ты из теста передашь startTime null, то этот момент обработает форматтер а не аннотация?
+
+
+Ivanushka [23 hours ago] 
+@RequestParam(value = "startTime", required = false) String startTime... Аннотация. Так я и говорю, что у меня только DateTimeFormatter.
+
+
+Viktor [23 hours ago] 
+ну вот у меня было подозрение, что это читерский подход и надо как-то по другому, решил уточнить :smiley:
+
+
+Viktor [5:03 PM] 
+Даже в методе parse форматера идея подчеркивает проверку на null, как always false
+
+
+[5:04] 
+есть подозрение, что я делаю что-то не так :smiley:
+
+
+Andrew [7:10 PM] 
+в RootControoller.mealTest пытаюсь сравнить через contains и провожу через метод getWithExceeded MEALS константу. Оно показывает матч еррор показывая две идентичные коллекции
+
+Katherine Buzatu [20 hours ago] 
+mentioned Ivanushka’s Java snippet: Обычно я вижу куда копать
+java.lang.AssertionError: Model attribute 'meals' 
+Expected :[MealWithExceed{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510, exceed=true}, MealWithExceed{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000, exceed=true}, MealWithExceed{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500, exceed=true}, MealWithExceed{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500, exceed=false}, MealWithExceed{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000, exceed=false}, MealWithExceed{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500, exceed=false}]
+Actual  :[MealWithExceed{id=100007, dateTime=2015-05-31T20:00, description='Ужин', calories=510, exceed=true}, MealWithExceed{id=100006, dateTime=2015-05-31T13:00, description='Обед', calories=1000, exceed=true}, MealWithExceed{id=100005, dateTime=2015-05-31T10:00, description='Завтрак', calories=500, exceed=true}, MealWithExceed{id=100004, dateTime=2015-05-30T20:00, description='Ужин', calories=500, exceed=false}, MealWithExceed{id=100003, dateTime=2015-05-30T13:00, description='Обед', calories=1000, exceed=false}, MealWithExceed{id=100002, dateTime=2015-05-30T10:00, description='Завтрак', calories=500, exceed=false}]
+ <Click to see difference>
+
+
+Marina [8:50 PM] 
+Подскажите, кто тестировал через soapUI, как передать Meal в RequestBody для методов update и  create?
+
+
+Few [9:09 PM] 
+да также как user'а передаем в тестировании AdminRest
+
+
+[9:09] 
+или может я не понял вопроса?
+
+
+Marina [9:11 PM] 
+А я и user'а не знаю как передать в soapUI, в видео же вроде только get и getAll тесты?
+Fedor Vershinin
+или может я не понял вопроса?
+Posted in #hw7Yesterday at 9:09 PM
+
+
+Few
+[9:12 PM] 
+у нас в проекте после накатки патчей появился файл Topjava-soapui-project.xml
+
+
+[9:12] 
+его надо подгрузить в SoapUI и там все нужные тесты есть
+
+Marina [9:13 PM] 
+Спасибо, как то я этот момент пропустила.
+Fedor Vershinin
+его надо подгрузить в SoapUI и там все нужные тесты есть
+Posted in #hw7Yesterday at 9:12 PM
+
+
+Few [9:14 PM] 
+:slightly_smiling_face: рад помочь
+
+
+
+----- Today December 28th, 2017 -----
+vsimonov [12:49 PM] 
+В soap тестах похоже отсутсвует тесты на getByMail их надо самому сделать?
+
+
+Andrew [1:22 PM] 
+При методе Пост - в контроллер после операций в JsonUtil - write-read - мне в тестах возвращает Meal c null полями.. Может быть там ошибка где-то?
+
+
+Andrew [1:28 PM] 
+Нашёл, отсутствовала @RequestBody аннотация

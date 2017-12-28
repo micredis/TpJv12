@@ -1608,7 +1608,174 @@ Alexander _Gubanow [12:47 PM]
 и тут видно что админ не один (admins do the updates)
 
 
-Few 
-[12:57 PM] 
+Few [12:57 PM] 
 а мы тут сейчас серьезно? :slightly_smiling_face:
 делать то конечно будем нескольких, просто интересная неточность в задании
+
+
+
+new messages
+anpotashev [9:19 PM] 
+Друзья, подскажите, возможно-ли как-то получить инстанс эксцепшна по его классу?
+```public class ValidationException extends RuntimeException {
+    public ValidationException(String message) {
+        super(message);
+    }
+
+    public ValidationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}```
+Вот такой вот суперкласс. Имею класс одного из потомков, хотелось бы вызвать исключение. (edited)
+
+
+Viktor [9:45 PM] 
+new ValidationException("") не подходит? :smiley: или именно рефлексией хочешь?
+
+
+anpotashev [9:46 PM] 
+@Viktor мне надо не ValidationException получить а одного их наследников
+
+
+[9:47] 
+На стеке задал https://ru.stackoverflow.com/questions/764183/%D0%9A%D0%B0%D0%BA-%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE-%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C-instance-exception-%D0%BF%D0%BE-%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D1%83 Там чуть более подробно
+ru.stackoverflow.com
+Как можно получить instance Exception по классу
+Добрый день! Подскажите, плиз. Имеется следующий класс: public class ValidationException extends RuntimeException { public ValidationException(String message) { super(message); } ...
+ 
+
+
+Viktor [9:49 PM] 
+а какой конкретно?
+
+
+anpotashev [9:51 PM] 
+Который придет в параметре.
+У меня такая вот аннотация:
+```@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ThrowIfException {
+    String message() default "Error!";
+    Class<? extends ValidationException> exception() default ValidationException.class;
+}```
+В ней и указывается какой экцепшн бросить.
+
+
+[9:52] 
+Сейчас у меня на каждый экцепшн своя аннотация, хочу попробовать упросить.
+
+
+Viktor [9:55 PM] 
+эта аннотация оборачивает метод в try-catch и выбрасывает твое исключение если вы методы вывалилось любое?
+
+
+anpotashev [9:57 PM] 
+Нее, эти аннотации отвечают за валидацию на слое сервисов. Некоторые проверяют результат на нулл, некоторые на полученный эксцепшн, некоторые проверяют параметры. По сути это наш ValidationUnit, только с использованием АОП.
+
+
+[9:57] 
+Например, повесил аннотацию на метод и если в результате будет нулл, то получишь исключение. (edited)
+
+
+Viktor [10:00 PM] 
+тоесть теперь ты хочешь сделать 1 аннотацию, которая делает много дел, проверка на null, на исключение...?
+
+
+anpotashev [10:01 PM] 
+Ну скажем не одну, но придать гибкость, указывая тип исключения в качестве параметра
+Вот например:
+```@AfterReturning(value = "throw404IfNullResult() && @annotation(annotation)", returning = "result")
+    public void checkResult1(Object result, Throw404IfNullResult annotation) {
+        log.debug("checking result for null");
+        if (result == null) {
+            log.debug("throwing Exception404");
+            throw new Exception404(annotation.message());
+        }
+    }```
+Чтобы Exception404 можно было бы задать в качестве параметра (edited)
+
+
+Viktor [10:06 PM] 
+так а через Аоп почему не кинуть ошибку которая указана в аннотации? Как вариант посмотреть как работает ожидаемое исключение в тестах
+
+anpotashev [10:07 PM] 
+Не понял, что значит кинуть ошибку?
+
+[10:08] 
+Предлагаешь HttpStatus добавить вместо экцепшна?
+
+
+Viktor [10:23 PM] 
+что ты хочешь делать этой аннотацией?
+
+
+[10:28] 
+И в идеале покажи что делаешь, что получается и что ожидаешь.
+
+anpotashev [10:37 PM] 
+Дык вроде показал. Аннотация на методом инициирует валидацию и в случае чего кидается исключение. Это исключение затем обрабатывается в rest и пользователь получает ту или иную ошибку. Вот и хочу чтобы тип исключения можно было задать в аннотации в качестве параметра. А вот чтобы его в итоге сгенерировать из класса пока не нашел подходящего решения. (edited)
+
+
+[10:42] 
+т.е. примерно хочу:
+
+```    public void checkResult1(Object result, ValidationAnnotation annotation) {
+        log.debug("checking result for null");
+        if (result == null) {
+            Class<? extends ValidationException> clazz = annotation.execption();
+            ValidationException exception = bla-bla-bla(clazz);
+            throw exception;
+        }
+    }```
+
+
+Viktor [10:45 PM] 
+ValidationException exception = clazz.getInstance() там ещё как-то с конструктором надо подружиться
+
+
+[10:46] 
+https://docs.oracle.com/javase/tutorial/reflect/member/ctorInstance.html
+docs.oracle.com
+Creating New Class Instances (The Java™ Tutorials >                     The Reflection API > Members)
+This reflection Java tutorial describes using reflection for accessing and manipulating classes, fields, methods, and constructors
+
+
+[10:46] 
+тут почитай и как конструктор нужный найти и как инстанс создать.
+
+anpotashev [11:10 PM] 
+Спасибо, натолкнул на мысль, как можно сделать. Сейчас попробую.
+
+
+
+----- Today December 28th, 2017 -----
+anpotashev [12:20 AM] 
+Супер! Сработало. @Viktor, спасибо!
+Количество кода весьма сократилось.
+
+
+anpotashev [12:26 AM] 
+Только теперь возник еще один вопрос: Как это тестировать?
+Если эксепшны бросаются в зависимости от аннотаций, то правильно-ли их проверять в тестах, как это сделано в топджава?
+
+
+Erick [7:56 AM] 
+подскажите по архитектуре, в каком случае нагрузка на базу будет меньше?
+и будем ли мы расширять сущность Dish (у которой сейчас 2 поля name и price)?
+как лучше сделать?
+1: две таблицы dishes и menu, и хранить ссылки друг на друга и джойнить в запросах?
+2: одну большую таблицу menu (включающую dishes) на 15-20 полей, и при доставании данных из базы мапить эту реляционную модель на две объектных? (edited)
+
+
+[8:00] 
+второй вопрос риторический... т.к. "... ПМ (лид, архитектор) дал вам ТЗ и некоторое время недоступен."
+
+
+Erick [8:59 AM] 
+и сумеет ли Hibernate реализовать второй пункт? пока буду делать первый вариант.
+
+
+grigory.kislin [12:05 PM] 
+@Erick  
+> одну большую таблицу menu (включающую dishes) на 15-20 полей
+а как там еду хранить?? если например 21:)?  судя по вопросы- проблемы с RMDB моделями. посмотри на программу basejava- там мы делаем модель посложнее, чем на topjava

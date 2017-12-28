@@ -1,0 +1,47 @@
+grigory.kislin [1:00 AM] 
+Выложил 8й урок: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson08.md
+Welcome!
+напоминаю, что следующее занятие будет 09.01
+для тех, у кого проверка ДЗ, Татьяна напишет свой график
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+[1:00] 
+Приятного кодинга в НГ:)
+  
+
+
+russell [1:02 AM] 
+joined #hw8 along with 18 others.
+
+
+CRCx86 [7:51 AM] 
+такой вопрос, если я делаю свой проект, мне же не обязательно тянуть сначала сервлеты, потом профили настроек и прочую эволюционную ветку разработки, которые мы тут рассматриваем?
+
+Ivanushka [8 hours ago] 
+На мой скромный взгляд, это точно лишнее. Тут цель показать, какие технологии тебе ближе, и на сколько ты самостоятелен в принятии решений.
+
+
+grigory.kislin [12:03 PM] 
+@CRCx86 см. замечания для graduate- подойдут для остальных небольших проектов
+
+
+CRCx86 [12:03 PM] 
+@grigory.kislin где посмотреть?
+
+
+grigory.kislin [12:06 PM] 
+@CRCx86
+#graduate_project
+https://github.com/JavaWebinar/topjava/blob/doc/doc/graduation.md
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+ 
+
+
+CRCx86 [12:08 PM] 
+@grigory.kislin благодарю!

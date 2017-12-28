@@ -2155,3 +2155,24 @@ DataJpa:
    @Override
    @Transactional
    User save(User user);
+
+
+LORREON [3:30 PM] 
+Почему после "6 04 HW5 optional fix jdbc profiles" если выполнить SpringMain в базе postgresql нет нового юзера "userName" ?
+
+
+vahundos [3:53 PM] 
+Думаю из-за того, что грузиться mock.xml, а не spring-db.xml контекст
+
+
+[3:56] 
+mock использует реализацию в памяти (edited)
+
+LORREON [4:02 PM] 
+нет ->   appCtx.load("spring/spring-app.xml", "spring/spring-db.xml");
+
+
+
+----- Today December 28th, 2017 -----
+grigory.kislin [12:56 AM] 
+@LORREON у меня создается. проверь в тули базу смотришь и рефрешнуть таблицу незабудь
