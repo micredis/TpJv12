@@ -4737,3 +4737,43 @@ grigory.kislin [1:01 AM]
 @here
 *выложил 8е занятие #hw8*
 успехов! (edited)
+
+
+
+grigory.kislin [4:36 PM] 
+Хочу напомнить про канал #vacancies в общей группе слака javaops
+свежие вакансии (в том числе удаленка) (edited)
+
+Belstrel [19 hours ago] 
+Григорий подскажи как посмотреть( как перейти в основной слак?у меня приглашение только в topjava12
+
+
+grigory.kislin [4:56 PM] 
+напомню: получить приглашение в группу слак javaops можно из своего профиля в javaops.ru
+кнопка "*Присоединиться к JavaOPs группе Slack (если еще не с нами)*"
+
+Belstrel [19 hours ago] 
+Спасибо за оперативный ответ!:+1:
+
+
+Eugeniy [9:35 PM] 
+Я не могу присоединиться из приглашения, Slack блокирует страну. :anguished:
+
+
+
+----- Today December 29th, 2017 -----
+Argentum_kuh [12:51 AM] 
+Спасибо за регистрацию на проекте javaops!
+Ответ от Slack: already_invited
+
+
+[12:51] 
+канал #vacancies не доступен
+
+
+grigory.kislin [1:03 AM] 
+@Argentum_kuh если в группе- нажми Channels и выбери каналы куда приконнектится
+
+
+Argentum_kuh [1:06 AM] 
+@grigory.kislin как ни странно - не находит канал
