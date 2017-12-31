@@ -72,3 +72,33 @@ Marina [31 minutes ago]
 
 Dmitry Makarov [1 hour ago] 
 у меня в HW7 1 класс частично пропатчился
+
+
+Serge [4:36 PM] 
+uploaded and commented on this image: image.png
+1 Comment
+Ребят, у всех так таблица отображается? Такое чувство что стрелочки сортировки сдвинуты на столбец вправо
+
+
+
+Valery [5:07 PM] 
+у меня так же. стрелочки выравнены по правому краю колонок. заглавия по левому.
+
+
+
+----- Today December 31st, 2017 -----
+Katherine Buzatu [1:19 AM] 
+Товарищи, у кого-то datetimepicker заработал?
+
+Katherine Buzatu [3 hours ago] 
+https://github.com/xdan/datetimepicker/issues/517
+GitHub
+Position out of window · Issue #517 · xdan/datetimepicker
+Hi! Thanks for great plugin! Although there is one major problem. When I use jquery.datetimepicker.js v2.5.4 from package I get two errors: jquery.datetimepicker.js:1402 Uncaught TypeError: Cannot ...
+ 
+
+
+philip.goldm [1 hour ago] 
+@Katherine Buzatu используется версия v2.5.11. Проверь у себя в pom.xml
+
+у меня работает
