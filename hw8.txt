@@ -102,3 +102,26 @@ philip.goldm [1 hour ago]
 @Katherine Buzatu используется версия v2.5.11. Проверь у себя в pom.xml
 
 у меня работает
+
+Katherine Buzatu [3 days ago] 
+У меня тоже 2.5.11, но выдает ` Cannot read property ... of null`. Поменяла на `https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.11/jquery.datetimepicker.full.min.js` - заработало. Но не нашла, как этот full в webjars засунуть.
+
+
+vahundos [3 days ago] 
+@Katherine Buzatu Полный путь задавал так: `webjars/datetimepicker/2.5.11/build/jquery.datetimepicker.full.js` (edited)
+
+
+Сергей Матвеев [1:05 PM] 
+Message javax.servlet.ServletException: javax.servlet.jsp.JspTagException: No message found under code 'common.add' for locale 'ru_RU'.
+
+
+[1:06] 
+когда жму на Пользователи
+
+
+[1:06] 
+javax.servlet.jsp.JspTagException: No message found under code 'common.add' for locale 'ru_RU'.
+
+
+[1:06] 
+common.add=\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C
