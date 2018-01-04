@@ -125,3 +125,67 @@ javax.servlet.jsp.JspTagException: No message found under code 'common.add' for 
 
 [1:06] 
 common.add=\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C
+
+
+Zamyslov Oleg [4:58 PM] 
+Сергей, посмотри в проекте в config - messages - app_ru.properties. Есть ли там у тебя common.add
+
+
+kadmser [5:19 PM] 
+кто может обьяснить " передавать в качестве параметра функций через onclick " ? Пока еще не вьехал в JS
+
+
+Сергей Матвеев [5:31 PM] 
+Да есть.
+Zamyslov Oleg
+Сергей, посмотри в проекте в config - messages - app_ru.properties. Есть ли там у тебя common.add
+Posted in #hw8Yesterday at 4:58 PM
+
+
+[5:33] 
+в англ. локали тоже самое.
+
+
+vahundos [5:40 PM] 
+@Сергей Матвеев переменная среды TOPJAVA_ROOT заданна со слешами? т.е. в unix формате (edited)
+
+
+Сергей Матвеев [5:41 PM] 
+<property name="basenames" value="file:///#{systemEnvironment['TOPJAVA_ROOT']}/config/messages/app"/>
+Vladimir Avdeev
+@Сергей Матвеев переменная среды TOPJAVA_ROOT заданна со слешами? т.е. в unix формате
+Posted in #hw8Yesterday at 5:40 PM
+
+
+[5:43] 
+да там косячёк
+
+
+vahundos [5:46 PM] 
+В 1-м уроке в разделе `7. Логирование.` как раз об переменной среды.
+
+
+Сергей Матвеев [5:47 PM] 
+поправил может ребут надо?
+
+[5:47] 
+задано вот так C:\Users\smatveev\IdeaProjects\topjava12_renew\topjava-1
+
+
+vahundos [5:49 PM] 
+По идее вот так нужно: `C:/Users/smatveev/IdeaProjects/topjava12_renew/topjava-1` - в unix стиле
+Если переменную изменять для пользователя, то хватит просто перезапустить idea, а если для системы, то вроде нужно перезагрузить саму систему (edited)
+
+
+Сергей Матвеев [5:52 PM] 
+Да поправил в уникс и бутнул идею
+
+
+[5:53] 
+Благодарю забыл я, что это переменная среды.
+
+
+vahundos [6:05 PM] 
+@kadmser Например, вот так можно `<a class="btn btn-primary" onclick="someFunction(${user.id})">button</a>`
+а в js файле `function someFunction(userId) { }`
+Не уверен, что так правильно делать, но...
