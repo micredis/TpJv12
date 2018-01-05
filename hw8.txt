@@ -189,3 +189,58 @@ vahundos [6:05 PM]
 @kadmser Например, вот так можно `<a class="btn btn-primary" onclick="someFunction(${user.id})">button</a>`
 а в js файле `function someFunction(userId) { }`
 Не уверен, что так правильно делать, но...
+
+
+
+----- Yesterday January 4th, 2018 -----
+Андрей [12:56 PM] 
+Чтобы в users.jsp и resources/js/... и fragments/bodyHeader.jsp были "зелеными" - надо перед fragments/bodyHeader.jsp сделать: ../ - ../fragments/bodyHeader.jsp (edited)
+
+
+Андрей [2:07 PM] 
+Но тогда не работает в браузере...
+
+
+[2:07] 
+Что то там с путями не то...
+
+
+MetalBro [5:06 PM] 
+у кого-нибудь взлетает приложение на профиле hsqldb?
+
+russell [18 hours ago] 
+да, все работает.
+
+
+MetalBro [18 hours ago] 
+тесты или томкат прям запускается?
+
+
+MetalBro [5:53 PM] 
+тесты по maven все проходят, но приложение не поднимается. А в своем проекте при запуске выдает все время Caused by: org.springframework.beans.PropertyBatchUpdateException: Failed properties: Property 'driverClassName' threw exception; nested exception is java.lang.IllegalStateException: Could not load JDBC driver class [org.hsqldb.jdbcDriver]
+Хотя драйвер есть, и в pom и в classpath. Почти день разборок к успеху не привел. Есть гуру, которые понимают как с этим работают?)
+
+
+Viktor [6:44 PM] 
+clean сделай
+
+
+
+----- Today January 5th, 2018 -----
+tema.emelyan [5:38 AM] 
+@MetalBro а если в web.xml в default profiles поменять постгрес на hsqldb?
+
+
+MetalBro [6:27 AM] 
+проблема более-менее решается выставлением опций VM при запуске томкат
+
+
+[6:31] 
+ну и явным заданием профилей в web.xml
+
+[6:36] 
+resolver только для тестов идет
+
+
+Ivanushka [7:16 AM] 
+@Андрей Точно такая же ситуация. Пришлось добавить две строки с точками. В итоге два одинаковых пути один с ../../, а другой без...
