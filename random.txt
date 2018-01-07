@@ -2698,3 +2698,16 @@ Shalukhau Dzmitry [1:02 PM]
 
 Belstrel [10:40 AM] 
 С новым годом, с новым счастьем!
+
+
+Дима Жуков [7:17 AM] 
+https://blog.takipi.com/java-10-checklist-meet-the-declaration-that-will-change-the-way-you-code/
+Takipi Blog
+Java 10 Checklist: Meet the Declaration That Will Change the Way You Code | Takipi Blog
+Oracle is accelerating its JDK release cycles; what does this change mean for the community? (45 kB)
+Jan 3rd at 7:54 PM
+
+
+[7:17] 
+var list = new ArrayList<String>();
+val stream = getStream();  Приветик от javascript прям)
