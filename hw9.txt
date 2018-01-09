@@ -1,0 +1,48 @@
+grigory.kislin [11:34 PM] 
+joined #hw9.
+
+
+grigory.kislin [11:34 PM] 
+set the channel topic: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson09.md
+
+
+grigory.kislin [11:35 PM] 
+Готово 9е занятие
+Наконец делаем настоящую авторизацию, ее тестирование и отрисовку таблиц по AJAX.
+
+
+[11:35] 
+успехов!
+
+
+Constantine [11:38 PM] 
+joined #hw9 along with 18 others.
+
+
+
+----- Today January 9th, 2018 -----
+vsimonov [11:11 AM] 
+патч Apply 9_03_HW8_enable_disable.patch не встаёт из-за public void testEnable() , у всех так?
+
+Антон Кляшторный [6 hours ago] 
+похоже так
+
+
+Pavel [4 hours ago] 
++1
+
+
+Katherine Buzatu [3 hours ago] 
+У меня 9_03_HW8 без проблем.
+
+
+tema.emelyan [3 hours ago] 
+тоже без проблем
+
+
+itAvgur [14 minutes ago] 
+no problem!
+
+
+Dmitry Makarov [12 minutes ago] 
+все ок

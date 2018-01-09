@@ -3508,3 +3508,65 @@ Java 9?
 Anzey [1 hour ago] 
 Проблема не в сервисе, так как иксепшин бросает метод  em.persist(user); 
 При настройке JPA вроде ничего лишнего не скачивал. Различие от pom   проекта только в том что я использую вместо postgres - mysql-connector-java
+
+Anzey [18 days ago] 
+не знаю что я сделал не так но исправил с помощью
+
+Remember that HibernateTemplate will translate the native Hibernate exceptions into exceptions in
+Spring’s DataAccessException hierarchy. This allows consistent exception handling for different data
+access strategies in Spring. However, when calling the native methods on a Hibernate session, the
+exceptions thrown will be of native type HibernateException. If you want the Hibernate exceptions to be
+translated into Spring’s DataAccessException for consistent exception handling, you have to apply the
+@Repository annotation to your DAO class that requires exception translation.
+Then, register a PersistenceExceptionTranslationPostProcessor instance to translate the native
+Hibernate exceptions into data access exceptions in Spring’s DataAccessException hierarchy. This bean
+post processor will only translate exceptions for beans annotated with @Repository.
+<beans ...>
+...
+<bean class="org.springframework.dao.annotation.
+PersistenceExceptionTranslationPostProcessor" />
+</beans>
+
+
+Shalukhau Dzmitry [3:27 PM] 
+>Few [3:47 PM] 
+>Подобная муть была уже однажды, решилась деплоем war вместо exploded
+Интересно, как дошел? И кстати, в чем отличие? @Few (edited)
+
+
+Few [3:44 PM] 
+@Shalukhau Dzmitry не у меня, я лишь вспомнил что кто-то описывал здесь такую проблему, и как она решилась :slightly_smiling_face:
+
+
+Shalukhau Dzmitry [3:48 PM] 
+@grigory.kislin Может подскажите, в чем разница между деплоем просто war от exploded? (есть подозрение, что во втором случае архив распаковывается).
+
+
+Valery [4:19 PM] 
+>есть подозрение, что во втором случае архив распаковывается
+так об этом и говорится на первом уроке про томкат
+
+
+Shalukhau Dzmitry [4:35 PM] 
+@Valery спасибо. А зачем мы в таком случае деплоим именно extploded? 
+На данный момент, если деплоить exploded - у меня получается проблема с нахождением параметров :disappointed: (edited)
+
+
+Valery [4:52 PM] 
+почему деплоим именно extploded Григорий там поясняет. сам я не помню...
+
+
+Ruslan Pivovarov [5:00 PM] 
+На сколько я помню при деплое extploded в провайдере могут обновляться рессурсы(jsp, html, css и т.д.) без передеплоя если не ошибаюсь.
+
+
+
+tema.emelyan [5:06 PM] 
+по-моему не только ресурсы, но и методы, если только сигнатура/аннотации не поменялась/ись
+
+
+grigory.kislin [5:11 PM] 
+>  в чем разница между деплоем просто war от exploded
+1. быстрее, тк не пакуется
+2. да, ресурсы можно обновлять на ходу (при нажатой кнопке, https://github.com/JavaOPs/topjava/wiki/IDEA#%D0%94%D0%BB%D1%8F-%D0%B4%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B9-%D0%BF%D0%B5%D1%80%D0%B5%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D0%BE%D0%B2-%D0%BA%D0%BD%D0%BE%D0%BF%D0%BA%D0%B0-%D0%BD%D0%B0%D0%B6%D0%BC%D0%B8%D1%82%D0%B5-%D0%BA%D0%BD%D0%BE%D0%BF%D0%BA%D1%83-update-resource-on-frame-deactivation)
+@Anzey по поводу ошибки- если мой проект клонировать- тоже появляется ? (edited)

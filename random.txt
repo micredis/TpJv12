@@ -2711,3 +2711,12 @@ Jan 3rd at 7:54 PM
 [7:17] 
 var list = new ArrayList<String>();
 val stream = getStream();  Приветик от javascript прям)
+
+
+
+Дима Жуков [4:42 PM] 
+http://www.javamagazine.mozaicreader.com/NovDec2017/facebook#&pageSet=13&page=0&contentItem=0    Servlet API 4.0 скоро и в Springе
+javamagazine.mozaicreader.com
+Java Magazine, Nov/Dec 2017
+View the digital edition of Java Magazine: November/December 2017 Facebook. (14 kB)
+ 
