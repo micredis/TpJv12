@@ -2720,3 +2720,14 @@ javamagazine.mozaicreader.com
 Java Magazine, Nov/Dec 2017
 View the digital edition of Java Magazine: November/December 2017 Facebook. (14 kB)
  
+ 
+ 
+Tanya [12:45 AM] 
+кто в курсе, как в идее в диаграммах менять размер окошек?
+
+
+Few [11:02 AM] 
+@Tanya учитывая динамику событий в https://youtrack.jetbrains.com/issue/IDEA-102335, видимо никак )
+YouTrack
+IDEA-102335: Unable to resize diagram element
+When making a visualization of a database, it is not possible to resize the created table elements. This is especially noteworthy because the GUI gives the impression that it is possible by rendering…

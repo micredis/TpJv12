@@ -46,3 +46,200 @@ no problem!
 
 Dmitry Makarov [12 minutes ago] 
 все ок
+
+shaakem [15 hours ago] 
+Все норм. В Version Control чисто перед накаткой?
+
+
+Andrew [15 hours ago] 
+Такая же беда...
+
+
+Andrew [14 hours ago] 
+Как вы решили проблему?
+
+
+Katherine Buzatu [14 hours ago] 
+А при накатке все изменения были отмечены?
+
+
+Andrew [14 hours ago] 
+Да
+
+
+Andrew [14 hours ago] 
+Откатился, и не помогло- Киньте пожалуйста класс после этого патча, чтобы проигнорировать ханки
+
+
+Katherine Buzatu [14 hours ago] 
+А класс какой?
+
+
+Andrew [14 hours ago] 
+AbstractUserServiceTest
+
+
+Few [5:49 PM] 
+IP адрес getbootstrap.com внесен Роскомнадзором в реестр запрещенных (на этом же IP адресе якобы детское порно)
+мой "ответственный" провайдер заблокировал :slightly_smiling_face:
+
+itAvgur [17 hours ago] 
+Кстати, не только он.
+Еще какие-то сайты программерской направленности попадались, которые работали ТОЛЬКО из-под того же FreeGate'а. (edited)
+
+
+Dmitry Makarov [17 hours ago] 
+у вас хотя бы пишет, что сайт заблокирован. У меня заблокированные сайты просто не грузятся
+
+
+Few [17 hours ago] 
+да у меня так же, я через ТП узнал что он заблокирован
+предъявил им что они могли бы хоть простенькую страничку с причиной выводить...
+
+
+dart_rabbit [8:12 PM] 
+Я так понимаю, что to мы вводим ради ajax и прямого биндинга объектов? Потому как скрыть поля обычном rest можно и через @JsonIgnore.
+
+Katherine Buzatu [15 hours ago] 
+А как же exceeded? Это отдельное поле, нужное только для фронта.
+
+
+vch [15 hours ago] 
+а его тоже можно в entity указать, пометив как `@Transient` :slightly_smiling_face:
+
+
+Andrew [8:51 PM] 
+9_03_HW8_enable_disable.patch: проблема с накаткой тоже. Сверил код с базой - этот класс идентичен. В чём же соль?
+
+
+[8:54] 
+В итоге должен какой класс получится?
+
+
+Katherine Buzatu [9:05 PM] 
+added this Java snippet: AbstractUserServiceTest.java
+package ru.javawebinar.topjava.service;
+​
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.dao.DataAccessException;
+import ru.javawebinar.topjava.model.Role;
+import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
+​
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+​
+import static ru.javawebinar.topjava.UserTestData.*;
+​
+public abstract class AbstractUserServiceTest extends AbstractServiceTest {
+​
+  @Autowired
+  protected UserService service;
+​
+  @Autowired
+  private CacheManager cacheManager;
+​
+  @Before
+  public void setUp() throws Exception {
+    cacheManager.getCache("users").clear();
+  }
+​
+  @Test
+  public void create() throws Exception {
+    User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.ROLE_USER));
+    User created = service.create(newUser);
+    newUser.setId(created.getId());
+    assertMatch(service.getAll(), ADMIN, newUser, USER);
+  }
+​
+  @Test(expected = DataAccessException.class)
+  public void duplicateMailCreate() throws Exception {
+    service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
+  }
+​
+  @Test
+  public void delete() throws Exception {
+    service.delete(USER_ID);
+    assertMatch(service.getAll(), ADMIN);
+  }
+​
+  @Test(expected = NotFoundException.class)
+  public void notFoundDelete() throws Exception {
+    service.delete(1);
+  }
+​
+  @Test
+  public void get() throws Exception {
+    User user = service.get(ADMIN_ID);
+    assertMatch(user, ADMIN);
+  }
+​
+  @Test(expected = NotFoundException.class)
+  public void getNotFound() throws Exception {
+    service.get(1);
+  }
+​
+  @Test
+  public void getByEmail() throws Exception {
+    User user = service.getByEmail("admin@gmail.com");
+    assertMatch(user, ADMIN);
+  }
+​
+  @Test
+  public void update() throws Exception {
+    User updated = new User(USER);
+    updated.setName("UpdatedName");
+    updated.setCaloriesPerDay(330);
+    updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
+    service.update(updated);
+    assertMatch(service.get(USER_ID), updated);
+  }
+​
+  @Test
+  public void getAll() throws Exception {
+    List<User> all = service.getAll();
+    assertMatch(all, ADMIN, USER);
+  }
+​
+  @Test
+  public void testEnable() {
+    service.enable(USER_ID, false);
+    Assert.assertFalse(service.get(USER_ID).isEnabled());
+    service.enable(USER_ID, true);
+    Assert.assertTrue(service.get(USER_ID).isEnabled());
+  }
+}
+Add Comment Collapse
+
+
+
+
+grigory.kislin [9:20 PM] 
+сегодня письмо с меня и счас патчи вчекиню
+
+
+
+----- Today January 10th, 2018 -----
+Viktor [3:06 AM] 
+мне интересно стало, почему методы конвертации UserTo в User и обратно вынесены в утильный класс. Почему бы не научить сам UserTo конвертироваться и создаваться из User'a. Есть ли какая-то важная причина использованию утилитарного класса, или просто так принято?
+
+
+tema.emelyan [3:18 AM] 
+@Viktor я слышал, что в то никакую логику обычно не помещают, только данные (edited)
+
+itAvgur [6 hours ago] 
+Иногда с припиской: "Если оооочень хочется, то можно".
+Вообщем, вопрос стиля.
+
+
+Konstantin [9:40 AM] 
+Джаваскриптовая часть тяжело дается что-то. Вроде прошелся по основным разделам на w3schools.com. Там все легкие примеры, в проекте все фреймворки намешаны в кучу и возникает путанница
+
+
+Alexander _Gubanow [10:12 AM] 
+В нашем проекте Ajax запросы инициализируются браузером при выполнении пользователем каких-то действий,отсылаются на сервер. После обработки на сервере и получения ответа от сервера (по событию success в Ajax-запросе)   перерисовывается таблица с данными. А как реализовать функционал приложения, если сервер является инициализатором отправки данных? Например, на сервере есть какая-то очередь, куда складываются сообщения от разных пользователей, или пишутся логи от всех  событий на сервере, а сервер должен потом автоматически и динамически(то есть при появлении нового сообщения в очереди) отправить эти сообщения и показать пользователям в браузере.
