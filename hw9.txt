@@ -243,3 +243,139 @@ Konstantin [9:40 AM]
 
 Alexander _Gubanow [10:12 AM] 
 В нашем проекте Ajax запросы инициализируются браузером при выполнении пользователем каких-то действий,отсылаются на сервер. После обработки на сервере и получения ответа от сервера (по событию success в Ajax-запросе)   перерисовывается таблица с данными. А как реализовать функционал приложения, если сервер является инициализатором отправки данных? Например, на сервере есть какая-то очередь, куда складываются сообщения от разных пользователей, или пишутся логи от всех  событий на сервере, а сервер должен потом автоматически и динамически(то есть при появлении нового сообщения в очереди) отправить эти сообщения и показать пользователям в браузере.
+
+
+Few [10:51 AM] 
+Для этих целей Спринг предлагает WebSockets+SockJS+STOMP (Spring in Action, 4-е издание, глава 18) (edited)
+
+Alexander _Gubanow [19 hours ago] 
+@Few Спасибо. Почитал про WebSockets - там немного другая технология передачи данных. Всегда открыто дуплексное  соединение клиент/сервер после подключения клиента, в отличие от HTTP, где соединение происходит на время передачи данных. Хотелось все же услышать мнение гуру, если реализовать указанный выше функционал, например,если клиент будет  генерить каждые  n   секунд запросы на сервер по ajax - это не будет выглядить топорно в плане архитектуры приложения (с позиции  будущего работодателя)?
+
+
+Few [18 hours ago] 
+По описанной тобой логике, как раз видится наиболее правильным чтобы сервер отправлял сообщения подписавшимся на них клиентам . А для этого как раз STOMP лучше всего и подходит. Он в том числе отлично интегрируется с spring security (edited)
+
+
+Few [18 hours ago] 
+Хотя мнение гуру всегда интересно, ждем
+
+
+philip.goldm [12:16 PM] 
+@grigory.kislin обнаружил в Apply 9_07_datatable_via_ajax.patch небольшую проблему. 
+В RootController убирается добавление списка пользователей из атрибутов модели
+>model.addAttribute("users", userService.getAll());
+Из-за этого падают тесты в RootControllerTest. Там есть проверки на наличие атрибута
+>.andExpect(model().attribute("users", hasSize(2)))
+
+
+Atrieron [1:19 PM] 
+А у меня одного уже которое занятие не патчится список ролей админа в populateDB.sql? Приходится каждый раз заново заносить.
+
+Katherine Buzatu [1 day ago] 
+Роли были добавлены в 7_04_HW6. В патчах содержатся только последние изменения. Попробуй накатить из этого патча только изменения populate. И закоммитить в мастере. Я так думаю.
+
+
+grigory.kislin [5:17 PM] 
+@philip.goldm так и есть. но почему- проблема?
+
+philip.goldm [22 hours ago] 
+Да, уже догодался :)
+
+
+MetalBro [4:18 AM] 
+В чем заключается преимущество создания DTO если мы не формируем его из несвязанных сущностей или сущности с данными, не хранимыми в базе (типа MealWithExceed)? Например, userTo представляет собой урезанного User.  Для удобства работы на фронтенде (если точно известна его структура)?
+1 reply Today at 12:09 PM View thread
+
+Ivanushka [9:57 AM] 
+added and commented on this Java snippet: Господа (товарищи) ткните пальцем...
+Есть два контроллера c методом getAll():
+@RestController
+@RequestMapping("/ajax/admin/users")
+public class AdminAjaxController extends AbstractUserController {
+​
+  @Override
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<User> getAll() {
+    return super.getAll();
+  }
+}
+​
+и...
+@RestController
+@RequestMapping(AdminRestController.REST_URL)
+public class AdminRestController extends AbstractUserController {
+  static final String REST_URL = "/rest/admin/users";
+​
+  @Override
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<User> getAll() {
+    return super.getAll();
+  }
+1 Comment Collapse
+Почему через SoapUI GET /topjava/rest/admin/users мне прилетает JSON, а через GET /topjava/ajax/admin/users возвращается HTML? (Почувствовал себя обезьяной, пилящей атомную бомбу)
+
+
+
+Few [11:06 AM] 
+@Ivanushka из за spring security
+
+
+Ivanushka [11:08 AM] 
+@Few Спасибо, посмотрю. Но и там и там в Soap настраивал Authentication
+
+
+Few [11:12 AM] 
+@Ivanushka <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
+       <http-basic/>
+       <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
+       <intercept-url pattern="/**" access="isAuthenticated()"/>
+       <csrf disabled="true"/>
+   </http>
+
+
+[11:12] 
+вот из-за этого
+
+[11:12] 
+для ajax таких настроек нет
+
+[11:13] 
+возвращает тебе html страницы логина т.к. ты не авторизован
+
+
+Ivanushka [11:20 AM] 
+@Few Спасибо ещё раз, точно. :+1:
+
+
+Katherine Buzatu [2:42 PM] 
+Товарищи, у нас появился `UserTo`. Помнится, когда мы делали разделение приложения на слои, была речь о том, что про ТО знает только слой веб. Новоиспеченный же `UserTo` оказывается у нас не только в сервисе, но еще и разбросан между сервисом и контроллером (update/save). Почему `UserTo` не оставили только в контроллере, реализовав слоями ниже обновление отдельных полей (типа нынешнего `enable()`)?
+
+anpotashev [2:57 PM] 
+"ТО знает только слой веб" - мне кажется неправильное высказывание. TO скорее используется для передачи данных м/ду слоями приложения и/или во вне.
+"Почему не использовать отдельные параметры" - теряется гибкость: 
+Допустим надо добавить/изменить/удалить поле в ТО. В случае с параметрами придется переписывать все функции на всех слоях. А в случае с ТО - максимум только в начальной и конечной точках.
+
+
+Katherine Buzatu [3:07 PM] 
+Ну, или тогда преобразовывать все в сервисе. Вот конкретно этот кусок мне не нравится:
+```if (userTo.isNew()) {
+            super.create(UserUtil.createNewFromTo(userTo));
+        } else {
+            super.update(userTo, userTo.getId());
+        }```
+
+
+anpotashev [3:17 PM] 
+Тут согласен. Красивее вынести в сервис. Имхо, разумеется.
+
+
+Katherine Buzatu [3:22 PM] 
+Еще кажется избыточным параметр `id` в `update(UserTo userTo, int id)`. Если раньше мы его получали отдельно из `PathVariable` и проверяли соответствие, то сейчас они априори равны, т. к. мы уже подаем `id=userTo.getId()`.
+
+
+anpotashev [3:30 PM] 
+Тут могу только предположить, что в REST также будет изменено на DTO
+
+
+anpotashev [3:35 PM] 
+А кто-нибудь сделал без костылей так чтобы в окне редактирования еды нормально отображалась дата-время? (edited)

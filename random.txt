@@ -2731,3 +2731,33 @@ Few [11:02 AM]
 YouTrack
 IDEA-102335: Unable to resize diagram element
 When making a visualization of a database, it is not possible to resize the created table elements. This is especially noteworthy because the GUI gives the impression that it is possible by rendering…
+
+
+Дима Жуков [5:51 PM] 
+https://javarush.ru/groups/posts/426-vopros-otvet-pochemu-paroljh-v-java-luchshe-khranitjh-v-massive-simvolov-a-ne-v-string-
+Javarush
+Вопрос-ответ: почему пароль в Java лучше хранить в массиве символов, а не в String?
+Вы вполне можете услышать такой вопрос на интервью на позицию Java Junior. Но вот моему приятелю его задали на собеседовании на должность Technical Lead ... (177 kB)
+
+
+vch [5:57 PM] 
+@Дима Жуков если человек логинится на web-странице, то мы всё равно получим пароль в String (через getParameter, например).
+Как ты предлагаешь работать с паролем, чтобы он ни разу не попадал в String?
+
+
+Дима Жуков [6:01 PM] 
+А JPasswordField getPassword() - это че? Это что то из свинг инпут текст? Я не слышал про такое?
+
+
+vch [6:02 PM] 
+awt
+
+
+[6:02] 
+Ну то есть да, получается swing
+
+
+
+----- Today January 11th, 2018 -----
+grigory.kislin [12:16 PM] 
+я бы ответил- лучше вообще в Java не хранить:)
