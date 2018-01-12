@@ -364,3 +364,27 @@ dart_rabbit [8:00 AM]
 
 grigory.kislin [9:18 PM] 
 > в контроллерах этого никак не используем
+
+
+LORREON [9:43 AM] 
+Как работает этот код .andExpect(model().attribute("meals", hasItem(
+                       allOf(
+                               hasProperty("id", is(MEAL1_ID)),
+                               hasProperty("description", is(MEAL1.getDescription()))
+                       )
+               ))); (edited)
+
+
+[9:44] 
+почему не .andExpect(model().attribute("meals", hasItem(
+                       allOf(
+                               hasProperty("id", is(MEALS.iterator().next().getId())),
+                               hasProperty("description", is(MEALS.iterator().next().getDescription())),
+                               hasProperty("dateTime", is(MEALS.iterator().next().getDateTime())),
+                               hasProperty("calories", is(MEALS.iterator().next().getCalories()))
+                       )
+               )));
+
+
+LORREON [10:40 AM] 
+и как сделать через .andExpect(content()?

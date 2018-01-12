@@ -379,3 +379,232 @@ anpotashev [3:30 PM]
 
 anpotashev [3:35 PM] 
 А кто-нибудь сделал без костылей так чтобы в окне редактирования еды нормально отображалась дата-время? (edited)
+
+
+Serge [6:32 PM] 
+uploaded and commented on this image: 2018-01-11 в 19.27.45.jpg
+1 Comment
+Ребят, кто поборол DateTimePicker… Не могу понять его волшебную логику. При обновлении ДАТУ и ЧАСЫ считывает с поля, а МИНУТЫ ставит текущего времени
+Кто как округлял эти минуты?
+
+
+
+Anel [6:53 PM] 
+Кто-нибудь может ткнуть пальцем, откуда у нас появляется topjava в url? У меня все упорно работает по ссылкам вида: http://localhost:8080/rest/admin/users  без /topjava/
+
+
+Katherine Buzatu [8:34 PM] 
+uploaded and commented on this image: image
+1 Comment
+@Anel
+
+
+
+Anel [8:40 PM] 
+@Katherine Buzatu :+1: спасибо!
+
+
+Andrew [8:53 PM] 
+После устновки патчей у меня не запускается, падает с NoSuchBeanDefinitionException: No bean named 'userService' available. Так должно быть?
+
+Dmitry Makarov [18 hours ago] 
+у меня работает
+
+
+Anel [9:01 PM] 
+uploaded and commented on this image: message.png
+1 Comment
+И еще, кто-то может объяснить, что значит сообщение:
+
+
+
+dart_rabbit [9:07 PM] 
+@Anel Открой свойства проекта, фасет спринга
+
+
+Anel [9:11 PM] 
+uploaded and commented on this image: message2.png
+1 Comment
+@dart_rabbit
+
+
+
+Andrew [9:17 PM] 
+Это было, помогло клин-пекедж
+
+
+Anel [9:29 PM] 
+@Andrew а поподробнее?
+
+
+Andrew [9:29 PM] 
+Maven-Clean, Maven-Package
+
+
+[9:30] 
+Видимо, что-то где-то подвисло
+
+
+Anel [9:34 PM] 
+Не помогает ( на самом деле, такая же проблема в проекте, в котором, по факту, только эти 5 конфигурационных файлов спринг + pom + web.xml
+
+Andrew [17 hours ago] 
+Контекст подключен? И клин не помог?
+
+
+Anel [17 hours ago] 
+Клин/пекедж никакого эффекта не дает. Аналогичная ситуация на топджаве. так приложение без проблем работат. все контексты поднимаются
+
+
+Andrew [16 hours ago] 
+Это я так понимаю, после всех патчей и без изменений HW9? userService бин декларируется в security.xml. Может, где-то объявлен бин уже с таким именем?
+
+
+Anel [16 hours ago] 
+нет, это в пустом проекте, без userService бина
+
+
+Andrew [16 hours ago] 
+А, так в чём проблема тогда?
+
+
+Anel [16 hours ago] 
+понять хочу, что это такое
+
+
+Andrew [10:01 PM] 
+Это нормально, что у User есть кнопка Users, которая при нажатии кидает алерт с еррором?
+
+
+Viktor [10:21 PM] 
+А ктонибудь пытался напрямую обращаться по адресам localhost:8080/ajax/admin/users и прочим ajax?  С ними что-то не то и я не понимаю почему. Или я что-то делаю не так
+Пробую обратиться по указанному выше в браузере все норм, даже в дебаг попадаю. Пробую тоже самое через постмана или SoapUI возвращает стартовую страницу авторизации, не 401 код а именно всю страницу с авторизацией (edited)
+
+
+Viktor [10:21 PM] 
+uploaded this image: Из браузера
+1 Comment
+
+
+
+Viktor [10:21 PM] 
+uploaded this image: Из постмана
+Add Comment
+
+
+
+Viktor [10:22 PM] 
+added this Plain Text snippet: Заголовки запроса из браузера
+GET /ajax/admin/users HTTP/1.1
+Host: localhost:8080
+Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: ru,en-US;q=0.9,en;q=0.8
+Cookie: JSESSIONID=BEDABCE11E37467ADFE7C60195494142
+Add Comment Collapse
+
+
+
+Viktor [10:23 PM] 
+added this Plain Text snippet: заголовки из постмана
+GET /ajax/admin/users HTTP/1.1
+Host: localhost:8080
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+Cache-Control: no-cache
+Postman-Token: 903e0f06-f90e-4209-00e0-94a9e1db50a7
+Add Comment Collapse
+
+
+
+Viktor [10:24 PM] 
+uploaded this image: Левый запрос
+Add Comment
+
+
+
+Viktor [10:25 PM] 
+Самое забавное, что через постмана можно обратиться к любому адресу и любым запросом и он возвращает главную страницу. Через браузер такое не прокатывает.
+
+
+[10:25] 
+Мне непонятно, что за фигня происходит :smiley: (edited)
+
+Andrew [10:37 PM] 
+Там же в хедерах надо креденшлы передавать, у нас вроде выключены сессии для реста
+
+
+[10:40] 
+В MailTo LocalDateTime должно быть поле? Или магия не может и надо стрингом принимать дату? Не могу заставить магию преобразовывать
+
+Viktor [10:40 PM] 
+повесь над полем аннаотацию форматтера
+
+
+Andrew [10:41 PM] 
+Пробовал, но видимо ему надо и велью указать
+
+
+Viktor [10:43 PM] 
+"я тебе вылью". Иногда лучше использовать русские слова, либо английские писать английскими буквами=)
+
+
+Dmitry Makarov [10:54 PM] 
+Viktor, ты о какой аннотации говоришь?
+
+Andrew [16 hours ago] 
+@DateTimeFormat
+
+
+Viktor [10:54 PM] 
+@Andrew спасибо, поставил в настройках создание сессии и через /rest смог все таки дотянуться до /ajax
+
+
+[10:55] 
+@Dmitry Makarov
+   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+
+
+
+Katherine Buzatu [10:55 PM] 
+commented on Viktor’s file Из браузера
+Недавно обсуждался смысл ТО. Вот, пожалуйста, слились все пользовательские пароли.
+
+
+
+
+Viktor [10:56 PM] 
+ну так-то они все равно должны быть закодированны :smiley:
+
+
+
+----- Today January 12th, 2018 -----
+Andrew [12:43 AM] 
+datetimepicker: подключить зависимость достаточно или надо ещё и скрипты с ЦСС добавлять? У меня пустые рамки появляются..
+
+anpotashev [14 hours ago] 
+css добавил?
+```<link rel="stylesheet" href="webjars/datetimepicker/2.5.11/jquery.datetimepicker.css">```
+
+
+Andrew [13 hours ago] 
+Уже настроил.. Но видимо надо специальный формат даты отправлять, чтобы читался спрингом..
+
+
+Andrew [13 hours ago] 
+Пока не нашёл нужный
+
+
+Andrew [13 hours ago] 
+Мне по фильтр приходят все нуллы
+
+
+anpotashev [13 hours ago] 
+формат можно задать в аннотации над полем.
+
+
+Katherine Buzatu [2:25 PM] 
+Измучили меня уже эти датаТаймы. В ISO - из ISO... Мне кажется, что надо конвертировать в ISO на клиенте, и отдавать на сервер уже в ISO. От ДатаПикера приходит датаТайм с пробелом. Обойти это на js вышло, но грубо как-то, некрасиво. Разверните, пожалуйста, в нужном направлении движения.
