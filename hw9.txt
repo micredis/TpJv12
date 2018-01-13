@@ -608,3 +608,363 @@ anpotashev [13 hours ago]
 
 Katherine Buzatu [2:25 PM] 
 Измучили меня уже эти датаТаймы. В ISO - из ISO... Мне кажется, что надо конвертировать в ISO на клиенте, и отдавать на сервер уже в ISO. От ДатаПикера приходит датаТайм с пробелом. Обойти это на js вышло, но грубо как-то, некрасиво. Разверните, пожалуйста, в нужном направлении движения.
+
+
+Ruslan Pivovarov [1 day ago] 
+https://xdsoft.net/jqplugins/datetimepicker/   $("#datetime").datetimepicker({
+       format:'Y-m-d H:i'
+   }); Такое не подойдет.
+xdsoft.net
+DateTimePicker
+DateTimePicker Best Period Picker search &text=&via=xdsoft_net arget= _blank title= Tweet >
+
+
+Katherine Buzatu [1 day ago] 
+Пойдет, но мы-то на сервере ISO ждем, с Т.
+
+
+Ruslan Pivovarov [1 day ago] 
+@DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm") а такое? Или это не то?
+
+
+Katherine Buzatu [1 day ago] 
+Вот как раз об этом. Мы ждем с Т, а ДатаПикер отдает с пробелом.
+
+
+Ruslan Pivovarov [1 day ago] 
+@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") извеняюсь принимать такое в контроллере.
+
+
+Ruslan Pivovarov [1 day ago] 
+Без Т.
+
+Anton K. [1 day ago] 
+format:'Y-m-d\\TH:i'
+
+
+grigory.kislin [1 day ago] 
+сам мучался:) в результате 4 решения было
+1. format:'Y-m-d\\TH:i'
+2. преобразование на клиенте вручную
+3. json view (или to) с нужным форматом для UI
+4. jquery converters
+
+
+Kaa [23 hours ago] 
+еще вариант - eonasdan-bootstrap-datetimepicker и datetime-local тип поля вообще можно сказать из коробки работают.
+
+
+Nick [7:33 PM] 
+uploaded and commented on this image: Screenshotstyle.png
+1 Comment
+Доброе время суток! Вернулся на master и почему то вдруг перестали грузиться стили. Покопался, не смог найти. Буду благодарен за помощь.
+
+
+
+Viktor [7:34 PM] 
+судя по скриншоту их и правда нет :smiley:
+
+
+
+Nick [7:42 PM] 
+Ну да, да , вопрос неправильно поставил. В чем может быть причина?
+
+
+Katherine Buzatu [7:45 PM] 
+@Nick _Не претендую на истину_ Помнишь, мы тест такой писали - на доступность стилей. Я бы 1. посмотрела, проходит он или нет. 2. Посмотрела бы, что изменилось в том месте с тех пор, как тест проходил. 3 - по результатам 1 и 2.
+
+
+Viktor [7:55 PM] 
+Когд просишь помочь, надо выложить максимум доступной тебе информации. 
+Через F12 ты можешь посмотреть грузяться ли стили, если да то с какой ошибкой.
+В Idea ты можешь посмотреть логи и увидеть как сервер реагировал на запрос и какую ошибку выдал, если выдал.
+
+
+[7:56] 
+Без этих данных могу сказать только одно, стили не грузяться, потому что не грузяться :smiley:
+
+
+
+Nick [8:06 PM] 
+uploaded and commented on this image: XRf2G_croper_ru.png
+2 Comments
+Стили он видит, но не грузит.
+
+
+
+Nick [8:06 PM] 
+uploaded this image: VzOPl_croper_ru.png
+Add Comment
+
+
+
+Katherine Buzatu [8:09 PM] 
+commented on Nick’s file XRf2G_croper_ru.png
+Bootstrap стили где?
+
+Katherine Buzatu [8:12 PM] 
+Вернулся на master... Может, maven clean?
+
+
+Nick [8:14 PM] 
+Делал. Проблема все таки в bootstarp стилях. Сейчас попробую решить.
+
+
+Nick [8:34 PM] 
+Хм, вроде все проверил: в pom все есть, idea тоже видит "Mapped URL path [/webjars/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'"
+
+
+Viktor [8:37 PM] 
+Ник запросы смотри, у тебя на клиента не отправляются файлы, опять всю нужную информацию прячешь
+
+
+[8:37] 
+вкладка network
+
+
+
+[8:38] 
+логи томаката в idea внизу, такое окошечко, там ещё слов много написано и они продолжают появляться иногда
+
+
+Nick [8:51 PM] 
+uploaded and commented on this image: vWzkN_croper_ru.png
+1 Comment
+Да, действительно, файлов bootstrap нет
+
+
+
+Viktor [8:53 PM] 
+теперь перейди во вкладку console и посмотри почему нет
+
+
+Nick [9:02 PM] 
+uploaded and commented on this image: DdH60_croper_ru.png
+1 Comment
+Только на JS ругается
+
+
+
+Viktor [9:08 PM] 
+тогда смотри логи томката
+
+
+Nick [9:29 PM] 
+added and commented on this Plain Text snippet: Output tomcat
+12-Jan-2018 22:27:13.642 WARNING [main] org.apache.catalina.core.AprLifecycleListener.init The APR based Apache Tomcat Native library failed to load. The error reported was [C:\Users\Sikonder\Downloads\apache-tomcat-8.5.24\bin\tcnative-1.dll: Can't load AMD 64-bit .dll on a IA 32-bit platform]
+ java.lang.UnsatisfiedLinkError: C:\Users\Sikonder\Downloads\apache-tomcat-8.5.24\bin\tcnative-1.dll: Can't load AMD 64-bit .dll on a IA 32-bit platform
+	at java.lang.ClassLoader$NativeLibrary.load(Native Method)
+	at java.lang.ClassLoader.loadLibrary0(ClassLoader.java:1941)
+	at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1857)
+	at java.lang.Runtime.loadLibrary0(Runtime.java:870)
+	at java.lang.System.loadLibrary(System.java:1122)
+	at org.apache.tomcat.jni.Library.<init>(Library.java:42)
+	at org.apache.tomcat.jni.Library.initialize(Library.java:178)
+	at org.apache.catalina.core.AprLifecycleListener.init(AprLifecycleListener.java:198)
+	at org.apache.catalina.core.AprLifecycleListener.isAprAvailable(AprLifecycleListener.java:107)
+	at org.apache.catalina.connector.Connector.setProtocol(Connector.java:582)
+	at org.apache.catalina.connector.Connector.<init>(Connector.java:74)
+	at org.apache.catalina.startup.ConnectorCreateRule.begin(ConnectorCreateRule.java:64)
+	at org.apache.tomcat.util.digester.Digester.startElement(Digester.java:1250)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractXMLDocumentParser.emptyElement(AbstractXMLDocumentParser.java:182)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanStartElement(XMLDocumentFragmentScannerImpl.java:1339)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2784)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:505)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:841)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:770)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:643)
+	at org.apache.tomcat.util.digester.Digester.parse(Digester.java:1518)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:593)
+	at org.apache.catalina.startup.Catalina.load(Catalina.java:644)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:309)
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:492)
+
+12-Jan-2018 22:27:13.741 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/8.5.24
+12-Jan-2018 22:27:13.741 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Nov 27 2017 13:05:30 UTC
+12-Jan-2018 22:27:13.741 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         8.5.24.0
+12-Jan-2018 22:27:13.741 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 7
+12-Jan-2018 22:27:13.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            6.1
+12-Jan-2018 22:27:13.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          x86
+12-Jan-2018 22:27:13.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files (x86)\Java\jdk1.8.0_144\jre
+12-Jan-2018 22:27:13.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_144-b01
+12-Jan-2018 22:27:13.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+12-Jan-2018 22:27:13.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Sikonder\.IntelliJIdea2017.3\system\tomcat\Unnamed_topjava_2
+12-Jan-2018 22:27:13.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\Sikonder\Downloads\apache-tomcat-8.5.24
+12-Jan-2018 22:27:13.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Sikonder\.IntelliJIdea2017.3\system\tomcat\Unnamed_topjava_2\conf\logging.properties
+12-Jan-2018 22:27:13.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+12-Jan-2018 22:27:13.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcom.sun.management.jmxremote=
+12-Jan-2018 22:27:13.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcom.sun.management.jmxremote.port=1099
+12-Jan-2018 22:27:13.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcom.sun.management.jmxremote.ssl=false
+12-Jan-2018 22:27:13.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcom.sun.management.jmxremote.authenticate=false
+12-Jan-2018 22:27:13.744 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.rmi.server.hostname=127.0.0.1
+12-Jan-2018 22:27:13.744 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+12-Jan-2018 22:27:13.744 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+12-Jan-2018 22:27:13.744 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+12-Jan-2018 22:27:13.744 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Sikonder\.IntelliJIdea2017.3\system\tomcat\Unnamed_topjava_2
+12-Jan-2018 22:27:13.744 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\Sikonder\Downloads\apache-tomcat-8.5.24
+12-Jan-2018 22:27:13.744 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Sikonder\Downloads\apache-tomcat-8.5.24\temp
+12-Jan-2018 22:27:13.909 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+12-Jan-2018 22:27:13.930 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+12-Jan-2018 22:27:13.941 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+12-Jan-2018 22:27:13.944 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+12-Jan-2018 22:27:13.944 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 504 ms
+12-Jan-2018 22:27:13.974 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+12-Jan-2018 22:27:13.974 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/8.5.24
+12-Jan-2018 22:27:13.984 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+12-Jan-2018 22:27:13.995 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+12-Jan-2018 22:27:13.998 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 53 ms
+Connected to server
+[2018-01-12 10:27:14,324] Artifact topjava:war: Artifact is being deployed, please wait...
+12-Jan-2018 22:27:18.693 INFO [RMI TCP Connection(5)-127.0.0.1] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22:27:18.946 INFO  org.springframework.web.context.ContextLoader.initWebApplicationContext:270 - Root WebApplicationContext: initialization started
+22:27:19.029 INFO  o.s.context.support.AbstractApplicationContext.prepareRefresh:589 - Refreshing Root WebApplicationContext: startup date [Fri Jan 12 22:27:19 MSK 2018]; root of context hierarchy
+22:27:19.104 INFO  o.s.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions:316 - Loading XML bean definitions from class path resource [spring/spring-app.xml]
+22:27:19.213 INFO  o.s.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions:316 - Loading XML bean definitions from class path resource [spring/spring-tools.xml]
+22:27:19.232 INFO  o.s.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions:316 - Loading XML bean definitions from class path resource [spring/spring-security.xml]
+22:27:19.282 INFO  o.s.security.core.SpringSecurityCoreVersion.performVersionChecks:75 - You are running with Spring Security Core 5.0.0.RELEASE
+22:27:19.287 WARN  o.s.security.core.SpringSecurityCoreVersion.performVersionChecks:78 - **** You are advised to use Spring 5.0.2.RELEASE or later with this version. You are running: 5.0.1.RELEASE
+22:27:19.288 INFO  o.s.security.config.SecurityNamespaceHandler.<init>:78 - Spring Security 'config' module version is 5.0.0.RELEASE
+22:27:19.371 INFO  o.s.s.c.h.FilterInvocationSecurityMetadataSourceParser.parseInterceptUrlsForFilterInvocationRequestMap:194 - Creating access control expression attribute 'hasRole('ROLE_ADMIN')' for /rest/admin/**
+22:27:19.372 INFO  o.s.s.c.h.FilterInvocationSecurityMetadataSourceParser.parseInterceptUrlsForFilterInvocationRequestMap:194 - Creating access control expression attribute 'isAuthenticated()' for /**
+22:27:19.409 INFO  o.s.s.config.http.HttpSecurityBeanDefinitionParser.checkFilterChainOrder:307 - Checking sorted filter chain: [Root bean: class [org.springframework.security.web.context.SecurityContextPersistenceFilter]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, order = 200, Root bean: class [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, order = 400, Root bean: class [org.springframework.security.web.header.HeaderWriterFilter]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, order = 500, Root bean: class [org.springframework.security.web.authentication.www.BasicAuthenticationFilter]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, order = 1600, Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.security.config.http.HttpConfigurationBuilder$SecurityContextHolderAwareRequestFilterBeanFactory#0; factoryMethodName=getBean; initMethodName=null; destroyMethodName=null, order = 1800, Root bean: class [org.springframework.security.web.authentication.AnonymousAuthenticationFilter]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, order = 2100, Root bean: class [org.springframework.security.web.access.ExceptionTranslationFilter]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, order = 2300, <org.springframework.security.web.access.intercept.FilterSecurityInterceptor#0>, order = 2400]
+22:27:19.575 INFO  o.s.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions:316 - Loading XML bean definitions from class path resource [spring/spring-db.xml]
+22:27:19.665 INFO  o.s.b.f.xml.DefaultBeanDefinitionDocumentReader.doRegisterBeanDefinitions:139 - Skipped XML bean definition file due to specified profiles [hsqldb] not matching: class path resource [spring/spring-db.xml]
+22:27:19.680 INFO  o.s.b.f.xml.DefaultBeanDefinitionDocumentReader.doRegisterBeanDefinitions:139 - Skipped XML bean definition file due to specified profiles [tomcat] not matching: class path resource [spring/spring-db.xml]
+22:27:19.681 INFO  o.s.b.f.xml.DefaultBeanDefinitionDocumentReader.doRegisterBeanDefinitions:139 - Skipped XML bean definition file due to specified profiles [tomcat] not matching: class path resource [spring/spring-db.xml]
+22:27:19.681 INFO  o.s.b.f.xml.DefaultBeanDefinitionDocumentReader.doRegisterBeanDefinitions:139 - Skipped XML bean definition file due to specified profiles [jdbc] not matching: class path resource [spring/spring-db.xml]
+22:27:19.687 INFO  o.s.b.f.xml.DefaultBeanDefinitionDocumentReader.doRegisterBeanDefinitions:139 - Skipped XML bean definition file due to specified profiles [jpa] not matching: class path resource [spring/spring-db.xml]
+22:27:20.581 INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory:354 - Building JPA container EntityManagerFactory for persistence unit 'default'
+22:27:20.605 INFO  org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:31 - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+22:27:20.757 INFO  org.hibernate.Version.logVersion:45 - HHH000412: Hibernate Core {5.2.12.Final}
+22:27:20.760 INFO  org.hibernate.cfg.Environment.<clinit>:213 - HHH000206: hibernate.properties not found
+22:27:20.842 INFO  o.h.a.common.reflection.java.JavaReflectionManager.<clinit>:66 - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+22:27:21.481 INFO  org.hibernate.dialect.Dialect.<init>:157 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL81Dialect
+22:27:21.642 INFO  o.h.engine.jdbc.env.internal.LobCreatorBuilderImpl.useContextualLobCreation:124 - HHH000424: Disabling contextual LOB creation as createClob() method threw error : java.lang.reflect.InvocationTargetException
+22:27:22.360 INFO  org.hibernate.validator.internal.util.Version.<clinit>:21 - HV000001: Hibernate Validator 6.0.5.Final
+22:27:22.731 INFO  o.h.validator.internal.engine.ValidatorFactoryImpl.getTemporalValidationTolerance:575 - HV000238: Temporal validation tolerance set to 0.
+22:27:23.345 INFO  o.h.hql.internal.QueryTranslatorFactoryInitiator.initiateService:47 - HHH000397: Using ASTQueryTranslatorFactory
+22:27:23.491 INFO  o.s.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:389 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:27:23.540 INFO  o.s.security.web.DefaultSecurityFilterChain.<init>:43 - Creating filter chain: Ant [pattern='/resources/**'], []
+22:27:23.546 INFO  o.s.security.web.DefaultSecurityFilterChain.<init>:43 - Creating filter chain: Ant [pattern='/webjars/**'], []
+22:27:23.935 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource.processMap:74 - Adding web access control expression 'hasRole('ROLE_ADMIN')', for Ant [pattern='/rest/admin/**']
+22:27:23.939 DEBUG o.s.s.w.a.e.ExpressionBasedFilterInvocationSecurityMetadataSource.processMap:74 - Adding web access control expression 'isAuthenticated()', for org.springframework.security.web.util.matcher.AnyRequestMatcher@1
+22:27:23.947 DEBUG o.s.s.access.intercept.AbstractSecurityInterceptor.afterPropertiesSet:180 - Validated configuration attributes
+22:27:23.948 INFO  o.s.security.web.DefaultSecurityFilterChain.<init>:43 - Creating filter chain: Ant [pattern='/rest/**'], [org.springframework.security.web.context.SecurityContextPersistenceFilter@808c23, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@598692, org.springframework.security.web.header.HeaderWriterFilter@572fb0, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@a8271, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@17a5022, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74fae3, org.springframework.security.web.access.ExceptionTranslationFilter@19c9516, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@15dbe1a]
+12-Jan-2018 22:27:23.986 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\Sikonder\Downloads\apache-tomcat-8.5.24\webapps\manager]
+12-Jan-2018 22:27:24.061 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\Sikonder\Downloads\apache-tomcat-8.5.24\webapps\manager] has finished in [75] ms
+22:27:24.868 INFO  o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:442 - Executing SQL script from class path resource [db/initDB.sql]
+22:27:25.445 INFO  o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:508 - Executed SQL script from class path resource [db/initDB.sql] in 577 ms.
+22:27:25.445 INFO  o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:442 - Executing SQL script from class path resource [db/populateDB.sql]
+22:27:25.477 INFO  o.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript:508 - Executed SQL script from class path resource [db/populateDB.sql] in 32 ms.
+22:27:25.583 INFO  org.springframework.web.context.ContextLoader.initWebApplicationContext:310 - Root WebApplicationContext: initialization completed in 6632 ms
+22:27:25.630 INFO  org.springframework.web.servlet.FrameworkServlet.initServletBean:494 - FrameworkServlet 'mvc-dispatcher': initialization started
+22:27:25.635 INFO  o.s.context.support.AbstractApplicationContext.prepareRefresh:589 - Refreshing WebApplicationContext for namespace 'mvc-dispatcher-servlet': startup date [Fri Jan 12 22:27:25 MSK 2018]; parent: Root WebApplicationContext
+22:27:25.635 INFO  o.s.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions:316 - Loading XML bean definitions from class path resource [spring/spring-mvc.xml]
+22:27:26.571 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/profile/meals/{id}],methods=[DELETE]}" onto public void ru.javawebinar.topjava.web.meal.MealAjaxController.delete(int)
+22:27:26.575 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/profile/meals],methods=[GET],produces=[application/json]}" onto public java.util.List<ru.javawebinar.topjava.to.MealWithExceed> ru.javawebinar.topjava.web.meal.MealAjaxController.getAll()
+22:27:26.576 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/profile/meals/filter],methods=[POST],produces=[application/json]}" onto public java.util.List<ru.javawebinar.topjava.to.MealWithExceed> ru.javawebinar.topjava.web.meal.MealAjaxController.getBetween(java.time.LocalDate,java.time.LocalTime,java.time.LocalDate,java.time.LocalTime)
+22:27:26.576 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/profile/meals],methods=[POST]}" onto public void ru.javawebinar.topjava.web.meal.MealAjaxController.createOrUpdate(java.lang.Integer,java.time.LocalDateTime,java.lang.String,int)
+22:27:26.589 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile/meals/{id}],methods=[GET],produces=[application/json]}" onto public ru.javawebinar.topjava.model.Meal ru.javawebinar.topjava.web.meal.MealRestController.get(int)
+22:27:26.589 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile/meals/{id}],methods=[PUT],consumes=[application/json],produces=[application/json]}" onto public void ru.javawebinar.topjava.web.meal.MealRestController.update(ru.javawebinar.topjava.model.Meal,int)
+22:27:26.591 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile/meals/{id}],methods=[DELETE],produces=[application/json]}" onto public void ru.javawebinar.topjava.web.meal.MealRestController.delete(int)
+22:27:26.592 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile/meals],methods=[GET],produces=[application/json]}" onto public java.util.List<ru.javawebinar.topjava.to.MealWithExceed> ru.javawebinar.topjava.web.meal.MealRestController.getAll()
+22:27:26.592 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile/meals/filter],methods=[GET],produces=[application/json]}" onto public java.util.List<ru.javawebinar.topjava.to.MealWithExceed> ru.javawebinar.topjava.web.meal.MealRestController.getBetween(java.time.LocalDate,java.time.LocalTime,java.time.LocalDate,java.time.LocalTime)
+22:27:26.593 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile/meals],methods=[POST],consumes=[application/json],produces=[application/json]}" onto public org.springframework.http.ResponseEntity<ru.javawebinar.topjava.model.Meal> ru.javawebinar.topjava.web.meal.MealRestController.createWithLocation(ru.javawebinar.topjava.model.Meal)
+22:27:26.597 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/],methods=[GET]}" onto public java.lang.String ru.javawebinar.topjava.web.RootController.root()
+22:27:26.598 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/users],methods=[GET]}" onto public java.lang.String ru.javawebinar.topjava.web.RootController.users(org.springframework.ui.Model)
+22:27:26.598 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/users],methods=[POST]}" onto public java.lang.String ru.javawebinar.topjava.web.RootController.setUser(javax.servlet.http.HttpServletRequest)
+22:27:26.599 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/meals],methods=[GET]}" onto public java.lang.String ru.javawebinar.topjava.web.RootController.meals(org.springframework.ui.Model)
+22:27:26.603 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/admin/users/{id}],methods=[DELETE]}" onto public void ru.javawebinar.topjava.web.user.AdminAjaxController.delete(int)
+22:27:26.604 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/admin/users/{id}],methods=[POST]}" onto public void ru.javawebinar.topjava.web.user.AdminAjaxController.enable(int,boolean)
+22:27:26.605 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/admin/users],methods=[GET],produces=[application/json]}" onto public java.util.List<ru.javawebinar.topjava.model.User> ru.javawebinar.topjava.web.user.AdminAjaxController.getAll()
+22:27:26.605 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/ajax/admin/users],methods=[POST]}" onto public void ru.javawebinar.topjava.web.user.AdminAjaxController.createOrUpdate(java.lang.Integer,java.lang.String,java.lang.String,java.lang.String)
+22:27:26.615 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/admin/users/{id}],methods=[GET],produces=[application/json]}" onto public ru.javawebinar.topjava.model.User ru.javawebinar.topjava.web.user.AdminRestController.get(int)
+22:27:26.616 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/admin/users/{id}],methods=[PUT],consumes=[application/json]}" onto public void ru.javawebinar.topjava.web.user.AdminRestController.update(ru.javawebinar.topjava.model.User,int)
+22:27:26.616 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/admin/users/{id}],methods=[DELETE]}" onto public void ru.javawebinar.topjava.web.user.AdminRestController.delete(int)
+22:27:26.617 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/admin/users],methods=[GET],produces=[application/json]}" onto public java.util.List<ru.javawebinar.topjava.model.User> ru.javawebinar.topjava.web.user.AdminRestController.getAll()
+22:27:26.618 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/admin/users],methods=[POST],consumes=[application/json],produces=[application/json]}" onto public org.springframework.http.ResponseEntity<ru.javawebinar.topjava.model.User> ru.javawebinar.topjava.web.user.AdminRestController.createWithLocation(ru.javawebinar.topjava.model.User)
+22:27:26.619 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/admin/users/by],methods=[GET],produces=[application/json]}" onto public ru.javawebinar.topjava.model.User ru.javawebinar.topjava.web.user.AdminRestController.getByMail(java.lang.String)
+22:27:26.622 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile],methods=[GET],produces=[application/json]}" onto public ru.javawebinar.topjava.model.User ru.javawebinar.topjava.web.user.ProfileRestController.get()
+22:27:26.623 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile],methods=[PUT],consumes=[application/json]}" onto public void ru.javawebinar.topjava.web.user.ProfileRestController.update(ru.javawebinar.topjava.model.User)
+22:27:26.624 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile],methods=[DELETE]}" onto public void ru.javawebinar.topjava.web.user.ProfileRestController.delete()
+22:27:26.625 INFO  o.s.w.s.h.AbstractHandlerMethodMapping$MappingRegistry.register:549 - Mapped "{[/rest/profile/text],methods=[GET]}" onto public java.lang.String ru.javawebinar.topjava.web.user.ProfileRestController.testUTF()
+22:27:26.656 INFO  o.h.validator.internal.engine.ValidatorFactoryImpl.getTemporalValidationTolerance:575 - HV000238: Temporal validation tolerance set to 0.
+22:27:26.849 INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter.initControllerAdviceCache:568 - Looking for @ControllerAdvice: WebApplicationContext for namespace 'mvc-dispatcher-servlet': startup date [Fri Jan 12 22:27:25 MSK 2018]; parent: Root WebApplicationContext
+22:27:26.950 INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter.initControllerAdviceCache:568 - Looking for @ControllerAdvice: WebApplicationContext for namespace 'mvc-dispatcher-servlet': startup date [Fri Jan 12 22:27:25 MSK 2018]; parent: Root WebApplicationContext
+22:27:26.983 DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver.initExceptionHandlerAdviceCache:272 - Looking for exception mappings: WebApplicationContext for namespace 'mvc-dispatcher-servlet': startup date [Fri Jan 12 22:27:25 MSK 2018]; parent: Root WebApplicationContext
+22:27:27.086 INFO  o.s.web.servlet.handler.AbstractUrlHandlerMapping.registerHandler:373 - Mapped URL path [/resources/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+22:27:27.090 INFO  o.s.web.servlet.handler.AbstractUrlHandlerMapping.registerHandler:373 - Mapped URL path [/webjars/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'
+22:27:27.202 INFO  org.springframework.web.servlet.FrameworkServlet.initServletBean:513 - FrameworkServlet 'mvc-dispatcher': initialization completed in 1572 ms
+[2018-01-12 10:27:27,214] Artifact topjava:war: Artifact is deployed successfully
+[2018-01-12 10:27:27,214] Artifact topjava:war: Deploy took 12 890 milliseconds
+22:27:27.426 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/'; against '/resources/**'
+22:27:27.427 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/'; against '/webjars/**'
+22:27:27.428 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/'; against '/rest/**'
+22:27:27.430 DEBUG org.springframework.security.web.FilterChainProxy.doFilterInternal:202 - / has no matching filters
+22:27:28.966 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/'; against '/resources/**'
+22:27:28.967 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/'; against '/webjars/**'
+22:27:28.967 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/'; against '/rest/**'
+22:27:28.967 DEBUG org.springframework.security.web.FilterChainProxy.doFilterInternal:202 - / has no matching filters
+22:27:28.994 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/resources/css/style.css'; against '/resources/**'
+22:27:28.995 DEBUG org.springframework.security.web.FilterChainProxy.doFilterInternal:202 - /resources/css/style.css has an empty filter list
+22:27:52.994 DEBUG o.s.s.web.util.matcher.AntPathRequestMatcher.matches:157 - Checking match of request : '/resources/css/style.css'; against '/resources/**'
+22:27:52.995 DEBUG org.springframework.security.web.FilterChainProxy.doFilterInternal:202 - /resources/css/style.css has an empty filter list
+
+Nick Yesterday at 9:29 PM  
+
+Наверное, пропали эти стили в бермудском треугольнике.
+Katherine Buzatu Yesterday at 9:47 PM  
+
+...и, похоже, jQuery захватили.
+
+
+Nick [9:49 PM] 
+Фух, проблема решена. Всем спасибо:+1:. Причина была в том, что в headTag.jsp не были прописаны линки)
+
+
+
+----- Today January 13th, 2018 -----
+Антон Кляшторный [1:54 PM] 
+RootController.meals(), его нужно тоже поправить. что поправлять, подскажите мысль
+
+
+Viktor [1:55 PM] 
+meals таблицу переделал на ajax?
+
+
+Антон Кляшторный [1:58 PM] 
+переделал, добавляет, обновляет и раскрашивает
+
+
+Few [2:11 PM] 
+@Антон Кляшторный 9_06_datatables_via_ajax пересмотри с самого начала там почти
+
+
+Антон Кляшторный [2:15 PM] 
+Спасибо, пойду поправлять. С Наступающим СНГ! (edited)
+
+
+Антон Кляшторный [3:22 PM] 
+@Viktor @Few Если правильно понял ваши подсказки то в root контроллере meals получаю List<Meal>,  остальное делает ajax
+
+
+Viktor [3:23 PM] 
+@Антон Кляшторный а зачем тебе List<Meal>?
+
+
+Антон Кляшторный [3:29 PM] 
+действительно, всего строки из 6-ти символов хватает :slightly_smiling_face:
+
+
+Viktor [3:35 PM] 
+:smiley:

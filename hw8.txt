@@ -388,3 +388,9 @@ LORREON [9:43 AM]
 
 LORREON [10:40 AM] 
 и как сделать через .andExpect(content()?
+
+
+grigory.kislin [3:23 PM] 
+@LORREON подебаж. только не content() - тут в теле запроса JSP
+> почему не ...
+сократили
