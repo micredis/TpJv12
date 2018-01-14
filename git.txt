@@ -521,3 +521,76 @@ grigory.kislin [8:59 PM]
 Viktor [9:56 PM] 
 @grigory.kislin да сейчас так и сделали, но ответа на вопрос я так и не нашел. Pull то прошел и я получил все комменты, но ветки не появились :smiley:
 Мне интересно как по сути это работает в openSource. Если человек нашел 1 баг, форкнул 1 раз, второй баг и ещё раз форкнул? и на каждый баг делать форк пока не примут в команду? :smiley:
+
+
+grigory.kislin [10:21 PM] 
+погоди, зачем форать? почему не clone ?
+
+
+Viktor [10:26 PM] 
+хз, рефлексом с topjava :smiley:
+
+
+[10:28] 
+как я понимаю работу:
+У меня нет прав, чтобы комиттить в оригинальную ветку, поэтому я делаю fork и клонирую себе уже свою копию репозитория. В ней работаю, что-то добавлю -> commit -> push -> pull request. 
+Если я сделаю просто clone то коммитить смогу только  в локальный репозиторий, и не смогу отправить pull request
+
+
+
+----- Today January 14th, 2018 -----
+grigory.kislin [4:24 PM] 
+точно...
+https://git-scm.com/book/ru/v2/GitHub-%D0%92%D0%BD%D0%B5%D1%81%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2%D0%BA%D0%BB%D0%B0%D0%B4%D0%B0-%D0%B2-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B
+
+
+[4:27] 
+@viktorpavlovi4
+гуглить то пробовал? https://www.google.ru/search?q=git+pull+for+foked (edited)
+
+
+[4:30] 
+вот еще: https://stackoverflow.com/questions/3903817/pull-new-updates-from-original-github-repository-into-forked-github-repository
+настраиваешь forked на основной и фетчишь
+`$ git remote add upstream git://github.com/pjhyett/github-services.git`
+`$ git fetch upstream`
+
+а затем делаешь когда хочешь обновится rebase
+`$ git rebase upstream/master`
+
+и пользуешься google:)
+stackoverflow.com
+Pull new updates from original GitHub repository into forked GitHub repository
+I forked someone's repository on GitHub and would like to update my version with commits and updates made in the original repository. These were made after I forked my copy. How can I pull in the
+ 
+(edited)
+
+
+Viktor [5:53 PM] 
+гуглил и делал именно это, тащит только master без доп веток
+
+
+[5:54] 
+нагуглил даже обратные pull request в свой репо, Сам создавал нужные ветки и пытался кинуть запросы. Но сравнивать было нечего и соответственно запрос не кинуть.
+
+
+Viktor [6:04 PM] 
+хотя думаю я где-то накосячил с первым вариантом. С кояком то я разберусь, просто интересно есть прям совсем короткий путь?
+
+
+grigory.kislin [6:04 PM] 
+а так в своей ветке:
+git fetch upstream/branch
+git rebase upstream/branch (edited)
+
+
+[6:04] 
+?
+
+
+Viktor [6:22 PM] 
+а вот до этого не додумался :smiley:
+
+
+Viktor [6:56 PM] 
+так ладно. первый вариант сейчас сработал...  надо будет ещё на чем-то потестировать :smiley:

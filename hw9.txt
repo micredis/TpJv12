@@ -968,3 +968,60 @@ Viktor [3:23 PM]
 
 Viktor [3:35 PM] 
 :smiley:
+
+
+Дима Жуков [3:50 PM] 
+А зачем мы  <property name="fallbackToSystemLocale" value="false"/> - это в false выставили?
+
+
+vsimonov [4:16 PM] 
+Заметил после накатrи патчей Update не работает в users и meals. Это нормально?
+
+
+Valery [4:19 PM] 
+для users должно работать. для meals - это 1й пункт дз.
+
+
+grigory.kislin [4:38 PM] 
+@vsimonov попробуй по коду посмотреть
+
+
+[4:39] 
+@Дима Жуков в уроке была на это ссылка. поищи
+
+
+vsimonov [5:18 PM] 
+скачал уже последний мастер с topjava тоже не работает.
+Grigory Kislin
+@vsimonov попробуй по коду посмотреть
+Posted in #hw9Today at 4:38 PM
+
+
+Valery [5:31 PM] 
+посмотри на что ругается.
+
+
+[5:32] 
+у меня не работал update так как js был закеширован в браузере.
+
+
+vsimonov [5:38 PM] 
+не на что не ругается просто js не отрабатывает. У меня так add и не работал, пока я в js не убрал //  $("#modalTitle").html(i18n["addTitle"]);  с update подозреваю тоже самое
+
+
+Valery [5:43 PM] 
+смотри в браузере вкладку console. js там все свои исключения пишет.
+
+
+
+grigory.kislin [6:03 PM] 
++ Ctrl+F5
+
+
+
+vsimonov [6:05 PM] 
+вах пацаны извиняйте, похоже разобрался.
+
+
+grigory.kislin [6:05 PM] 
+> так как js был закеширован в браузере.
