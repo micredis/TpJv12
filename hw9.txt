@@ -1176,3 +1176,47 @@ anpotashev [11:32 PM]
 
 MetalBro [11:35 PM] 
 да, посмотрел, что-то вроде этого и  есть
+
+
+
+----- Yesterday January 15th, 2018 -----
+Marina [9:39 PM] 
+Ребята, кто разобрался с datetimepicker, подскажите, что я е так делаю? Все как по ссылкам, добавляю:
+
+
+Marina [9:40 PM] 
+<link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/ >
+<script src="/jquery.js"></script>
+<script src="/build/jquery.datetimepicker.full.min.js"></script>
+
+anpotashev [17 hours ago] 
+Пути у тебя какие-то не такие.
+Посмотри как у нас добавлены остальные js-библиотеки и их css-ки в headTag.jsp
+
+
+Marina [9:41 PM] 
+и у меня эти ресурсы не находятся, что-то еще где-то нужно добавить? А то что-то совсем запуталась и не работаетю
+
+itAvgur [13 hours ago] 
+Например используй в IDEA функцию Autocomplete.
+И постепенно двигаясь от корня проекта выходишь на необходимый файл.
+
+
+grigory.kislin [11 hours ago] 
+лучше вариант: Ctrl+Shift+N и jquery.datetimepicker.css (edited)
+
+
+Marina [6 hours ago] 
+Найти у меня их получается, но как заставить их видеть, прописать абсолютный путь вместо относительного?
+
+
+Marina [6 hours ago] 
+Прописала полный путь и все-равно тоже самое, файлы не найдены :disappointed:
+
+
+vsimonov [11:42 AM] 
+тесты с авторизацией кто сделал? я вот такую сасису пишу mockMvc.perform(get(REST_URL + MEAL1_ID).with(user("user@yandex.ru").password("password").roles("USER"))) но не алё No authorized user found
+
+
+vsimonov [11:57 AM] 
+а всё увидел у нас есть userHttpBasic

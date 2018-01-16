@@ -4895,3 +4895,42 @@ https://www.eventbrite.com/e/java-and-c-net-engineers-online-hiring-tournament-c
 Eventbrite
 Java and C# (.NET) Engineers Online Hiring Tournament - Crossover
 Crossover Hiring Tournament - 1 Day Testing for a New Job We're running an Online Hiring Tournament on January 13th to hire developers who demonstrate outstanding technical skills required to join the Crossover network. Crossover (www.crossover.com) is an Austin, TX based HR and Technology company finding the top 1% of talent around the world and introducing them to US software enterprises. The company also has a unique technology enabling full time remote work from wherever you live.  We are searching Show more… (173 kB)
+
+
+grigory.kislin [3:34 AM] 
+@here
+*----------------------------------------------------------------*
+*Налетаем: #hw10*
+*----------------------------------------------------------------* (edited)
+
+
+Konstantin [12:52 PM] 
+Делаю сейчас 2  тестовых задания. Простые круд приложения, похожие на нашу стажировку. Нужно ли добавлять логгирование, валидацию и прочие плюшки, если в задании про это ничего не сказано? Вроде бы функционал это не расширяет, а лишь улучшает читаемость и сделано для самого разработчика
+
+
+[12:53] 
+Кто по своему опыту скажет как к этому относятся работодатели?
+
+
+astronarh [1:08 PM] 
+@Konstantin В основном хорошо, или нейтрально, если отрицательно, стоит ли там работать?
+
+
+Konstantin [1:10 PM] 
+Ок. Просто Григорий пугал, что шаг вправо-влево от условия, расстрел)
+
+
+astronarh [1:17 PM] 
+@Konstantin если так этого боишся, сделай два варианта ))) с плюшками. и без, и когда сдаваться будешь, спроси какой сдать )))
+
+
+Konstantin [1:22 PM] 
+Ха-ха)))
+
+
+Viktor [1:40 PM] 
+@Konstantin идея правильная у astronarh. Сделай минимальное задание без плюшек, потом создай новую ветку и в ней добавь все что хочешь. Когда будешь скидывать напиши, что в доп ветке дополнил плюшками :smiley:
+
+
+Konstantin [2:11 PM] 
+@Viktor спасибо, возможно так и сделаю

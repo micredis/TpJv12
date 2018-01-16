@@ -1,0 +1,61 @@
+grigory.kislin [3:30 AM] 
+joined #hw10.
+
+
+grigory.kislin [3:30 AM] 
+set the channel topic: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson10.md
+
+
+grigory.kislin [3:33 AM] 
+Welcome на 10й урок. Осталось всего-ничего! последнее полноценное ДЗ
+
+
+Fabus [3:43 AM] 
+joined #hw10 along with 12 others.
+
+
+tema.emelyan [6:04 AM] 
+у меня одного видео 10_3 не загружается?
+
+itAvgur [7 hours ago] 
+У меня все ОК.
+
+
+Few [7 hours ago] 
+10_3 не скачивается тоже
+
+
+Few [7 hours ago] 
+просмотреть можно, а скачать нет
+
+
+grigory.kislin [3 hours ago] 
+привет! а хотите скачивать?
+
+
+Few [3 hours ago] 
+ну до сих пор все скачивались, для истории сохраняю я лично
+
+
+
+Katherine Buzatu [3 hours ago] 
+Не, ну мы изловчимся, конечно, скачаем, если хотя бы смотреть можно :slightly_smiling_face:
+
+
+meldenev.aleksandr [6:16 AM] 
+joined #hw10 along with 5 others.
+
+
+Katherine Buzatu [8:26 AM] 
+@grigory.kislin
+> Lesson_10/10_3_jquery_convertor_def_groups.mp4 Вам запрещено скачивать этот документ.
+(edited)
+
+
+
+Marina [9:29 AM] 
+Подскажите, пожалуйста, после накатки патча с datetimepicker при запуске tomcat, пытаюсь ввести дату и у меня не появляется календарик, только вручную ввод, что при добавлении, что в фильтре, так и должно быть? Ошибок никаких не выводит. У себя в дз все с этим мучалась, так и не заработал этот datetimepicker, и тут в решении тоже самое, может я как то неправильно понимаю работу этого datetimepicker?
+
+
+Marina [9:33 AM] 
+Вопрос снимается reimport/clean/package помогло.

@@ -2640,3 +2640,158 @@ curl рекомендуется писать на все запросы?)
 
 grigory.kislin [11:44 AM] 
 в ТЗ есть:) не думаю что надо 100%
+
+
+grigory.kislin [3:34 AM] 
+@here
+*----------------------------------------------------------------*
+*Налетаем: #hw10*
+*----------------------------------------------------------------* (edited)
+
+
+Konstantin [12:52 PM] 
+Делаю сейчас 2  тестовых задания. Простые круд приложения, похожие на нашу стажировку. Нужно ли добавлять логгирование, валидацию и прочие плюшки, если в задании про это ничего не сказано? Вроде бы функционал это не расширяет, а лишь улучшает читаемость и сделано для самого разработчика
+
+
+[12:53] 
+Кто по своему опыту скажет как к этому относятся работодатели?
+
+
+astronarh [1:08 PM] 
+@Konstantin В основном хорошо, или нейтрально, если отрицательно, стоит ли там работать?
+
+
+Konstantin [1:10 PM] 
+Ок. Просто Григорий пугал, что шаг вправо-влево от условия, расстрел)
+
+
+astronarh [1:17 PM] 
+@Konstantin если так этого боишся, сделай два варианта ))) с плюшками. и без, и когда сдаваться будешь, спроси какой сдать )))
+
+
+Konstantin [1:22 PM] 
+Ха-ха)))
+
+
+Viktor [1:40 PM] 
+@Konstantin идея правильная у astronarh. Сделай минимальное задание без плюшек, потом создай новую ветку и в ней добавь все что хочешь. Когда будешь скидывать напиши, что в доп ветке дополнил плюшками :smiley:
+
+
+Konstantin [2:11 PM] 
+@Viktor спасибо, возможно так и сделаю
+
+anpotashev [17 hours ago] 
+В меню у юзеров каша (cache)
+
+
+MetalBro [9:35 PM] 
+возможно тут на уровне браузера после авторизации что-то сохраняется
+
+
+[9:38] 
+для этого вроде сессии придуманы)
+
+
+anpotashev [10:07 PM] 
+Друзья, а код ошибки для юзера без нужной роли д.б. такой же как для не авторизованного - *HttpStatus.UNAUTHORIZED* или какой другой?
+
+Serge [16 hours ago] 
+В этом случае как правило возвращают 403 Forbidden… Spring Security сам возвращает эти ошибки правильно. 
+http://qaru.site/questions/100677/correct-http-status-code-for-resource-which-requires-authorization
+qaru.site
+rest - Правильный код состояния http для ресурса, который требует авторизации - Qaru
+Кажется, что существует много путаницы в правильном коде состояния http для возврата, если пользователь пытается получить доступ к странице, требующей входа пользователя. Итак, какой код статуса будет отправляться, когда я покажу страницу входа? Я
+(edited)
+
+
+anpotashev [16 hours ago] 
+Да, смотрю, возвращает.
+Два но:
+1) возвращает в html
+2) в тесте рест-контроллера получаю эксепшн, вместо кода возврата :disappointed:
+Вот такой вот тест:
+```    @Test
+    @WithUserDetails(value = "Admin", userDetailsServiceBeanName = "customUserDetailsService")
+    public void voteWihoutRole() throws Exception {
+        mockMvc.perform(post(getUri()))
+                .andDo(print())
+                .andExpect(status().isForbidden());
+        ;
+    }```
+А вот эксепшн:
+```org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.security.access.AccessDeniedException: Access is denied```
+
+
+Serge [16 hours ago] 
+Потому что аутентификация в тесте не настоящая… 
+У меня так работает:
+```@Test
+    public void testGetNotAdminAuthorized() throws Exception {
+        mockMvc.perform(get(REST_URL + ADMIN_1.getId())
+                .with(userAuth(USER_1)))
+                .andExpect(status().isForbidden());
+    }
+```
+```public static RequestPostProcessor userAuth(User user) {
+        return SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+    }
+```
+По поводу HTML формата не скажу… 10 занятие топджава расставит все точки, там обработку ошибок будем делать (edited)
+
+
+anpotashev [16 hours ago] 
+У тебя где проверка на роль юзера стоит?
+У меня в сервисе - @PreAuthorize("hasRole('ROLE_USER')")
+
+И про "ненастоящую" авторизацию - у не авторизованного пользователя такой же эксепшн.
+А у юзера с ролью ROLE_USER все ок в тестах с "такой же" авторизацией.
+PS сейчас попробую, для очистки совести. (edited)
+
+
+Serge [16 hours ago] 
+аннотациями ничего не конфигурил, все конфиги через xml
+```<http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
+        <http-basic/>
+        <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/user/**" access="hasRole('ROLE_USER')"/>
+        <csrf disabled="true"/>
+    </http>
+
+    <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="userService">
+            <password-encoder ref="noopEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+```
+
+
+anpotashev [15 hours ago] 
+У тебя hasRole('ROLE_...') на адреса рест-контроллера навешаны, а у меня на методы сервисов.
+
+Serge [15 hours ago] 
+ну да…
+
+
+anpotashev [15 hours ago] 
+Перевесил на контроллер - ничего не изменилось. :disappointed:
+Ладно, продолжу мучать код. Спасибо за участие.
+
+
+anpotashev [12 hours ago] 
+Уф, нашел, где собака порылась.
+
+
+anpotashev [10:49 PM] 
+А через курл нормально, но в формате html, что не очень нравится.
+
+
+
+----- Today January 16th, 2018 -----
+grigory.kislin [2:53 AM] 
+@Serge в 8 уроке есть ссылка
+https://stackoverflow.com/questions/319530/restful-authentication
+stackoverflow.com
+RESTful Authentication
+What does RESTful Authentication mean and how does it work? I can't find a good overview on Google. My only understanding is that you pass the session key (remeberal) in the URL, but this could be
