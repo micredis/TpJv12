@@ -59,3 +59,28 @@ Marina [9:29 AM]
 
 Marina [9:33 AM] 
 Вопрос снимается reimport/clean/package помогло.
+
+
+
+Dmitry Makarov [3:00 PM] 
+uploaded this file
+10_3_jquery_convertor_def_groups.mp4
+29 MB
+MPEG 4 Video
+ Click to download
+
+1 Comment
+
+
+
+Dmitry Makarov [3:01 PM] 
+качайте
+https://files.slack.com/files-pri/T6ZKL8Q2H-F8UGK4KK9/download/10_3_jquery_convertor_def_groups.mp4_-_google_________-1.mp4
+
+philip.goldm [9:53 PM] 
+Ребята, кому-нибудь удалось выполнять 1е задание?
+>1: Сделать валидацию в AdminAjaxController/MealAjaxController через ExceptionInfoHandler. Вернуть клиенту ErrorInfo и статус HttpStatus.UNPROCESSABLE_ENTITY (тип методов контроллеров вернуть обратно на void).
+Как вызывать handleError метод с UNPROCESSABLE_ENTITY у ExceptionInfoHandler в createOrUpdate класса AdminAjaxController?  Пожалуйста, дайте направление, кто сделал. У меня попадает в INTERNAL_SERVER_ERROR.
+
+Anton K. [9 hours ago] 
+я эксепшн бросал

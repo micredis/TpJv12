@@ -4934,3 +4934,14 @@ Viktor [1:40 PM]
 
 Konstantin [2:11 PM] 
 @Viktor спасибо, возможно так и сделаю
+
+
+
+Gle [8:25 PM] 
+commented on image.png
+Подскажите, для чего создается  два spring application contetx
+
+
+
+Viktor [10:26 PM] 
+@Gle у тебя на скрине 1 контекст
