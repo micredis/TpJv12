@@ -2846,3 +2846,293 @@ Viktor [10:20 PM]
 [10:28] 
 Это не то, чтобы большая проблема, я оставил максимальный лимит запросов, но все таки странно. 
 Хотя возможно понял :smiley: транзакция то одна, значит кеширует хибернейт на первом уровне. И если обращения к таблице не было, то он отдаст из кеша. Хорошо иногда порассуждать в слух :smiley:
+
+
+
+----- Yesterday January 17th, 2018 -----
+MetalBro [9:45 AM] 
+Кто-нибудь через curl отсылал JSON в русской кодировке?
+
+Katherine Buzatu [21 hours ago] 
+Postman скушал, SoapUI плюется.
+
+
+MetalBro [16 hours ago] 
+тоже. Postman принимает и так и так, через gitbash не выходит. Решения в инете рекомендуют вводить переменную среды...
+
+
+MetalBro [9:45 AM] 
+UTF-8, кириллицей
+
+
+anpotashev [2:15 PM] 
+отсылал
+
+MetalBro [16 hours ago] 
+gitbash? И нормально проходит? В чем его отличие от postman того же
+
+
+anpotashev [13 hours ago] 
+Да ни в чем
+```curl -i --user admin:password -H "Content-Type: application/json" -X PUT -d '{"id"
+:"100004","name":"Баролло"}' "http://localhost:8081/rest/restaurants/100004"```
+
+
+MetalBro [12 hours ago] 
+этот запрос должен что-нибудь возвращать?
+
+
+MetalBro [12 hours ago] 
+хз, у меня возвращает bad request, в логах ошибка парсинга json
+
+
+MetalBro [12 hours ago] 
+`curl -i --user admin@gmail.com:admin -H "Content-Type:application/json" -X POST -d '{"name": "Семга жареная","price": 521.50,"date": [2018, 9, 29]}'  "http://localhost:8080/rest/admin/restaurants/100007/dishes"` такое например (edited)
+
+
+anpotashev [11 hours ago] 
+Вот post возвращает адрес:
+```ab@NETTOP:/mnt/c/Users/ab/IdeaProjects/restaurant$ curl -i --user admin:password -H "Content-Type: application/json" -X POST -d '{"id"
+:"", "name":"Боброфф"}' "http://localhost:8081/rest/restaurants"
+HTTP/1.1 201
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Set-Cookie: JSESSIONID=BB9E4767119F018FDD09663F1C43959F; Path=/; HttpOnly
+Location: http://localhost:8081/rest/restaurants/100024
+Content-Length: 0
+Date: Wed, 17 Jan 2018 22:03:16 GMT
+```
+(edited)
+
+
+grigory.kislin [3:37 PM] 
+@Serge  AuthorizedUser создается Spring Security в фильтре через `UserServiceImpl.loadUserByUsername`
+
+
+Viktor [4:39 PM] 
+Интересно, у кого-нибудь уже готов проект?
+
+Katherine Buzatu [19 hours ago] 
+Да :)
+
+
+Katherine Buzatu [19 hours ago] 
+...да, интересно!
+
+
+dart_rabbit [18 hours ago] 
+Осталась документация и решение - выкидывать пару  методов или нет? :slightly_smiling_face:
+ 
+
+
+anpotashev [13 hours ago] 
+тоже готово. Сейчас зачистка. К утру, надеюсь, закончу.
+
+
+Viktor [8 hours ago] 
+у меня примерно на 70% :smiley: ещё 1 констроллер, потом допилить что-то похожее на валидацию + security попробовать.
+Зато тестов больше сотни хаха (edited)
+
+
+alphadoub [6:20 PM] 
+В проекте topjave в ProfileRestController мы за своим профилем идём в базу. Я тоже если честно не совсем понимаю зачем. Тоже хотел спросить, но забыл). Что мешает взять UserTo из Auth...User. Мы зачем-то получаем id у Auth...User. И по этому id получаем User из базы.
+Sergei Ovchinnikov
+Григорий, спасибо за ответ. Задал немного общий вопрос, на самом деле интересно будет ли правильным решением при манипуляциях с юзером вместо get User из базы использовать Authorized User, которого получаем при авторизации (чтобы не ходить лишний раз в базу за юзером)?
+Posted in #graduate_projectJan 16th at 9:30 PM
+(edited)
+
+
+alphadoub [6:37 PM] 
+Хотя может из расчета, что это нужно редко, можно и сходить. Но мне кажется легче взять готовый объект, чем брать из пула конекшн, доставать данные и мапить их на Java модель.
+
+
+grigory.kislin [7:19 PM] 
+@alphadoub непонятно почему в этот канал..
+мысль хорошая:) но ProfileRestController.get() возвращает User а не UserTo... можно наверно было бы его из AuthorizedUser сделать, то думаю проще в базу сходить
+
+
+alphadoub [8:20 PM] 
+@grigory.kislin, ну а вообще в принципе, абстрагируясь от проектов наших, я правильно понимаю)вроде бы и ты в видео говорил), что можно без to обойтись? В частности и в этом выпускном проекте.
+В этом канале, потому что в продолжение того, что тут спросили просто.)) Ну и я действительно сомневаюсь в необходимости to в выпускном проекте (по всем сущностям по крайней мере) (edited)
+
+
+grigory.kislin [8:51 PM] 
+ну, можно думаю:)
+
+
+Dmitry Makarov [11:41 PM] 
+будет ли считаться ошибкой если *пользователь* видит только те рестораны у которых на сегодня есть меню? (edited)
+
+anpotashev [11 hours ago] 
+А админ увидит рестораны без меню? Ему как раз для внесения меню они нужны
+
+
+Katherine Buzatu [11 hours ago] 
+Думаю, вопрос в том, как ты видишь бизнес-логику приложения.
+
+
+Dmitry Makarov [11 hours ago] 
+админ увидит
+
+
+Dmitry Makarov [11 hours ago] 
+я сделал 2 варианта выборки ресторанов с меню, один хочу для юзеров, второй для админов (edited)
+
+
+anpotashev [11 hours ago] 
+Чесно говоря, у меня так же получалось, Но решил разделить на разные рест-запросы - рестораны отдельно, дневное меню для них отдельно.
+
+anpotashev [11 hours ago] 
+А не выдавать разом все меню для всех ресторанов за один рест запрос.
+Имхо, разумеется (edited)
+
+
+Dmitry Makarov [11 hours ago] 
+Меню по одному решил доставать?
+
+anpotashev [11 hours ago] 
+Отдаю списком на каждый ресторан
+
+Dmitry Makarov [11 hours ago] 
+понял
+
+anpotashev [11 hours ago] 
+Тебе как фронтэнду сильно поможет если все меню будет за один запрос?
+
+
+Dmitry Makarov [11 hours ago] 
+ну не все меню. у меня пагинация в репозитории (edited)
+
+
+anpotashev [10 hours ago] 
+Тем более. Допустим, я как фрот-энд хочу при выборе ресторана вывести 10 записей меню. А получаю 10 записей на все рестораны, из которых к выбранному относятся только два.
+
+anpotashev [10 hours ago] 
+Опять же только имхо
+
+
+Dmitry Makarov [10 hours ago] 
+на 1 дату 1 меню
+
+Dmitry Makarov [10 hours ago] 
+какие 10 записей?)
+
+
+Dmitry Makarov [10 hours ago] 
+10 блюд чтоли
+
+
+anpotashev [10 hours ago] 
+Ты ж про пагинацию сказал
+
+
+Dmitry Makarov [10 hours ago] 
+я достаю, например, 10 меню, у которых внутри ресторан и 2-5 блюд
+
+anpotashev [10 hours ago] 
+Погодь, сейчас в конец друг-друга запутаем.
+Адрес по которому например доступно меню напиши. (edited)
+
+
+Dmitry Makarov [10 hours ago] 
+рест?
+
+anpotashev [10 hours ago] 
+угу
+
+
+Dmitry Makarov [10 hours ago] 
+я еще не делал
+
+
+anpotashev [10 hours ago] 
+А преполагаешь как?
+
+
+anpotashev [10 hours ago] 
+- /restaurants/{id}/{date}/prices - что-то вроде?
+
+
+anpotashev [10 hours ago] 
+Или id ресторана не учавтсвует?
+
+
+Dmitry Makarov [10 hours ago] 
+/rest/profile/menu/{page}
+
+Dmitry Makarov [10 hours ago] 
+дата подставляется в контроллере (edited)
+
+
+anpotashev [10 hours ago] 
+а ресторан есть в выходных данных?
+
+
+Dmitry Makarov [10 hours ago] 
+есть внутри меню
+
+
+Dmitry Makarov [10 hours ago] 
+это для юзера
+
+
+anpotashev [10 hours ago] 
+ок. Как мне как фронтэнду сформировать рест запрос для получения меню конкретного ресторана да еще и с пагинацией?
+
+
+Dmitry Makarov [10 hours ago] 
+это другой разговор
+
+
+Dmitry Makarov [10 hours ago] 
+в запросе указать айди ресторана, для админа еще и дату
+
+
+anpotashev [10 hours ago] 
+К этому вопросам мучаю: "API продумывай с точки зрения не программиста и объектов, а с точки зрения того, кто им будет пользоваться (frontend)"
+
+
+Dmitry Makarov [10 hours ago] 
+хочешь сказать с реста надо было начинать?
+
+
+anpotashev [10 hours ago] 
+У тебя на твой запрос будет возвращаться что-то вроде 
+"Map<restaurant, List<MenuItem>> (edited)
+
+
+Dmitry Makarov [10 hours ago] 
+это у админа, если ТО не делать (edited)
+
+
+anpotashev [10 hours ago] 
+Не факт что с реста, а просто продумать с каким данными будет удобно работать фронтэнду
+
+
+Dmitry Makarov [10 hours ago] 
+ок подумаю
+
+
+Viktor [2:51 AM] 
+Всем привет, может кто сталкивался.
+Проблема с преобразованием в JSON при возврате значения клиенту. Взял из topjava objectMapper. Проблема в том, spring его не использует. Нашел место, где он его использует, там дефолтный. Поставил брейк на сеттере, спринг заходит туда и устанавливает значение. Но оказывается, что спринговых мапперов аж 3 штуки, во все 3 был установлен кастомный маппер. Но при переводе появляется четвертый и он переводит объект в json дефолтным маппером.
+
+
+[2:53] 
+прикол в том, что спринг же по дефолту создает синглентоны, но здесь почему-то несколько разных и управляемых спрингом.
+
+
+[2:54] 
+Уверен, что они разные, т.к. у них разные хешкоды, но один класс
+
+
+[2:58] 
+нет, оказывается создается их штук 10 :smiley:
+
+
+Viktor [3:12 AM] 
+возвращает дату так "date":[2018,1,18]
