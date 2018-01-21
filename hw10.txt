@@ -356,6 +356,10 @@ Andrew [10 minutes ago]
 Теперь на плохие реквесты просто даёт ошибку 400 - Bad Request.
 
 
+Andrew [1 day ago] 
+MethodArgumentNotValidException пытаюсь отловить, но падает спринг, No suitable resolver for argument 1 of type 'org.springframework.dao.DataIntegrityViolationException'
+
+
 Rostish [5:23 PM] 
 Аналогичная проблема с Ник
 
@@ -368,3 +372,71 @@ philip.goldm [5:25 PM]
 commented on Nick’s file Screenshot.png
 посмотри отправляемые запросы в браузере (developer tools\network). 
 Возможно есть ошибки в javascript
+
+
+Rostish [5:40 PM] 
+это из опшинл патчей
+
+
+[5:40] 
+из-за
+
+
+[5:40] 
+сейчас перепатчил все ок
+
+
+grigory.kislin [5:41 PM] 
+@itAvgur
+>  его текущая авторизация остается в сессии
+должна чистится при после отработки запроса ThreadLocal. а в сессию она не кладется- stateless (edited)
+
+
+Andrew [6:12 PM] 
+Подскажите, падает при обработке MethodArgumentNotValidException. Даже в метод не заходит.
+
+anpotashev [1 day ago] 
+В метод хэндлера?
+
+
+anpotashev [1 day ago] 
+В ajax или rest?
+
+
+Andrew [1 day ago] 
+Rest
+
+
+Andrew [1 day ago] 
+Пишет, что не может Invoke, потому что не хватает параметра. Посмотрел, что эксепшн в конструкторе принимает ещё что-то. Но не нашёл, как решить.
+
+
+Andrew [1 day ago] 
+Нашёл ошибку..
+
+
+Dmitry Makarov [3:10 AM] 
+Подскажите как залогиниться через postman, если кто знает
+
+
+Viktor [4:00 AM] 
+uploaded this image: image.png
+Add Comment
+
+
+
+
+Viktor [4:00 AM] 
+@Dmitry Makarov как на скрине выбери авторизацию, потом тип и введи данные
+
+
+Dmitry Makarov [4:02 AM] 
+@Viktor спасибо
+
+
+Vladimir_X [9:57 PM] 
+ребят, ка вы выводили на экран ошибку при дублирования email? Писали свой валидатор?
+
+
+anpotashev [10:04 PM] 
+без валидатора обошелся. Ловкость хэнд и никакого мошенства
