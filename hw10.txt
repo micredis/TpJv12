@@ -440,3 +440,98 @@ Vladimir_X [9:57 PM]
 
 anpotashev [10:04 PM] 
 без валидатора обошелся. Ловкость хэнд и никакого мошенства
+
+
+
+itAvgur [11:17 AM] 
+:confounded: Как мы в ExceptionHandler понимаем откуда он прилетел?
+Если из профиля пользователя или админки, то e-mail для редактируемой записи может совпадать.
+Если делать через BindingResult, то все понятно - разобрали валидаторами, приняли решение, передали ответ.
+А без него непонятно.....
+
+anpotashev [3 hours ago] 
+У нас два класса с ExceptionHandler: ExceptionInfoHandler и GlobalControllerExceptionHandler. Отсюда и пляшите.
+
+
+Marina [12:27 PM] 
+Вот и я также сделала сначала через  ExceptionHandler, проверила - работает, ошибку заметила только когда updateTest упал, в итоге тоже через валидаторы, только не поняла при чем здесь BindingResult, у меня без него работает, просто валидатор к контроллеру подключаю и ставлю @Validated
+
+
+vch [12:29 PM] 
+@Marina А оно транзакционно получилось? Не может быть такого, что одновременно зарегистрируются 2 пользователя с одинаковым email, валидация пройдёт успешно, а на этапе сохранения в базу столкнутся 2 параллельных Insert-запроса?
+
+
+Marina [12:31 PM] 
+Честно, не знаю, но тогда по идее база ошибку выдаст и того, кто вторым регистрируется на страницу с ошибкой отправит
+
+vch [12:32 PM] 
+Да, ошибку. И, мне кажется, в твоём варианте сообщение об этой ошибке будет не в слишком красивом виде показываться пользователю...
+
+Marina [12:33 PM] 
+а разве его не ExceptionHandler ловит, насколько я понимаю, он тоже отработает, в нем я тоже изменила сообщение об ошибке на более красивое
+
+vch [12:36 PM] 
+@Marina А, ну то есть ты в обоих случаях сделала корректную обработку - и валидатором, и с Exception указывается конкретное проблемное поле? Это двойная работа, но, пожалуй, самый хороший вариант.
+
+
+Marina [12:44 PM] 
+Не совсем, у меня в итоге ajax контроллеры через ExceptionHandler работают, а rootController и rest контроллеры - через валидаторы, в итоге красивые сообщения только при регистрации/профиле,  а в остальном только на требуемые в дз поля, если успею, что уже вряд ли, подумаю как на все сделать
+
+Yuri [5:12 PM] 
+Подскажите, может кто столкнулся, для п.3 (и возможно п.4) ДЗ.
+
+[5:15] 
+Я решил сделать свою аннотацию, т.е. в классе User:
+`@UniqueEmail`
+`private String email`
+....
+
+
+[5:16] 
+Аннотация
+```@Documented
+@Constraint(validatedBy = UniqueEmailValidator.class)
+@Target( { ElementType.FIELD } )
+@Retention(RetentionPolicy.RUNTIME)
+public @interface UniqueEmail {
+    String message() default "User with this email already exists";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+}
+```
+
+
+[5:17] 
+Валидатор:
+```
+```
+
+
+[5:18] 
+Валидатор:
+```public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public void initialize(UniqueEmail constraintAnnotation) {}
+
+    @Override
+    public boolean isValid(String email, ConstraintValidatorContext ctx) {
+        Assert.notNull(userRepository, "Repo is null");
+        return email != null && userRepository.getByEmail(email) == null;
+    }
+}
+```
+
+
+Yuri [5:27 PM] 
+Проблема в том, что `@Autowired` не срабатывает, и как следствие валидатор тоже. Как я понял, это происходит по причине того, что ValidatorFactory, которая подгружает валидаторы не умеет делать делать `@Autowired`. Об этом пишут, например, тут:
+https://stackoverflow.com/questions/13599821/autowired-repository-is-null-in-custom-constraint-validator
+Я пробовал использовать SpringWebConstraintValidatorFactory но не помогло (скорее всего неправильно использовал ее)
+stackoverflow.com
+Autowired Repository is Null in Custom Constraint Validator
+I have a Spring based webapp. I am using several repository classes with annotations @Repository, @Transactional in my Controllers. That part works fine. I created a Custom Constraint Validator wh...
