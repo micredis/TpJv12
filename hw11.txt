@@ -1,0 +1,91 @@
+grigory.kislin [1:22 AM]
+joined #hw11.
+
+grigory.kislin [1:22 AM]
+set the channel topic: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson11.md
+
+grigory.kislin [1:25 AM]
+Поздравлю!! Ты дошел до последнего занятия Topjava: https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson11.md
+Деплоим приложение в Heroku, постим сюда свои резюме, делаем их ревью друг у друга, пишем замечания
+Я тоже поучаствую по возможности
+GitHub
+JavaWebinar/topjava
+Contribute to topjava development by creating an account on GitHub.
+
+Serge [1:29 AM]
+joined #hw11 along with 18 others.
+
+philip.goldm [3:09 PM]
+@grigory.kislin привет! после накатки всех патчей, в некоторых местах падают тесты и есть мелкие ошибки в js. 
+Уточни, это ожидаемо, т.е. необходимо самому поправить у себя в master ветке? :slightly_smiling_face: Или что-то не правильно?  
+Спасибо
+
+grigory.kislin [4:05 PM]
+@philip.goldm привет! 
+после всех патчей тесты у меня проходят. посмотри причины
+> есть мелкие ошибки в js
+Ctrl+F5 Делал? что за ошибки?
+
+philip.goldm [23 hours ago]
+проблема не в кеше. отправил
+
+
+grigory.kislin [4:43 PM]
+с локализацией- бага, сделаю fix. 
+по умолчанию у меня RU, думал что везде будет
+https://travis-ci.org/JavaWebinar/topjava
+Today
+
+----- January 24th -----
+
+vahundos [1:52 PM]
+Прошу оценить и сделать замечания по резюме, кто сможет
+https://drive.google.com/file/d/1r2GpmN5lz8d0afwaM0RjhE5fPeXY5xXL/view
+
+grigory.kislin [2:23 PM]
+> Хочу начать карьеру Java Developer с возможностью активно развиваться и дорасти до тимлида.
+не надо начать карьеру. Java разработчик
+тем более с опытом в it (edited)
+[2:25 PM]
+остальное- ок
+
+vahundos [2:39 PM]
+Спасибо!
+
+anpotashev [3:02 PM]
+Оформление - класс. Аж зависть взяла. 
+Чуть покритикую: имхо, указание языков "русский" и "украинский" излишни. Слово "хочу", думаю, стоит чем-нибудь заменить.
+[3:04 PM]
+В навыки sql может добавить? Не думаю что для hr-ов из опыта postgres автоматически вытекает знание sql (edited)
+
+MetalBro [3:05 PM]
+че тут, уже начали резюме кидать?
+[3:05 PM]
+)
+[3:05 PM]
+еще н-нада?
+
+anpotashev [3:08 PM]
+кидай :slightly_smiling_face:
+
+MetalBro [3:09 PM]
+https://drive.google.com/open?id=1dH0bja8wmQlkEZXBvvpWMo5lECkViCwO
+[3:09 PM]
+Что может быть отталкивающим, если не спешат звонить?
+[3:09 PM]
+откликаться)
+
+anpotashev [3:15 PM]
+Навыки как-то отсортировать может?
+"Общая информация о себе" - звучит немного не по-русски.
+Чем занимался на фрилансе? Если что-то около-профильное, то стоит описать.
+
+MetalBro [3:17 PM]
+да, слов "Общая информация" хватит
+[3:17 PM]
+сек
+
+
+dart_rabbit [3:19 PM]
+>Оформление - класс. Аж зависть взяла.
+@anpotashev я чуть позже, после шести Мск постараюсь скинуть ссыль на генератор резюме. Там npm package ставится, заполняешь файлик, генеришь по имеющимся шаблонам.
