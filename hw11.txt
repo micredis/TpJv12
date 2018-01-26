@@ -319,3 +319,8 @@ Pivotal’s Cloud-Native platform drives software innovation for many of the wor
 https://d1fto35gcfffzn.cloudfront.net/images/og/pivotal-london-whiteboarding.jpg
 [4:37 PM]
 Сертификация online, компьютер с вебкамерой и микрофоном, 200$
+
+
+grigory.kislin [9:46 PM]
+можно чтото подсократить. нарпимер *Со стороны Архангельска* занимался миграцией БД биллинга в центральный биллинг -> Миграция БД биллинга в центральный биллинг
+и так посмотри все. оставляй основное (edited)
