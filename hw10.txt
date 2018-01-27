@@ -639,3 +639,77 @@ Today
 
 Ruslan Pivovarov [12:17 PM]
 Пните в нужную сторону не могу понять по поводу транзакций в тесте, а именно (@Transactional(propagation = Propagation.NEVER)) почему без указания этого падает с не совпедением статуса. то-есть как будто транзакция прошла успешно. Я про тест (testCreateDuplicate()).
+
+
+Ruslan Pivovarov [1:03 PM]
+Если я правильно понимаю - т.к. у нас родительский класс AbstractControllerTest помечен  @Transactional у нас в начале всех тестов открывается общая транзакция и по завершении всех тестов (на счет этого не уверен прошу пояснения по возможности, момент завершения транзакции и выполнения rollback) она закрывается (и т.к. это тесты делает rollback) и тестовый метод поздно замечает что у нас дубликат.
+[1:04 PM]
+Я конечно помню про упоминание об этом в лекции, только не помню в какой.
+
+anpotashev [1:08 PM]
+Когда у нас тестовый класс помечен аннотацией @Transactional, то вызов методов происходит примерно так:
+```public void testMethod() {
+startTransaction();
+....
+endTransaction();
+}```
+и exception, который должен обработать хэндлер, вылетит на последней строке метода. (edited)
+
+Ruslan Pivovarov [1:13 PM]
+По всей видимости я еще тот тугодум. У нас exception выпадает после транзакции поэтому он в контроллере не обрабатывается и не передается в response?
+[1:15 PM]
+В смысле после внутренней транзакции, а внешняя уже не обрабатывает для rest контроллера?
+[1:17 PM]
+Т.е еще не было коммита в базу а у нас уже ушел response? Затем коммит и выпадает exception/
+[1:17 PM]
+?
+
+anpotashev [1:18 PM]
+Что-то вроде того. Т.к. существует внешняя транзакция, то внутренняя то-ли не создается, то-ли игнорируется.
+[1:19 PM]
+Во всяком случае я так для себя понял :slightly_smiling_face:
+
+Ruslan Pivovarov [1:21 PM]
+У нас repository create Propagation.REQUIRED т.е но необходимости.
+[1:23 PM]
+@anpotashev Большое человеческое спасибо. Сейчас хоть по полочкам все разложилось. Не люблю когда ничего не понятно.:slightly_smiling_face:
+
+anpotashev [1:23 PM]
+велкам
+
+
+Ruslan Pivovarov [1:30 PM]
+added this Java snippet: Untitled 
+public abstract class AbstractUserController {
+	
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+  public ErrorInfo duplicateEmail(HttpServletRequest request, DataIntegrityViolationException e) {
+    return new ErrorInfo(request.getRequestURL(), ErrorType.DATA_ERROR, new String[]{"User with this email exist."});
+  }
+...
+}
+Collapse 
+
+Ruslan Pivovarov [1:32 PM]
+На сколько плохая практика? Или все-таки более предпочтительнее делать глобальный ExceptionHandler? (edited)
+
+grigory.kislin [3:10 PM]
+@Ruslan Pivovarov если не ставим Propagation.NEVER, то по @Transactional в AbstractControllerTest
+комита в базу не происходит, а делается rollback (так работает @Transactional  в тестах) . Без сохранения в базу нарушение ограничения на дубликат не происходит.
+При Propagation.NEVER мы отключаем @Transactional (rollback) в AbstractControllerTest.
+В репозитории идет сохранение в базу и в ExceptionInfoHandler ловим DataIntegrityViolationException (edited)
+
+Ruslan Pivovarov [3:12 PM]
+Спасибо.
+
+anpotashev [1 day ago]
+Ну вот, выходит, я и сам запутался и тебя пытался запутать.
+
+
+Ruslan Pivovarov [1 day ago]
+Ну смысл примерно такой-же)
+
+
+grigory.kislin [3:23 PM]
+добавил вопрос в урок

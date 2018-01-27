@@ -324,3 +324,54 @@ https://d1fto35gcfffzn.cloudfront.net/images/og/pivotal-london-whiteboarding.jpg
 grigory.kislin [9:46 PM]
 можно чтото подсократить. нарпимер *Со стороны Архангельска* занимался миграцией БД биллинга в центральный биллинг -> Миграция БД биллинга в центральный биллинг
 и так посмотри все. оставляй основное (edited)
+
+
+Belstrel [11:39 PM]
+Друзья а я вот на HH пока только сделал https://hh.ru/resume/641ca466ff03cad69c0039ed1f653562554743
+hh.ru
+Программист Java
+HeadHunter (hh.ru) позволяет найти работу в России. HeadHunter - это качественная база резюме и вакансий и современные сервисы для поиска работы и персонала.
+----- January 27th, 2018 -----
+
+Антон Кляшторный [12:22 PM]
+Привет, коллеги! В каком поле (personal info, experience, skills) размещаете ссылку на свой репозиторий с проектами или этого не надо делать, только по запросу от HR?
+
+Антон Кляшторный [12:30 PM]
+в personal, посмотрел примеры ваших резюме, спасибо :slightly_smiling_face:
+
+Антон Кляшторный [4:11 PM]
+Резюме инженера-механика без опыта работы в IT https://drive.google.com/open?id=1Q-HUPDKebrhUGL47BHrDcq1cpp6D3bbj
+
+Антон Кляшторный [4:12 PM]
+shared this file:  
+kliashtorny-cv.pdf
+152 kB PDF from Google Drive
+
+
+Few [7:19 PM]
+Заранее спасибо за критику :slightly_smiling_face:
+https://drive.google.com/file/d/1Adt331gfO_OxNQ1Qsxk8Asg8LmgSVZSj/view?usp=sharing
+
+anpotashev [31 minutes ago]
+Мое имхо: "хочу" - плохое слово в резюме.
+Что подразумеваешь под REST в навыках?
+Знание русского в резюме на русском кажется немного лишним.
+"До сегодня" лучше заменить "по настоящее время". Иначе некрасиво звучит.
+Ну и увлечения, имхо, тоже не нужны в резюме. (edited)
+
+
+Few [7:19 PM]
+shared this file:  
+my-resume.pdf
+31 kB PDF from Google Drive
+
+
+anpotashev [10:15 PM]
+commented on Антон Кляшторный’s file kliashtorny-cv.pdf
+Попробую покритиковать, чуток. 
+По мелочи: можно добавить ссылку на приложение в herokuю про выпуской проект в experience можно упомянуть.
+В skills - + SQL, +JDBC, +Security, +mvc, +, возможно, JS. +С паттернами знаком?
+Так же в skills может hibernate взять не в скобки, а через запятую, все-таки, JPA - это спецификация, а hibernate помимо нее кое-что умеет.
+Сертификат - можно, думаю, ссылку добавить.
+Interests - нужно-ли оно.
+Все, имхо, разумеется

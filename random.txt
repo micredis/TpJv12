@@ -2801,3 +2801,15 @@ alphadoub [7:53 PM]
 2. Или Спринговый кэш в репозитории.
 
 @grigory.kislin , ясно, спасибо
+
+
+kadmser [2:43 PM]
+Подскажите онлайн ресурс для тренировки SQL запросов. не для обучения, для того чтобы освежить. Нужны задачки
+
+Дима Жуков [2:45 PM]
+http://www.sql-ex.ru
+sql-ex.ru
+SQL exercises
+SQL remote education. Interactive exercises on SQL statements: SELECT,INSERT,UPDATE,DELETE
+[2:45 PM]
+Первая ссылка в гугле)
