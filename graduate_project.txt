@@ -3362,3 +3362,31 @@ Konstantin [7:50 AM]
 
 alphadoub [12:33 PM]
 Только он элемент html, а не xml, я опечатался. Ночь была). :relaxed: (edited)
+
+philip.goldm [3:21 PM]
+Ребята привет! Кто-нибудь у себя обрабатывает ошибку AccessDeniedException.class для вывода JSON ответа вместо стандартного HTML формы?  (не авторизированный пользователь пытается выполнить запрос)
+
+grigory.kislin [3:35 PM]
+@philip.goldm мне интересное решение прислали- 
+https://stackoverflow.com/a/7066536/548473 + обычный rest контроллер (edited)
+stackoverflow.com
+How to specify the default error page in web.xml?
+I am using <error-page> element in web.xml to specify the friendly error page when user encounters a certain error such as error with code of 404: <error-page> <error-code&g...
+
+philip.goldm [3:37 PM]
+мы же в проетке REST пилим. Мы же не можем отдавать error.html. Есть клиент который пытается получить json объект. (edited)
+ожидаемый результат. Чтото типа
+
+{
+   "url": "http://localhost:8080/api/restaurants",
+   "type": "ACCESS_IS_DENIED",
+   "details": [
+       "org.springframework.security.access.AccessDeniedException: Access is denied"
+   ]
+} (edited)
+
+grigory.kislin [4:39 PM]
+добавил- обычный rest контроллер:) (edited)
+
+philip.goldm [5:13 PM]
+@grigory.kislin запилил. работает. спасибо (edited)
