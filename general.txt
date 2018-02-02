@@ -5109,3 +5109,36 @@ Belstrel [4:30 PM]
 
 Gle [1:10 PM]
 И четырежды))) когда получается занимается только по выходным))
+
+
+Belstrel [1 day ago]
+а ты по специальности работаешь или как получится??
+
+
+Сергей Матвеев [10:14 AM]
+Колеги сколько даёт комбинаций 6 символов с основанием системы счисления 62? Коллега пишет что 6 в степени 62, я считают , что 62 в 6й.
+http://automateddeveloper.blogspot.com/2014/07/creating-java-url-shortener.html#
+automateddeveloper.blogspot.com
+Creating a Java URL shortener
+A long time ago I posted a brief article about using Google's URL shortening API to easily create shortened URLs for your application (e.g....
+
+Dmitry Makarov [10:37 AM]
+62 в 6 степени
+можешь ему с двоичной системой сравнить, на примере пальцев рук
+6 пальцев = 64 комбинации(считая кулак) = 2^6 (edited)
+
+Сергей Матвеев [10:43 AM]
+если брать 6 символов то 56 800 235 583. 56 ярдов получишь)
+https://www.dcode.fr/base-n-convert
+dcode.fr
+Base N Converter - 2, 10, 26, 36, 60, 62 etc. - Online Software Tool
+Tool to write numbers in base N. In numeral systems, a base (radix) is the value of successive powers when writing a number. Until base 10, it is common to use digits 0, 1, 2, 3, 4, 5, 6, 7, 8 et 9, after, some others symbols such as letters.
+https://www.dcode.fr/images/dcode.png
+если 7 то     3 521 614 606 207 то чють больше ярдов))
+Благодарю
+
+grigory.kislin [12:21 PM]
+1й символ - 62 варината
+если с повторами- то второй - тоже 62
+... 6й - 62
+итого 62 ^ 6
