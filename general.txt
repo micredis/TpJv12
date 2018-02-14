@@ -5157,3 +5157,38 @@ grigory.kislin [10:37 PM]
 Продолжаем общение в группе Slack JavaOPs (вступить можно из своего профиля). 
 Все материалы проекта положил на Google Drive, доступ к ним остается навсегда.
 С 13.02 проекты немного подорожают, если надумали принять участие- можно зафиксировать цену через предоплату
+
+
+chumak [3:07 PM]
+Всем привет. Ткните носом если было где-то. Как перевести на русский ошибки Spring security ? На каком бы языке страницу не смотрел "Bad credentials" и хоть ты тресни. Добавление AbstractUserDetailsAuthenticationProvider.badCredentials в app.properties ситуацию не меняет
+
+grigory.kislin [6:57 PM]
+@chumak я когдато делал, в topjava нет
+а гугл- не помогает??
+https://www.google.ru/search?q=spring_security_last_exception+localization&oq=spring+security+localization+&aqs=chrome.1.69i57j0l2j69i64l2.11674j1j4&sourceid=chrome&ie=UTF-8
+
+chumak [7:00 PM]
+Прежде чем писать гуглил и пробовал разные варианты скормить правильные проперти, но без успеха. Спасибо. Буду дальше ковыряться. (edited)
+
+grigory.kislin [7:23 PM]
+@chumak прежде чем гуглить ты похоже еще и сюда написал
+я обычно с гугла начинаю...
+
+Andrew [7:26 PM]
+Перенёс функционал и когда создаю юзера, создаётся без ролей... Где мы по дефолту ему даём роль?
+
+grigory.kislin [7:34 PM]
+@Andrew в конструкторе (edited)
+
+Andrew [7:47 PM]
+Нашёл! В методе ютилы - createNewFromTo
+
+chumak [10:34 AM]
+Вообщем сделал. Теперь spring security locale выставляется согласно языка браузера. На досуге еще попытаюсь пофиксить переключение локали кнопкой сайта.
+
+silent [6:13 PM]
+Вакансия в Москве: https://javarush.ru/groups/posts/472-juniortrainee-java-developer-dlja-smartsoftme-
+Javarush
+Junior/Trainee Java developer для SmartSoft.me в Москве
+Мы, компания SmartSoft.me, занимающаяся разработкой решений для крупных заказчиков на Java и Oracle, ищем в команду Junior/Trainee Java developer. В портфеле нашей компании — разработка собственной системы документооборота, сопровождение и развитие облачной ...
+https://javarush.ru/api/1.0/rest/images/1293665/dd112884-d6e3-4ca4-a289-836692e7fd7b
