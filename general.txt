@@ -5192,3 +5192,10 @@ Javarush
 Junior/Trainee Java developer для SmartSoft.me в Москве
 Мы, компания SmartSoft.me, занимающаяся разработкой решений для крупных заказчиков на Java и Oracle, ищем в команду Junior/Trainee Java developer. В портфеле нашей компании — разработка собственной системы документооборота, сопровождение и развитие облачной ...
 https://javarush.ru/api/1.0/rest/images/1293665/dd112884-d6e3-4ca4-a289-836692e7fd7b
+
+
+grigory.kislin [4:19 PM]
+@here
+коллеги, сегодня группу удаляю
+вакансии публикуйте в #vacancies группы javaops (вступить в нее можно из профиля)
+кроме того там группы #help, #job_feedback, #rss,#relocaton,#study и много другого
